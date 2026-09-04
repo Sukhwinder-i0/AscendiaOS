@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProgressStatus {
+  NOT_STARTED
+  LEARNING
+  COMPLETED
+  NEEDS_REVISION
+  MASTERED
+}
+
+enum ResourceType {
+  YOUTUBE_VIDEO
+  YOUTUBE_PLAYLIST
+  WEBSITE
+  PDF
+  MARKDOWN
+  TXT
+  IMAGE
+  GENERIC_FILE
+  CODE
+  BOOKMARK
+}
+
+enum ResourceLocationType {
+  INBOX
+  EXAM
+  SUBJECT
+  CHAPTER
+  TOPIC
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  fullName     String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  exams        Exam[]
+  subjects     Subject[]
+  chapters     Chapter[]
+  topics       Topic[]
+  topicProgress TopicProgress[]
+
+  @@map("users")
+}
+
+model Exam {
+  id             String    @id @default(uuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String
+  code           String?
+  targetDate     DateTime?
+  targetScore    Float?
+  targetRank     Int?
+  dailyGoalHours Float     @default(4.0)
+  isArchived     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  subjects       Subject[]
+
+  @@index([userId])
+  @@map("exams")
+}
+
+model Subject {
+  id         String   @id @default(uuid())
+  examId     String
+  exam       Exam     @relation(fields: [examId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  code       String?
+  colorHex   String?  @default("#3B82F6")
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  chapters   Chapter[]
+
+  @@index([examId])
+  @@index([userId])
+  @@map("subjects")
+}
+
+model Chapter {
+  id         String   @id @default(uuid())
+  subjectId  String
+  subject    Subject  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  orderIndex Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  topics     Topic[]
+
+  @@index([subjectId])
+  @@index([userId])
+  @@map("chapters")
+}
+
+model Topic {
+  id         String   @id @default(uuid())
+  chapterId  String
+  chapter    Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId   String?
+  parent     Topic?   @relation("TopicHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  subtopics  Topic[]  @relation("TopicHierarchy")
+  name       String
+  orderIndex Int      @default(0)
+  path       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  progress   TopicProgress?
+
+  @@index([chapterId])
+  @@index([parentId])
+  @@index([userId])
+  @@map("topics")
+}
+
+model TopicProgress {
+  id                 String         @id @default(uuid())
+  topicId            String         @unique
+  topic              Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId             String
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status             ProgressStatus @default(NOT_STARTED)
+  confidenceScore    Int            @default(1)
+  masteryScore       Float          @default(0.0)
+  totalStudyTimeSec  Int            @default(0)
+  lastStudiedAt      DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+
+  @@index([userId])
+  @@index([topicId])
+  @@map("topic_progress")
+}
