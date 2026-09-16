@@ -4,34 +4,37 @@ import { z } from 'zod';
 // ENUMS
 // ==========================================
 
-export enum ProgressStatus {
-  NOT_STARTED = 'NOT_STARTED',
-  LEARNING = 'LEARNING',
-  COMPLETED = 'COMPLETED',
-  NEEDS_REVISION = 'NEEDS_REVISION',
-  MASTERED = 'MASTERED',
-}
+export const ProgressStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  LEARNING: 'LEARNING',
+  COMPLETED: 'COMPLETED',
+  NEEDS_REVISION: 'NEEDS_REVISION',
+  MASTERED: 'MASTERED',
+} as const;
+export type ProgressStatus = (typeof ProgressStatus)[keyof typeof ProgressStatus];
 
-export enum ResourceType {
-  YOUTUBE_VIDEO = 'YOUTUBE_VIDEO',
-  YOUTUBE_PLAYLIST = 'YOUTUBE_PLAYLIST',
-  WEBSITE = 'WEBSITE',
-  PDF = 'PDF',
-  MARKDOWN = 'MARKDOWN',
-  TXT = 'TXT',
-  IMAGE = 'IMAGE',
-  GENERIC_FILE = 'GENERIC_FILE',
-  CODE = 'CODE',
-  BOOKMARK = 'BOOKMARK',
-}
+export const ResourceType = {
+  YOUTUBE_VIDEO: 'YOUTUBE_VIDEO',
+  YOUTUBE_PLAYLIST: 'YOUTUBE_PLAYLIST',
+  WEBSITE: 'WEBSITE',
+  PDF: 'PDF',
+  MARKDOWN: 'MARKDOWN',
+  TXT: 'TXT',
+  IMAGE: 'IMAGE',
+  GENERIC_FILE: 'GENERIC_FILE',
+  CODE: 'CODE',
+  BOOKMARK: 'BOOKMARK',
+} as const;
+export type ResourceType = (typeof ResourceType)[keyof typeof ResourceType];
 
-export enum ResourceLocationType {
-  INBOX = 'INBOX',
-  EXAM = 'EXAM',
-  SUBJECT = 'SUBJECT',
-  CHAPTER = 'CHAPTER',
-  TOPIC = 'TOPIC',
-}
+export const ResourceLocationType = {
+  INBOX: 'INBOX',
+  EXAM: 'EXAM',
+  SUBJECT: 'SUBJECT',
+  CHAPTER: 'CHAPTER',
+  TOPIC: 'TOPIC',
+} as const;
+export type ResourceLocationType = (typeof ResourceLocationType)[keyof typeof ResourceLocationType];
 
 // ==========================================
 // AUTH SCHEMAS & TYPES
@@ -73,10 +76,10 @@ export const CreateExamSchema = z.object({
   targetRank: z.number().optional(),
   dailyGoalHours: z.number().min(0.5).max(24).default(4.0),
 });
-export type CreateExamDto = z.infer<typeof CreateExamSchema>;
+export type CreateExamDto = z.input<typeof CreateExamSchema>;
 
 export const UpdateExamSchema = CreateExamSchema.partial();
-export type UpdateExamDto = z.infer<typeof UpdateExamSchema>;
+export type UpdateExamDto = z.input<typeof UpdateExamSchema>;
 
 export interface ExamResponse {
   id: string;
@@ -103,7 +106,7 @@ export const CreateSubjectSchema = z.object({
   code: z.string().optional(),
   colorHex: z.string().optional().default('#3B82F6'),
 });
-export type CreateSubjectDto = z.infer<typeof CreateSubjectSchema>;
+export type CreateSubjectDto = z.input<typeof CreateSubjectSchema>;
 
 export const CreateChapterSchema = z.object({
   name: z.string().min(1, 'Chapter name is required'),
