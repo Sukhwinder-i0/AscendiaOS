@@ -11,7 +11,6 @@ import {
   Check,
   X,
   CornerDownRight,
-  MoreVertical,
   CheckCircle2,
   Clock,
   AlertCircle,
@@ -77,27 +76,27 @@ export function TopicRow({
   const statusConfig = {
     [ProgressStatus.NOT_STARTED]: {
       label: 'Not Started',
-      bg: 'bg-slate-100 text-slate-600 border-slate-200',
+      bg: 'bg-background text-secondary border-border',
       icon: CircleDot,
     },
     [ProgressStatus.LEARNING]: {
       label: 'Learning',
-      bg: 'bg-blue-50 text-blue-700 border-blue-200',
+      bg: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
       icon: Clock,
     },
     [ProgressStatus.COMPLETED]: {
       label: 'Completed',
-      bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+      bg: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
       icon: CheckCircle2,
     },
     [ProgressStatus.NEEDS_REVISION]: {
       label: 'Needs Revision',
-      bg: 'bg-amber-50 text-amber-700 border-amber-200',
+      bg: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
       icon: AlertCircle,
     },
     [ProgressStatus.MASTERED]: {
       label: 'Mastered',
-      bg: 'bg-emerald-100 text-emerald-800 border-emerald-300',
+      bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
       icon: Award,
     },
   };
@@ -109,8 +108,8 @@ export function TopicRow({
     <div className="flex flex-col space-y-1">
       <div
         className={clsx(
-          'group flex items-center justify-between py-2 px-3 rounded-lg border border-transparent hover:border-slate-200 hover:bg-slate-50 transition-all',
-          isEditing && 'bg-white border-blue-500 shadow-sm',
+          'group flex items-center justify-between py-2 px-3 rounded-lg border border-transparent hover:border-border hover:bg-background/80 transition-all',
+          isEditing && 'bg-surface border-blue-500 shadow-sm',
         )}
         style={{ paddingLeft: `${Math.max(0.75, depth * 1.5 + 0.75)}rem` }}
       >
@@ -118,12 +117,12 @@ export function TopicRow({
           {hasSubtopics ? (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="p-1 text-slate-400 hover:text-slate-700 rounded"
+              className="p-1 text-secondary hover:text-primary rounded"
             >
               {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
             </button>
           ) : depth > 0 ? (
-            <CornerDownRight className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+            <CornerDownRight className="w-3.5 h-3.5 text-secondary shrink-0" />
           ) : (
             <div className="w-4 h-4" />
           )}
@@ -136,24 +135,24 @@ export function TopicRow({
                 onChange={(e) => setEditName(e.target.value)}
                 autoFocus
                 onKeyDown={(e) => e.key === 'Enter' && handleSaveEdit()}
-                className="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-900 focus:outline-none focus:border-blue-500 flex-1"
+                className="bg-background border border-border rounded px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
               />
               <button
                 onClick={handleSaveEdit}
                 disabled={loading}
-                className="p-1 text-emerald-600 hover:bg-emerald-50 rounded"
+                className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded"
               >
                 <Check className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="p-1 text-slate-400 hover:bg-slate-100 rounded"
+                className="p-1 text-secondary hover:bg-slate-100 dark:hover:bg-slate-800 rounded"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
           ) : (
-            <span className="text-sm font-medium text-slate-800 truncate">{topic.name}</span>
+            <span className="text-sm font-medium text-primary truncate">{topic.name}</span>
           )}
         </div>
 
@@ -170,7 +169,7 @@ export function TopicRow({
                 )}
               >
                 {Object.entries(statusConfig).map(([key, config]) => (
-                  <option key={key} value={key} className="bg-white text-slate-800">
+                  <option key={key} value={key} className="bg-surface text-primary">
                     {config.label}
                   </option>
                 ))}
@@ -183,21 +182,21 @@ export function TopicRow({
               <button
                 onClick={() => setIsAddingSubtopic(!isAddingSubtopic)}
                 title="Add Subtopic"
-                className="p-1 text-slate-400 hover:text-blue-600 hover:bg-slate-100 rounded transition-colors"
+                className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsEditing(true)}
                 title="Edit Topic"
-                className="p-1 text-slate-400 hover:text-amber-600 hover:bg-slate-100 rounded transition-colors"
+                className="p-1 text-secondary hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
               >
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onDeleteTopic(topic.id)}
                 title="Delete Topic"
-                className="p-1 text-slate-400 hover:text-red-600 hover:bg-slate-100 rounded transition-colors"
+                className="p-1 text-secondary hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
@@ -219,7 +218,7 @@ export function TopicRow({
             value={newSubtopicName}
             onChange={(e) => setNewSubtopicName(e.target.value)}
             autoFocus
-            className="bg-white border border-slate-300 rounded-md px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-blue-500 flex-1"
+            className="bg-background border border-border rounded-md px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
           />
           <button
             type="submit"
@@ -231,7 +230,7 @@ export function TopicRow({
           <button
             type="button"
             onClick={() => setIsAddingSubtopic(false)}
-            className="px-2 py-1.5 text-slate-600 hover:text-slate-900 text-xs"
+            className="px-2 py-1.5 text-secondary hover:text-primary text-xs"
           >
             Cancel
           </button>

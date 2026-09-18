@@ -3,10 +3,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { BrainCircuit } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function HomePage() {
   const { user, loading } = useAuth();
+  const { logoSrc } = useTheme();
   const router = useRouter();
 
   useEffect(() => {
@@ -20,14 +21,11 @@ export default function HomePage() {
   }, [user, loading, router]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
       <div className="flex items-center space-x-3 mb-4">
-        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
-          <BrainCircuit className="w-6 h-6" />
-        </div>
-        <h1 className="text-xl font-bold text-slate-900">StudyOS</h1>
+        <img src={logoSrc} alt="Exam COMPETII" className="h-10 w-auto object-contain" />
       </div>
-      <p className="text-xs text-slate-500">Loading your focused study workspace...</p>
+      <p className="text-xs text-secondary">Loading your focused study workspace...</p>
     </div>
   );
 }

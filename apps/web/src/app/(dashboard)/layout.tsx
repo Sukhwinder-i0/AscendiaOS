@@ -36,18 +36,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC] text-[#0F172A]">
+    <div className="flex min-h-screen bg-background text-primary">
       <Sidebar activeExamId={activeExam?.id} />
       <div className="flex-1 flex flex-col min-w-0">
         <Header activeExam={activeExam} />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">{children}</main>
+        <main className="flex-1 p-6 md:p-8 overflow-y-auto bg-background">{children}</main>
       </div>
     </div>
   );

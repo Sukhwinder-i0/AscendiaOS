@@ -13,7 +13,6 @@ import {
   AlertCircle,
   Loader2,
   CheckCircle2,
-  Sparkles,
   X,
 } from 'lucide-react';
 
@@ -123,17 +122,14 @@ export function SyllabusImportDialog({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-3xl bg-white border border-slate-200 rounded-xl shadow-md overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs animate-in fade-in duration-200">
+      <div className="relative w-full max-w-3xl bg-surface border border-border rounded-xl shadow-elevation overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-slate-50">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border bg-background/50">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg border border-blue-100">
-              <Sparkles className="w-5 h-5" />
-            </div>
             <div>
-              <h2 className="text-base font-bold text-slate-900">AI Syllabus PDF Import</h2>
-              <p className="text-xs text-slate-500">Upload a syllabus PDF to automatically extract hierarchy</p>
+              <h2 className="text-base font-bold text-primary">AI Syllabus PDF Import</h2>
+              <p className="text-xs text-secondary">Upload a syllabus PDF to automatically extract hierarchy</p>
             </div>
           </div>
           <button
@@ -141,7 +137,7 @@ export function SyllabusImportDialog({
               resetState();
               onClose();
             }}
-            className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -150,7 +146,7 @@ export function SyllabusImportDialog({
         {/* Content Body */}
         <div className="p-6 overflow-y-auto space-y-4 flex-1">
           {error && (
-            <div className="flex items-start gap-3 p-3.5 bg-red-50 border border-red-200 rounded-lg text-red-700 text-xs">
+            <div className="flex items-start gap-3 p-3.5 bg-red-500/10 border border-red-500/20 rounded-lg text-red-500 text-xs">
               <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -162,15 +158,15 @@ export function SyllabusImportDialog({
               <div
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleFileDrop}
-                className="border-2 border-dashed border-slate-300 hover:border-blue-400 rounded-xl p-8 text-center bg-slate-50 transition-colors flex flex-col items-center justify-center min-h-[220px]"
+                className="border-2 border-dashed border-border hover:border-blue-500/50 rounded-xl p-8 text-center bg-background/50 transition-colors flex flex-col items-center justify-center min-h-[220px]"
               >
-                <UploadCloud className="w-12 h-12 text-slate-400 mb-3" />
-                <p className="text-sm font-medium text-slate-800 mb-1">
+                <UploadCloud className="w-12 h-12 text-secondary mb-3" />
+                <p className="text-sm font-medium text-primary mb-1">
                   Drag and drop your syllabus PDF here
                 </p>
-                <p className="text-xs text-slate-500 mb-4">PDF documents up to 25MB supported</p>
+                <p className="text-xs text-secondary mb-4">PDF documents up to 25MB supported</p>
 
-                <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold border border-slate-300 transition-colors">
+                <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary text-xs font-semibold border border-border transition-colors">
                   <span>Browse Files</span>
                   <input
                     type="file"
@@ -182,12 +178,12 @@ export function SyllabusImportDialog({
               </div>
 
               {file && (
-                <div className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
+                <div className="flex items-center justify-between p-3.5 bg-background border border-border rounded-lg">
                   <div className="flex items-center gap-3">
-                    <FileText className="w-5 h-5 text-blue-600" />
+                    <FileText className="w-5 h-5 text-blue-500" />
                     <div>
-                      <p className="text-xs font-medium text-slate-900">{file.name}</p>
-                      <p className="text-[11px] text-slate-500">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                      <p className="text-xs font-medium text-primary">{file.name}</p>
+                      <p className="text-[11px] text-secondary">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                     </div>
                   </div>
                   <button
@@ -202,7 +198,6 @@ export function SyllabusImportDialog({
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-4 h-4" />
                         <span>Process Syllabus</span>
                       </>
                     )}
@@ -214,16 +209,16 @@ export function SyllabusImportDialog({
             /* Review & Edit Preview Step */
             <div className="space-y-4">
               {/* Classification Badges */}
-              <div className="flex items-center justify-between p-3.5 bg-slate-50 border border-slate-200 rounded-lg">
+              <div className="flex items-center justify-between p-3.5 bg-background border border-border rounded-lg">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500">Classification:</span>
-                  <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                  <span className="text-xs text-secondary">Classification:</span>
+                  <span className="px-2.5 py-1 text-xs font-semibold rounded-md bg-blue-500/10 text-blue-500 border border-blue-500/20">
                     {documentResult.documentType || 'FULL_EXAM_SYLLABUS'}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-500">AI Confidence:</span>
-                  <span className="text-xs font-semibold text-emerald-600">
+                  <span className="text-xs text-secondary">AI Confidence:</span>
+                  <span className="text-xs font-semibold text-emerald-500">
                     {((documentResult.aiConfidence || 0.9) * 100).toFixed(0)}%
                   </span>
                 </div>
@@ -232,14 +227,14 @@ export function SyllabusImportDialog({
               {/* Exam Title Field if creating new exam */}
               {!targetExamId && (
                 <div>
-                  <label className="block text-xs font-medium text-slate-700 mb-1">
+                  <label className="block text-xs font-medium text-secondary mb-1">
                     Exam Title
                   </label>
                   <input
                     type="text"
                     value={examTitle}
                     onChange={(e) => setExamTitle(e.target.value)}
-                    className="w-full bg-white text-slate-900 text-sm px-3 py-2 rounded-lg border border-slate-300 focus:outline-none focus:border-blue-500"
+                    className="w-full bg-background text-primary text-sm px-3 py-2 rounded-lg border border-border focus:outline-none focus:border-blue-500"
                     placeholder="e.g., GATE DA 2027"
                   />
                 </div>
@@ -247,8 +242,8 @@ export function SyllabusImportDialog({
 
               {/* Warnings alert if any */}
               {documentResult.warnings && documentResult.warnings.length > 0 && (
-                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-800 text-xs space-y-1">
-                  <span className="font-semibold block text-amber-900">AI Extraction Warnings:</span>
+                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-amber-500 text-xs space-y-1">
+                  <span className="font-semibold block text-amber-500">AI Extraction Warnings:</span>
                   <ul className="list-disc pl-4 space-y-0.5">
                     {documentResult.warnings.map((w, idx) => (
                       <li key={idx}>{w}</li>
@@ -264,13 +259,13 @@ export function SyllabusImportDialog({
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-border bg-background/50">
           <button
             onClick={() => {
               resetState();
               onClose();
             }}
-            className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 rounded-lg transition-colors"
+            className="px-4 py-2 text-xs font-semibold text-secondary hover:text-primary rounded-lg transition-colors"
           >
             Cancel
           </button>

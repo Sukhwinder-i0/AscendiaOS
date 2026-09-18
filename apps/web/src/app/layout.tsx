@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata: Metadata = {
   title: 'StudyOS - AI Personal Study & Exam Prep OS',
@@ -9,9 +10,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="bg-[#F8FAFC] text-[#0F172A] antialiased selection:bg-[#3B82F6] selection:text-white">
-        <AuthProvider>{children}</AuthProvider>
+    <html lang="en" className="dark">
+      <body className="bg-background text-primary antialiased selection:bg-accent selection:text-white transition-colors duration-200">
+        <ThemeProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

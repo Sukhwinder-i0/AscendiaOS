@@ -110,18 +110,18 @@ export default function SyllabusWorkspacePage() {
     return (
       <div className="text-center py-16">
         <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-        <p className="text-xs text-slate-500">Loading syllabus hierarchy...</p>
+        <p className="text-xs text-secondary">Loading syllabus hierarchy...</p>
       </div>
     );
   }
 
   if (error || !tree) {
     return (
-      <div className="bg-white p-8 rounded-xl text-center border border-red-200">
-        <p className="text-xs font-medium text-red-600">{error || 'Syllabus tree not found.'}</p>
+      <div className="bg-surface p-8 rounded-xl text-center border border-red-500/20">
+        <p className="text-xs font-medium text-red-500">{error || 'Syllabus tree not found.'}</p>
         <button
           onClick={fetchTree}
-          className="mt-4 px-4 py-2 bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg hover:bg-slate-200 transition-colors"
+          className="mt-4 px-4 py-2 bg-background text-primary text-xs font-semibold rounded-lg border border-border hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
         >
           Retry
         </button>

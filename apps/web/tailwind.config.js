@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -8,25 +9,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: '#F8FAFC', // Slate 50
-        surface: '#FFFFFF',    // Pure White
-        border: '#E2E8F0',     // Slate 200
+        background: 'var(--background)',
+        surface: 'var(--surface)',
+        border: 'var(--border)',
         primary: {
-          DEFAULT: '#0F172A',  // Slate 900
-          text: '#0F172A',
+          DEFAULT: 'var(--primary-text)',
+          text: 'var(--primary-text)',
         },
         secondary: {
-          DEFAULT: '#64748B',  // Slate 500
-          text: '#64748B',
+          DEFAULT: 'var(--secondary-text)',
+          text: 'var(--secondary-text)',
         },
         accent: {
-          DEFAULT: '#3B82F6',  // Blue 500
-          hover: '#2563EB',    // Blue 600
-          light: '#EFF6FF',    // Blue 50
+          DEFAULT: 'var(--accent)',
+          hover: 'var(--accent-hover)',
+          light: 'var(--accent-light)',
         },
-        success: '#22C55E',    // Green 500
-        warning: '#F59E0B',    // Amber 500
-        error: '#EF4444',      // Red 500
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        error: 'var(--error)',
       },
       boxShadow: {
         subtle: '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
@@ -36,4 +37,3 @@ module.exports = {
   },
   plugins: [],
 };
-

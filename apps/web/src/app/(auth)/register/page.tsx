@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { BrainCircuit, UserPlus, ArrowRight } from 'lucide-react';
+import { useTheme } from '@/context/ThemeContext';
+import { ThemeToggle } from '@/components/theme/ThemeToggle';
+import { UserPlus, ArrowRight } from 'lucide-react';
 
 export default function RegisterPage() {
   const [fullName, setFullName] = useState('');
@@ -14,6 +16,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
 
   const { register } = useAuth();
+  const { logoSrc } = useTheme();
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -32,56 +35,58 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
-            <BrainCircuit className="w-6 h-6" />
-          </div>
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative transition-colors">
+      <div className="absolute top-6 right-6">
+        <ThemeToggle />
+      </div>
+
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <div className="flex justify-center mb-4">
+          <img src={logoSrc} alt="Exam COMPETII" className="h-12 w-auto object-contain" />
         </div>
-        <h2 className="mt-4 text-center text-xl font-bold text-slate-900 tracking-tight">
-          Create your StudyOS Account
+        <h2 className="text-xl font-bold text-primary tracking-tight">
+          Create your Account
         </h2>
-        <p className="mt-1 text-center text-xs text-slate-500">
+        <p className="mt-1 text-xs text-secondary">
           Start structuring your personal exam & study preparation
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 border border-slate-200 rounded-xl sm:px-10">
+        <div className="bg-surface py-8 px-6 border border-border rounded-xl sm:px-10">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+            <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-500">
               {error}
             </div>
           )}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1.5">Full Name</label>
+              <label className="block text-xs font-medium text-secondary mb-1.5">Full Name</label>
               <input
                 type="text"
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Alex Morgan"
-                className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary placeholder-secondary/50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1.5">Email address</label>
+              <label className="block text-xs font-medium text-secondary mb-1.5">Email address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="alex@example.com"
-                className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary placeholder-secondary/50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1.5">Password</label>
+              <label className="block text-xs font-medium text-secondary mb-1.5">Password</label>
               <input
                 type="password"
                 required
@@ -89,7 +94,7 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="At least 6 characters"
                 minLength={6}
-                className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary placeholder-secondary/50 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
 
@@ -111,10 +116,10 @@ export default function RegisterPage() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-200 text-center">
-            <p className="text-xs text-slate-500">
+          <div className="mt-6 pt-6 border-t border-border text-center">
+            <p className="text-xs text-secondary">
               Already have an account?{' '}
-              <Link href="/login" className="font-semibold text-blue-600 hover:text-blue-700">
+              <Link href="/login" className="font-semibold text-blue-500 hover:text-blue-600">
                 Sign in <ArrowRight className="w-3 h-3 inline ml-0.5" />
               </Link>
             </p>
