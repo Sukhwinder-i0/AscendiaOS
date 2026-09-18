@@ -35,17 +35,17 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Welcome Banner */}
-      <div className="glass-card p-6 sm:p-8 rounded-3xl border border-slate-800 bg-gradient-to-r from-indigo-950/60 via-slate-900 to-purple-950/40 relative overflow-hidden">
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-white p-6 sm:p-8 rounded-xl border border-slate-200 relative">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center space-x-2 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-3 py-1 rounded-full text-xs font-semibold mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center space-x-1.5 bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full text-xs font-medium mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>Phase 1 Active</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">
-              Welcome back, {user?.fullName || 'Student'}! 👋
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+              Welcome back, {user?.fullName || 'Student'}
             </h1>
-            <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-xl">
+            <p className="text-slate-500 text-xs sm:text-sm mt-1 max-w-xl">
               Track your syllabus progress, organize subjects and topics, and maintain your learning consistency in one workspace.
             </p>
           </div>
@@ -53,7 +53,7 @@ export default function DashboardPage() {
           {activeExam ? (
             <Link
               href={`/workspace/${activeExam.id}/syllabus`}
-              className="flex items-center space-x-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-2xl transition-all shadow-xl shadow-indigo-600/25 shrink-0"
+              className="flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors shrink-0"
             >
               <FolderTree className="w-4 h-4" />
               <span>Open Syllabus Editor</span>
@@ -62,7 +62,7 @@ export default function DashboardPage() {
           ) : (
             <Link
               href="/exams"
-              className="flex items-center space-x-2 px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-2xl transition-all shadow-xl shadow-indigo-600/25 shrink-0"
+              className="flex items-center space-x-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors shrink-0"
             >
               <Plus className="w-4 h-4" />
               <span>Create First Exam</span>
@@ -74,81 +74,81 @@ export default function DashboardPage() {
       {/* Active Exam Overview */}
       {activeExam ? (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Active Goal
               </span>
-              <span className="text-xs bg-indigo-500/10 text-indigo-400 px-2.5 py-0.5 rounded-full font-mono">
+              <span className="text-xs bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded border border-slate-200 font-mono">
                 {activeExam.code || 'EXAM'}
               </span>
             </div>
             <div>
-              <h3 className="text-xl font-bold text-slate-100">{activeExam.title}</h3>
+              <h3 className="text-lg font-bold text-slate-900">{activeExam.title}</h3>
               {activeExam.daysRemaining !== null && (
-                <p className="text-xs text-amber-400 mt-1 flex items-center">
-                  <Clock className="w-3.5 h-3.5 mr-1" />
+                <p className="text-xs text-amber-700 mt-1 flex items-center">
+                  <Clock className="w-3.5 h-3.5 mr-1 text-amber-500" />
                   {activeExam.daysRemaining} days remaining until exam
                 </p>
               )}
             </div>
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
               <span>Daily Target:</span>
-              <span className="font-bold text-slate-200">{activeExam.dailyGoalHours} hours/day</span>
+              <span className="font-semibold text-slate-800">{activeExam.dailyGoalHours} hours/day</span>
             </div>
           </div>
 
-          <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Syllabus Completion
               </span>
-              <Target className="w-4 h-4 text-indigo-400" />
+              <Target className="w-4 h-4 text-blue-600" />
             </div>
             <div>
-              <p className="text-3xl font-extrabold font-mono text-slate-100">
+              <p className="text-3xl font-extrabold font-mono text-slate-900">
                 {activeExam.overallProgressPercentage}%
               </p>
-              <div className="h-2 w-full bg-slate-800 rounded-full mt-3 overflow-hidden">
+              <div className="h-2 w-full bg-slate-100 rounded-full mt-3 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-indigo-500 to-emerald-400 transition-all duration-300"
+                  className="h-full bg-blue-500 transition-all duration-300"
                   style={{ width: `${activeExam.overallProgressPercentage}%` }}
                 />
               </div>
             </div>
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
               <span>Status:</span>
-              <span className="font-semibold text-emerald-400">Active Learning</span>
+              <span className="font-semibold text-emerald-600">Active Learning</span>
             </div>
           </div>
 
-          <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                 Study Consistency
               </span>
-              <Flame className="w-4 h-4 text-orange-400 fill-orange-400" />
+              <Flame className="w-4 h-4 text-amber-500 fill-amber-500" />
             </div>
             <div>
-              <p className="text-3xl font-extrabold font-mono text-slate-100">0 Days</p>
-              <p className="text-xs text-slate-400 mt-1">Current daily study streak</p>
+              <p className="text-3xl font-extrabold font-mono text-slate-900">0 Days</p>
+              <p className="text-xs text-slate-500 mt-1">Current daily study streak</p>
             </div>
-            <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+            <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
               <span>Longest Streak:</span>
-              <span className="font-bold text-slate-200">0 Days</span>
+              <span className="font-semibold text-slate-800">0 Days</span>
             </div>
           </div>
         </div>
       ) : (
-        <div className="glass-card p-8 rounded-2xl text-center border border-dashed border-slate-800">
-          <GraduationCap className="w-10 h-10 text-indigo-400 mx-auto mb-3" />
-          <h3 className="text-lg font-bold text-slate-200">No Exam Workspace Selected</h3>
-          <p className="text-xs text-slate-400 max-w-md mx-auto mt-1 mb-4">
+        <div className="bg-white p-8 rounded-xl text-center border border-dashed border-slate-300">
+          <GraduationCap className="w-10 h-10 text-blue-600 mx-auto mb-3" />
+          <h3 className="text-base font-bold text-slate-900">No Exam Workspace Selected</h3>
+          <p className="text-xs text-slate-500 max-w-md mx-auto mt-1 mb-4">
             Create an exam workspace like GATE DA 2027, UPSC, or JEE to start organizing your syllabus hierarchy.
           </p>
           <Link
             href="/exams"
-            className="inline-flex items-center space-x-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl"
+            className="inline-flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
           >
             <Plus className="w-4 h-4" />
             <span>Create Exam Workspace</span>
@@ -160,18 +160,18 @@ export default function DashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/exams"
-          className="glass-card p-6 rounded-2xl border border-slate-800 hover:border-indigo-500/40 transition-all group"
+          className="bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors group"
         >
           <div className="flex items-center justify-between mb-4">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition-all">
+            <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
               <GraduationCap className="w-5 h-5" />
             </div>
-            <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-indigo-400 transition-colors" />
+            <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
           </div>
-          <h3 className="text-base font-bold text-slate-100 group-hover:text-indigo-300 transition-colors">
+          <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
             Exams & Learning Goals
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-500 mt-1">
             Manage your active exams, target scores, exam dates, and create new learning goals.
           </p>
         </Link>
@@ -179,27 +179,27 @@ export default function DashboardPage() {
         {activeExam ? (
           <Link
             href={`/workspace/${activeExam.id}/syllabus`}
-            className="glass-card p-6 rounded-2xl border border-slate-800 hover:border-indigo-500/40 transition-all group"
+            className="bg-white p-6 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors group"
           >
             <div className="flex items-center justify-between mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition-all">
+              <div className="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600">
                 <FolderTree className="w-5 h-5" />
               </div>
-              <ArrowRight className="w-5 h-5 text-slate-500 group-hover:text-emerald-400 transition-colors" />
+              <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors" />
             </div>
-            <h3 className="text-base font-bold text-slate-100 group-hover:text-emerald-300 transition-colors">
+            <h3 className="text-base font-bold text-slate-900 group-hover:text-blue-600 transition-colors">
               Interactive Syllabus Spine
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-500 mt-1">
               Add, edit, rename, move, and nest subjects, chapters, topics, and subtopics for {activeExam.title}.
             </p>
           </Link>
         ) : (
-          <div className="glass-card p-6 rounded-2xl border border-slate-800 opacity-60">
-            <div className="w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-500 mb-4">
+          <div className="bg-white p-6 rounded-xl border border-slate-200 opacity-60">
+            <div className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-400 mb-4">
               <FolderTree className="w-5 h-5" />
             </div>
-            <h3 className="text-base font-bold text-slate-300">Interactive Syllabus Spine</h3>
+            <h3 className="text-base font-bold text-slate-700">Interactive Syllabus Spine</h3>
             <p className="text-xs text-slate-500 mt-1">
               Create an exam first to unlock the syllabus editor.
             </p>

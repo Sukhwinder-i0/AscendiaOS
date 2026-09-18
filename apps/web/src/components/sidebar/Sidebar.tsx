@@ -46,18 +46,18 @@ export function Sidebar({ activeExamId }: SidebarProps) {
     : [];
 
   return (
-    <aside className="w-64 border-r border-slate-800 bg-slate-950 flex flex-col justify-between shrink-0 h-screen sticky top-0">
+    <aside className="w-64 border-r border-slate-200 bg-white flex flex-col justify-between shrink-0 h-screen sticky top-0">
       <div>
         {/* Brand */}
-        <div className="h-16 px-6 flex items-center space-x-3 border-b border-slate-800/80">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/25">
+        <div className="h-16 px-6 flex items-center space-x-3 border-b border-slate-200">
+          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
             <BrainCircuit className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="font-bold text-base bg-gradient-to-r from-white via-slate-200 to-indigo-200 bg-clip-text text-transparent">
+            <h1 className="font-bold text-base text-slate-900">
               StudyOS
             </h1>
-            <span className="text-[10px] uppercase tracking-wider text-indigo-400 font-semibold">
+            <span className="text-[10px] uppercase tracking-wider text-slate-500 font-medium">
               Phase 1 Core
             </span>
           </div>
@@ -66,7 +66,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
         {/* Navigation Section */}
         <div className="p-4 space-y-6">
           <div>
-            <p className="px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+            <p className="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
               Main Menu
             </p>
             <nav className="space-y-1">
@@ -78,13 +78,13 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     className={clsx(
-                      'flex items-center space-x-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
+                      'flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors',
                       active
-                        ? 'bg-indigo-600/15 text-indigo-300 border border-indigo-500/30'
-                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900',
+                        ? 'bg-blue-50 text-blue-600 border border-blue-100'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50',
                     )}
                   >
-                    <Icon className={clsx('w-4 h-4', active ? 'text-indigo-400' : 'text-slate-400')} />
+                    <Icon className={clsx('w-4 h-4', active ? 'text-blue-600' : 'text-slate-400')} />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -94,7 +94,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
 
           {activeExamId && (
             <div>
-              <p className="px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">
+              <p className="px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-2">
                 Exam Workspace
               </p>
               <nav className="space-y-1">
@@ -108,21 +108,21 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                       href={item.href}
                       onClick={(e) => disabled && e.preventDefault()}
                       className={clsx(
-                        'flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-all',
-                        disabled ? 'opacity-50 cursor-not-allowed text-slate-500' : '',
+                        'flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors',
+                        disabled ? 'opacity-50 cursor-not-allowed text-slate-400' : '',
                         active
-                          ? 'bg-indigo-600/15 text-indigo-300 border border-indigo-500/30'
+                          ? 'bg-blue-50 text-blue-600 border border-blue-100'
                           : !disabled
-                          ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-900'
+                          ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                           : '',
                       )}
                     >
                       <div className="flex items-center space-x-3">
-                        <Icon className={clsx('w-4 h-4', active ? 'text-indigo-400' : 'text-slate-500')} />
+                        <Icon className={clsx('w-4 h-4', active ? 'text-blue-600' : 'text-slate-400')} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
-                        <span className="text-[10px] bg-slate-800 text-slate-400 px-1.5 py-0.5 rounded border border-slate-700 font-mono">
+                        <span className="text-[10px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded border border-slate-200 font-mono">
                           {item.badge}
                         </span>
                       )}
@@ -136,12 +136,12 @@ export function Sidebar({ activeExamId }: SidebarProps) {
       </div>
 
       {/* Footer / Settings */}
-      <div className="p-4 border-t border-slate-800/80">
-        <div className="bg-slate-900/60 rounded-xl p-3 border border-slate-800 flex items-center space-x-3">
-          <Sparkles className="w-5 h-5 text-indigo-400 shrink-0" />
+      <div className="p-4 border-t border-slate-200">
+        <div className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex items-center space-x-3">
+          <Sparkles className="w-4 h-4 text-blue-500 shrink-0" />
           <div className="text-xs">
-            <p className="font-medium text-slate-300">Exam Prep OS</p>
-            <p className="text-slate-500">v1.0.0 Phase 1</p>
+            <p className="font-medium text-slate-800">Exam Prep OS</p>
+            <p className="text-slate-500 text-[11px]">v1.0.0 Phase 1</p>
           </div>
         </div>
       </div>

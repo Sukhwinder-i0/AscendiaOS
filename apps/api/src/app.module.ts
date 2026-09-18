@@ -4,6 +4,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { ExamsModule } from './exams/exams.module';
 import { SyllabusModule } from './syllabus/syllabus.module';
+import { SyllabusImportModule } from './syllabus-import/syllabus-import.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { SyllabusModule } from './syllabus/syllabus.module';
     AuthModule,
     ExamsModule,
     SyllabusModule,
+    SyllabusImportModule,
   ],
 })
 export class AppModule {}

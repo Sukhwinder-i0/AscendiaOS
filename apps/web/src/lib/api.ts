@@ -13,6 +13,8 @@ import {
   ReorderSyllabusDto,
   UpdateTopicProgressDto,
   SyllabusTreeResponse,
+  DocumentResponse,
+  ApproveSyllabusImportDto,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -195,6 +197,46 @@ class ApiClient {
       method: 'PATCH',
       body: JSON.stringify(dto),
     });
+  }
+
+  // Syllabus Import API
+  async uploadSyllabus(file: File, examId?: string): Promise<DocumentResponse> {
+    const token = this.getToken();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const url = `${API_BASE}/syllabus-import/upload${examId ? `?examId=${examId}` : ''}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data.message || `Upload failed: ${response.statusText}`);
+    }
+
+    return data as DocumentResponse;
+  }
+
+  async getImportDocument(id: string): Promise<DocumentResponse> {
+    return this.request<DocumentResponse>(`/syllabus-import/documents/${id}`);
+  }
+
+  async approveSyllabusImport(
+    id: string,
+    dto: ApproveSyllabusImportDto,
+  ): Promise<{ success: boolean; examId: string }> {
+    return this.request<{ success: boolean; examId: string }>(
+      `/syllabus-import/documents/${id}/approve`,
+      {
+        method: 'POST',
+        body: JSON.stringify(dto),
+      },
+    );
   }
 }
 

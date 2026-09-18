@@ -36,6 +36,100 @@ export const ResourceLocationType = {
 } as const;
 export type ResourceLocationType = (typeof ResourceLocationType)[keyof typeof ResourceLocationType];
 
+export const DocumentProcessingStatus = {
+  UPLOADED: 'UPLOADED',
+  PROCESSING: 'PROCESSING',
+  EXTRACTED: 'EXTRACTED',
+  ANALYZED: 'ANALYZED',
+  READY_FOR_REVIEW: 'READY_FOR_REVIEW',
+  APPROVED: 'APPROVED',
+  FAILED: 'FAILED',
+} as const;
+export type DocumentProcessingStatus = (typeof DocumentProcessingStatus)[keyof typeof DocumentProcessingStatus];
+
+export const SyllabusDocumentType = {
+  FULL_EXAM_SYLLABUS: 'FULL_EXAM_SYLLABUS',
+  SUBJECT_SYLLABUS: 'SUBJECT_SYLLABUS',
+  CHAPTER_OR_TOPIC_DOCUMENT: 'CHAPTER_OR_TOPIC_DOCUMENT',
+  UNKNOWN: 'UNKNOWN',
+} as const;
+export type SyllabusDocumentType = (typeof SyllabusDocumentType)[keyof typeof SyllabusDocumentType];
+
+// ==========================================
+// SYLLABUS AI IMPORT SCHEMAS & TYPES
+// ==========================================
+
+export const ExtractedTopicSchema: z.ZodType<any> = z.lazy(() =>
+  z.object({
+    name: z.string().min(1, 'Topic name is required'),
+    subtopics: z.array(ExtractedTopicSchema).optional().default([]),
+  })
+);
+
+export const ExtractedChapterSchema = z.object({
+  name: z.string().min(1, 'Chapter name is required'),
+  topics: z.array(ExtractedTopicSchema).default([]),
+});
+
+export const ExtractedSubjectSchema = z.object({
+  name: z.string().min(1, 'Subject name is required'),
+  code: z.string().optional(),
+  description: z.string().optional(),
+  chapters: z.array(ExtractedChapterSchema).default([]),
+});
+export type ExtractedSubject = z.infer<typeof ExtractedSubjectSchema>;
+export type ExtractedChapter = z.infer<typeof ExtractedChapterSchema>;
+export type ExtractedTopic = z.infer<typeof ExtractedTopicSchema>;
+
+export const ExtractedHierarchySchema = z.object({
+  documentType: z.enum([
+    'FULL_EXAM_SYLLABUS',
+    'SUBJECT_SYLLABUS',
+    'CHAPTER_OR_TOPIC_DOCUMENT',
+    'UNKNOWN',
+  ]),
+  confidence: z.number().min(0).max(1),
+  title: z.string().min(1, 'Title is required'),
+  examName: z.string().optional(),
+  subjects: z.array(ExtractedSubjectSchema).default([]),
+  warnings: z.array(z.string()).default([]),
+  sourceReferences: z
+    .array(
+      z.object({
+        pageNumber: z.number().optional(),
+        snippet: z.string().optional(),
+      })
+    )
+    .optional()
+    .default([]),
+});
+export type ExtractedHierarchy = z.infer<typeof ExtractedHierarchySchema>;
+
+export const ApproveSyllabusImportSchema = z.object({
+  targetExamId: z.string().optional(),
+  examTitle: z.string().optional(),
+  subjects: z.array(ExtractedSubjectSchema),
+});
+export type ApproveSyllabusImportDto = z.infer<typeof ApproveSyllabusImportSchema>;
+
+export interface DocumentResponse {
+  id: string;
+  userId: string;
+  examId?: string | null;
+  filename: string;
+  mimeType: string;
+  storageKey: string;
+  sizeBytes: number;
+  status: DocumentProcessingStatus;
+  documentType?: SyllabusDocumentType | null;
+  aiConfidence?: number | null;
+  extractedHierarchy?: ExtractedHierarchy | null;
+  warnings?: string[] | null;
+  errorMessage?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // ==========================================
 // AUTH SCHEMAS & TYPES
 // ==========================================

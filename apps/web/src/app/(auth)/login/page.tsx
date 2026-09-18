@@ -31,55 +31,51 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Dynamic Background Accents */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center text-white shadow-xl shadow-indigo-500/25">
-            <BrainCircuit className="w-7 h-7" />
+          <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
+            <BrainCircuit className="w-6 h-6" />
           </div>
         </div>
-        <h2 className="mt-4 text-center text-2xl font-extrabold text-slate-100 tracking-tight">
+        <h2 className="mt-4 text-center text-xl font-bold text-slate-900 tracking-tight">
           Welcome back to StudyOS
         </h2>
-        <p className="mt-1 text-center text-xs text-slate-400">
-          Sign in to access your personal study & exam prep workspace
+        <p className="mt-1 text-center text-xs text-slate-500">
+          Sign in to access your personal study workspace
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        <div className="glass-card py-8 px-6 shadow-2xl rounded-2xl border border-slate-800 sm:px-10">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-white py-8 px-6 border border-slate-200 rounded-xl sm:px-10">
           {error && (
-            <div className="mb-4 p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-xs text-rose-400">
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
               {error}
             </div>
           )}
 
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Email address</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">Email address</label>
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="demo@studyos.com"
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">Password</label>
+              <label className="block text-xs font-medium text-slate-700 mb-1.5">Password</label>
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all"
+                className="w-full bg-white border border-slate-300 rounded-lg px-3.5 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
               />
             </div>
 
@@ -87,7 +83,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex justify-center items-center space-x-2 py-2.5 px-4 border border-transparent rounded-xl text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-lg shadow-indigo-600/25"
+                className="w-full flex justify-center items-center space-x-2 py-2.5 px-4 rounded-lg text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
               >
                 {loading ? (
                   <span>Signing in...</span>
@@ -101,10 +97,10 @@ export default function LoginPage() {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
-            <p className="text-xs text-slate-400">
+          <div className="mt-6 pt-6 border-t border-slate-200 text-center">
+            <p className="text-xs text-slate-500">
               Don't have an account?{' '}
-              <Link href="/register" className="font-semibold text-indigo-400 hover:text-indigo-300">
+              <Link href="/register" className="font-semibold text-blue-600 hover:text-blue-700">
                 Create one now <ArrowRight className="w-3 h-3 inline ml-0.5" />
               </Link>
             </p>
@@ -118,7 +114,7 @@ export default function LoginPage() {
               setEmail('demo@studyos.com');
               setPassword('password123');
             }}
-            className="text-[11px] text-slate-500 hover:text-indigo-400 underline underline-offset-2"
+            className="text-[11px] text-slate-500 hover:text-blue-600 underline underline-offset-2"
           >
             Click to fill Demo User credentials (demo@studyos.com)
           </button>

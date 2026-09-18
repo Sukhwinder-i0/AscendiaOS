@@ -20,14 +20,14 @@ export default function HomePage() {
   }, [user, loading, router]);
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-[#F8FAFC] flex flex-col items-center justify-center p-4">
       <div className="flex items-center space-x-3 mb-4">
-        <div className="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xl shadow-indigo-600/30 animate-bounce">
-          <BrainCircuit className="w-7 h-7" />
+        <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white">
+          <BrainCircuit className="w-6 h-6" />
         </div>
-        <h1 className="text-2xl font-bold text-slate-100">StudyOS</h1>
+        <h1 className="text-xl font-bold text-slate-900">StudyOS</h1>
       </div>
-      <p className="text-xs text-slate-400">Loading your personal study workspace...</p>
+      <p className="text-xs text-slate-500">Loading your focused study workspace...</p>
     </div>
   );
 }

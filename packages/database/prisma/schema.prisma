@@ -36,6 +36,23 @@ enum ResourceLocationType {
   TOPIC
 }
 
+enum DocumentProcessingStatus {
+  UPLOADED
+  PROCESSING
+  EXTRACTED
+  ANALYZED
+  READY_FOR_REVIEW
+  APPROVED
+  FAILED
+}
+
+enum SyllabusDocumentType {
+  FULL_EXAM_SYLLABUS
+  SUBJECT_SYLLABUS
+  CHAPTER_OR_TOPIC_DOCUMENT
+  UNKNOWN
+}
+
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
@@ -49,6 +66,7 @@ model User {
   chapters     Chapter[]
   topics       Topic[]
   topicProgress TopicProgress[]
+  documents    Document[]
 
   @@map("users")
 }
@@ -68,9 +86,35 @@ model Exam {
   updatedAt      DateTime  @updatedAt
 
   subjects       Subject[]
+  documents      Document[]
 
   @@index([userId])
   @@map("exams")
+}
+
+model Document {
+  id                 String                   @id @default(uuid())
+  userId             String
+  user               User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  examId             String?
+  exam               Exam?                    @relation(fields: [examId], references: [id], onDelete: SetNull)
+  filename           String
+  mimeType           String
+  storageKey         String
+  sizeBytes          Int
+  status             DocumentProcessingStatus @default(UPLOADED)
+  documentType       SyllabusDocumentType?
+  aiConfidence       Float?
+  extractedText      String?                  @db.Text
+  extractedHierarchy Json?
+  warnings           Json?
+  errorMessage       String?                  @db.Text
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+
+  @@index([userId])
+  @@index([examId])
+  @@map("documents")
 }
 
 model Subject {

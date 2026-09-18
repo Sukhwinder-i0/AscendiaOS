@@ -68,19 +68,19 @@ export function SubjectAccordion({
   };
 
   return (
-    <div className="glass-card rounded-2xl overflow-hidden mb-5 border border-slate-800 shadow-lg">
+    <div className="bg-white rounded-xl overflow-hidden mb-4 border border-slate-200">
       {/* Subject Top Header */}
-      <div className="p-4 bg-slate-900/80 flex items-center justify-between border-b border-slate-800">
+      <div className="p-4 bg-slate-50 flex items-center justify-between border-b border-slate-200">
         <div className="flex items-center space-x-3 flex-1">
           <button
             onClick={() => setExpanded(!expanded)}
-            className="p-1.5 text-slate-400 hover:text-slate-100 rounded-lg hover:bg-slate-800"
+            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/60"
           >
             {expanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
           </button>
 
           <span
-            className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm"
+            className="w-3.5 h-3.5 rounded-full shrink-0 border border-slate-200"
             style={{ backgroundColor: subject.colorHex || '#3B82F6' }}
           />
 
@@ -91,27 +91,27 @@ export function SubjectAccordion({
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
                 autoFocus
-                className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 flex-1"
+                className="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-sm text-slate-900 focus:outline-none focus:border-blue-500 flex-1"
               />
               <button
                 onClick={handleSaveSubject}
                 disabled={loading}
-                className="p-1.5 text-emerald-400 hover:bg-emerald-500/20 rounded-lg"
+                className="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg"
               >
                 <Check className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="p-1.5 text-slate-400 hover:bg-slate-800 rounded-lg"
+                className="p-1.5 text-slate-400 hover:bg-slate-200 rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
           ) : (
             <div className="flex items-center space-x-2">
-              <h3 className="font-bold text-base text-slate-100">{subject.name}</h3>
+              <h3 className="font-bold text-base text-slate-900">{subject.name}</h3>
               {subject.code && (
-                <span className="text-[10px] bg-slate-800 text-slate-400 font-mono px-2 py-0.5 rounded border border-slate-700">
+                <span className="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded border border-slate-200">
                   {subject.code}
                 </span>
               )}
@@ -122,19 +122,19 @@ export function SubjectAccordion({
         <div className="flex items-center space-x-5">
           {/* Progress Bar */}
           <div className="hidden sm:flex items-center space-x-3 w-48">
-            <div className="h-2 flex-1 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-2 flex-1 bg-slate-100 rounded-full overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-400 transition-all duration-300"
+                className="h-full bg-blue-500 transition-all duration-300"
                 style={{ width: `${subject.progressPercentage}%` }}
               />
             </div>
-            <span className="text-xs font-bold font-mono text-slate-300 w-10 text-right">
+            <span className="text-xs font-semibold font-mono text-slate-700 w-10 text-right">
               {subject.progressPercentage}%
             </span>
           </div>
 
-          <div className="text-xs text-slate-400 font-mono flex items-center space-x-1">
-            <Layers className="w-3.5 h-3.5 text-slate-500 mr-1" />
+          <div className="text-xs text-slate-500 font-mono flex items-center space-x-1">
+            <Layers className="w-3.5 h-3.5 text-slate-400 mr-1" />
             <span>
               {subject.completedTopicsCount}/{subject.totalTopicsCount} completed
             </span>
@@ -143,7 +143,7 @@ export function SubjectAccordion({
           <div className="flex items-center space-x-1.5">
             <button
               onClick={() => setIsAddingChapter(!isAddingChapter)}
-              className="flex items-center space-x-1 px-2.5 py-1.5 bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 rounded-lg text-xs font-semibold border border-indigo-500/30 transition-colors"
+              className="flex items-center space-x-1 px-2.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold border border-blue-200 transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Chapter</span>
@@ -151,14 +151,14 @@ export function SubjectAccordion({
             <button
               onClick={() => setIsEditing(true)}
               title="Edit Subject"
-              className="p-1.5 text-slate-400 hover:text-amber-400 hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 rounded-lg transition-colors"
             >
               <Edit2 className="w-4 h-4" />
             </button>
             <button
               onClick={() => onDeleteSubject(subject.id)}
               title="Delete Subject"
-              className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-slate-200/60 rounded-lg transition-colors"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -168,26 +168,26 @@ export function SubjectAccordion({
 
       {/* Add Chapter Form */}
       {isAddingChapter && (
-        <form onSubmit={handleCreateChapter} className="p-3 bg-slate-900 border-b border-slate-800 flex items-center space-x-2">
+        <form onSubmit={handleCreateChapter} className="p-3 bg-slate-50 border-b border-slate-200 flex items-center space-x-2">
           <input
             type="text"
             placeholder="Chapter title (e.g. Probability)..."
             value={newChapterName}
             onChange={(e) => setNewChapterName(e.target.value)}
             autoFocus
-            className="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:border-indigo-500 flex-1"
+            className="bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-900 focus:outline-none focus:border-blue-500 flex-1"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-3.5 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-semibold hover:bg-indigo-500"
+            className="px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition-colors"
           >
             Add Chapter
           </button>
           <button
             type="button"
             onClick={() => setIsAddingChapter(false)}
-            className="px-2 py-1.5 text-slate-400 hover:text-slate-200 text-xs"
+            className="px-2 py-1.5 text-slate-500 hover:text-slate-800 text-xs"
           >
             Cancel
           </button>
@@ -196,9 +196,9 @@ export function SubjectAccordion({
 
       {/* Chapter Nodes */}
       {expanded && (
-        <div className="p-4 space-y-3 bg-slate-950/40">
+        <div className="p-4 space-y-3 bg-slate-50/50">
           {subject.chapters.length === 0 ? (
-            <div className="text-center py-6 text-slate-500 text-xs italic bg-slate-900/20 rounded-xl border border-dashed border-slate-800">
+            <div className="text-center py-6 text-slate-400 text-xs italic bg-white rounded-lg border border-dashed border-slate-300">
               No chapters in this subject. Click "+ Chapter" to create your first chapter.
             </div>
           ) : (
