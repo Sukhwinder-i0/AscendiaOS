@@ -323,7 +323,7 @@ export const CreateUrlResourceSchema = z.object({
   chapterId: z.string().optional(),
   topicId: z.string().optional(),
 });
-export type CreateUrlResourceDto = z.infer<typeof CreateUrlResourceSchema>;
+export type CreateUrlResourceDto = z.input<typeof CreateUrlResourceSchema>;
 
 export const CreateFileResourceSchema = z.object({
   title: z.string().min(1, 'Title is required'),
@@ -334,7 +334,7 @@ export const CreateFileResourceSchema = z.object({
   chapterId: z.string().optional(),
   topicId: z.string().optional(),
 });
-export type CreateFileResourceDto = z.infer<typeof CreateFileResourceSchema>;
+export type CreateFileResourceDto = z.input<typeof CreateFileResourceSchema>;
 
 export const PresignUploadSchema = z.object({
   filename: z.string().min(1, 'Filename is required'),
@@ -444,5 +444,80 @@ export interface UrlMetadataResponse {
   externalId?: string | null;
   domain?: string | null;
   metadata?: Record<string, any>;
+}
+
+// ==========================================
+// NOTE SCHEMAS & TYPES
+// ==========================================
+
+export const CreateNoteSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  content: z.string().optional().default(''),
+  contentFormat: z.enum(['MARKDOWN', 'RICH_TEXT']).optional().default('MARKDOWN'),
+  examId: z.string().optional().nullable(),
+  subjectId: z.string().optional().nullable(),
+  chapterId: z.string().optional().nullable(),
+  topicId: z.string().optional().nullable(),
+  template: z
+    .enum(['STANDARD', 'FORMULA_SHEET', 'CONCEPT_SUMMARY', 'MISTAKE_LOG', 'REVISION_NOTES'])
+    .optional(),
+});
+export type CreateNoteDto = z.input<typeof CreateNoteSchema>;
+
+export const UpdateNoteSchema = z.object({
+  title: z.string().min(1, 'Title cannot be empty').optional(),
+  content: z.string().optional(),
+  contentFormat: z.enum(['MARKDOWN', 'RICH_TEXT']).optional(),
+  isPinned: z.boolean().optional(),
+  isArchived: z.boolean().optional(),
+});
+export type UpdateNoteDto = z.infer<typeof UpdateNoteSchema>;
+
+export const MoveNoteSchema = z.object({
+  examId: z.string().optional().nullable(),
+  subjectId: z.string().optional().nullable(),
+  chapterId: z.string().optional().nullable(),
+  topicId: z.string().optional().nullable(),
+});
+export type MoveNoteDto = z.infer<typeof MoveNoteSchema>;
+
+export const NoteQuerySchema = z.object({
+  search: z.string().optional(),
+  examId: z.string().optional(),
+  subjectId: z.string().optional(),
+  chapterId: z.string().optional(),
+  topicId: z.string().optional(),
+  isPinned: z.boolean().optional(),
+  isArchived: z.boolean().optional(),
+  page: z.number().int().positive().optional().default(1),
+  limit: z.number().int().positive().max(100).optional().default(20),
+});
+export type NoteQueryDto = z.input<typeof NoteQuerySchema>;
+
+export const AttachResourceToNoteSchema = z.object({
+  resourceId: z.string().min(1, 'Resource ID is required'),
+});
+export type AttachResourceToNoteDto = z.infer<typeof AttachResourceToNoteSchema>;
+
+export interface NoteResponse {
+  id: string;
+  userId: string;
+  title: string;
+  content: string;
+  contentFormat: string;
+  isPinned: boolean;
+  isArchived: boolean;
+  examId?: string | null;
+  subjectId?: string | null;
+  chapterId?: string | null;
+  topicId?: string | null;
+  exam?: { id: string; title: string } | null;
+  subject?: { id: string; name: string } | null;
+  chapter?: { id: string; name: string } | null;
+  topic?: { id: string; name: string } | null;
+  resources?: ResourceResponse[];
+  snippet?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 

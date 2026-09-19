@@ -29,6 +29,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
   const primaryNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Exams', href: '/exams', icon: GraduationCap },
+    { label: 'Notes Workspace', href: '/notes', icon: FileText },
     { label: 'Resource Library', href: '/resources', icon: Bookmark },
     { label: 'Resource Inbox', href: '/resources/inbox', icon: Inbox },
   ];
@@ -45,7 +46,11 @@ export function Sidebar({ activeExamId }: SidebarProps) {
         href: `/workspace/${activeExamId}/resources`,
         icon: Bookmark,
       },
-      { label: 'Notes', href: '#', icon: FileText, badge: 'Soon' },
+      {
+        label: 'Notes',
+        href: `/workspace/${activeExamId}/notes`,
+        icon: FileText,
+      },
       { label: 'AI Tutor', href: '#', icon: Bot, badge: 'Soon' },
       { label: 'Analytics', href: '#', icon: PieChart, badge: 'Soon' },
       { label: 'Goals', href: '#', icon: Target, badge: 'Soon' },

@@ -75,6 +75,7 @@ model User {
   topicProgress TopicProgress[]
   documents    Document[]
   resources    Resource[]
+  notes        Note[]
 
   @@map("users")
 }
@@ -96,6 +97,7 @@ model Exam {
   subjects       Subject[]
   documents      Document[]
   resources      Resource[]
+  notes          Note[]
 
   @@index([userId])
   @@map("exams")
@@ -141,6 +143,7 @@ model Subject {
 
   chapters   Chapter[]
   resources  Resource[]
+  notes      Note[]
 
   @@index([examId])
   @@index([userId])
@@ -160,6 +163,7 @@ model Chapter {
 
   topics     Topic[]
   resources  Resource[]
+  notes      Note[]
 
   @@index([subjectId])
   @@index([userId])
@@ -183,6 +187,7 @@ model Topic {
 
   progress   TopicProgress?
   resources  Resource[]
+  notes      Note[]
 
   @@index([chapterId])
   @@index([parentId])
@@ -239,6 +244,8 @@ model Resource {
   topicId      String?
   topic        Topic?                   @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
+  noteReferences NoteResource[]
+
   createdAt    DateTime                 @default(now())
   updatedAt    DateTime                 @updatedAt
 
@@ -250,4 +257,51 @@ model Resource {
   @@index([locationType])
   @@index([type])
   @@map("resources")
+}
+
+model Note {
+  id            String         @id @default(uuid())
+  userId        String
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  content       String         @db.Text
+  contentFormat String         @default("MARKDOWN")
+  isPinned      Boolean        @default(false)
+  isArchived    Boolean        @default(false)
+
+  examId        String?
+  exam          Exam?          @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subjectId     String?
+  subject       Subject?       @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapterId     String?
+  chapter       Chapter?       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  topicId       String?
+  topic         Topic?         @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  resources     NoteResource[]
+
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([userId, updatedAt])
+  @@index([userId, isPinned])
+  @@index([userId, isArchived])
+  @@index([userId, examId])
+  @@index([userId, subjectId])
+  @@index([userId, chapterId])
+  @@index([userId, topicId])
+  @@map("notes")
+}
+
+model NoteResource {
+  noteId     String
+  note       Note     @relation(fields: [noteId], references: [id], onDelete: Cascade)
+  resourceId String
+  resource   Resource @relation(fields: [resourceId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+
+  @@id([noteId, resourceId])
+  @@index([noteId])
+  @@index([resourceId])
+  @@map("note_resources")
 }

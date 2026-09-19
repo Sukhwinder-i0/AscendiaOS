@@ -25,6 +25,12 @@ import {
   ResourceQueryDto,
   ResourceResponse,
   UrlMetadataResponse,
+  CreateNoteDto,
+  UpdateNoteDto,
+  MoveNoteDto,
+  NoteQueryDto,
+  AttachResourceToNoteDto,
+  NoteResponse,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -360,6 +366,95 @@ class ApiClient {
 
   async deleteResource(id: string): Promise<{ success: boolean }> {
     return this.request<{ success: boolean }>(`/resources/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  // Notes API
+  async createNote(dto: CreateNoteDto): Promise<NoteResponse> {
+    return this.request<NoteResponse>('/notes', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async getNotes(
+    query: NoteQueryDto = {},
+  ): Promise<{ items: NoteResponse[]; total: number; page: number; limit: number }> {
+    const params = new URLSearchParams();
+    if (query.search) params.append('search', query.search);
+    if (query.examId) params.append('examId', query.examId);
+    if (query.subjectId) params.append('subjectId', query.subjectId);
+    if (query.chapterId) params.append('chapterId', query.chapterId);
+    if (query.topicId) params.append('topicId', query.topicId);
+    if (query.isPinned !== undefined) params.append('isPinned', String(query.isPinned));
+    if (query.isArchived !== undefined) params.append('isArchived', String(query.isArchived));
+    if (query.page) params.append('page', String(query.page));
+    if (query.limit) params.append('limit', String(query.limit));
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<{ items: NoteResponse[]; total: number; page: number; limit: number }>(
+      `/notes${queryStr}`,
+    );
+  }
+
+  async getNoteById(id: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}`);
+  }
+
+  async updateNote(id: string, dto: UpdateNoteDto): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async pinNote(id: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/pin`, {
+      method: 'POST',
+    });
+  }
+
+  async unpinNote(id: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/pin`, {
+      method: 'DELETE',
+    });
+  }
+
+  async archiveNote(id: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/archive`, {
+      method: 'POST',
+    });
+  }
+
+  async unarchiveNote(id: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/archive`, {
+      method: 'DELETE',
+    });
+  }
+
+  async moveNote(id: string, dto: MoveNoteDto): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/move`, {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async attachResourceToNote(id: string, resourceId: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/resources`, {
+      method: 'POST',
+      body: JSON.stringify({ resourceId }),
+    });
+  }
+
+  async detachResourceFromNote(id: string, resourceId: string): Promise<NoteResponse> {
+    return this.request<NoteResponse>(`/notes/${id}/resources/${resourceId}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async deleteNote(id: string): Promise<{ success: boolean }> {
+    return this.request<{ success: boolean }>(`/notes/${id}`, {
       method: 'DELETE',
     });
   }

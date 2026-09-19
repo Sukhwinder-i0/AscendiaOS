@@ -8,6 +8,7 @@
     "build": "prisma generate && tsc",
     "typecheck": "tsc --noEmit",
     "generate": "prisma generate",
+    "db:push": "prisma db push",
     "migrate": "prisma migrate dev",
     "seed": "tsx prisma/seed.ts"
   },

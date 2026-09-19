@@ -167,6 +167,17 @@ describe('ResourcesService', () => {
 
   describe('createUrlResource', () => {
     it('should create a YouTube video resource in INBOX by default', async () => {
+      jest.spyOn(urlMetadataScraper, 'scrape').mockResolvedValue({
+        url: 'https://youtube.com/watch?v=12345',
+        type: ResourceType.YOUTUBE_VIDEO,
+        title: 'Bayes Theorem Video',
+        description: 'Learn Bayes Theorem',
+        thumbnailUrl: 'https://img.youtube.com/vi/12345/hqdefault.jpg',
+        provider: 'YouTube',
+        externalId: '12345',
+        domain: 'youtube.com',
+        metadata: {},
+      });
       db.resource.create.mockResolvedValue(mockResource);
 
       const result = await service.createUrlResource(mockUser.id, {
