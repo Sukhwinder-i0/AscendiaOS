@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { Sidebar } from '@/components/sidebar/Sidebar';
 import { Header } from '@/components/layout/Header';
+import { ActiveSessionBanner } from '@/components/study-session/ActiveSessionBanner';
 import { ExamResponse } from '@studyos/shared';
 import { api } from '@/lib/api';
 
@@ -48,6 +49,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div className="flex-1 flex flex-col min-w-0">
         <Header activeExam={activeExam} />
         <main className="flex-1 p-6 md:p-8 overflow-y-auto bg-background">{children}</main>
+        <ActiveSessionBanner />
       </div>
     </div>
   );

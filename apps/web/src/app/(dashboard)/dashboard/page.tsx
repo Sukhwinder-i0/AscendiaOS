@@ -15,6 +15,8 @@ import {
   Target,
 } from 'lucide-react';
 
+import { DailySummaryCard } from '@/components/analytics/DailySummaryCard';
+
 export default function DashboardPage() {
   const { user } = useAuth();
   const [exams, setExams] = useState<ExamResponse[]>([]);
@@ -65,6 +67,9 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      {/* Daily Summary Card */}
+      <DailySummaryCard />
 
       {/* Active Exam Overview */}
       {activeExam ? (

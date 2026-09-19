@@ -13,6 +13,25 @@ export const ProgressStatus = {
 } as const;
 export type ProgressStatus = (typeof ProgressStatus)[keyof typeof ProgressStatus];
 
+export const SessionType = {
+  LEARNING: 'LEARNING',
+  REVISION: 'REVISION',
+  PRACTICE: 'PRACTICE',
+  READING: 'READING',
+  NOTES: 'NOTES',
+  QUIZ: 'QUIZ',
+} as const;
+export type SessionType = (typeof SessionType)[keyof typeof SessionType];
+
+export const SessionStatus = {
+  CREATED: 'CREATED',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED',
+  DISCARDED: 'DISCARDED',
+} as const;
+export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus];
+
 export const ResourceType = {
   YOUTUBE_VIDEO: 'YOUTUBE_VIDEO',
   YOUTUBE_PLAYLIST: 'YOUTUBE_PLAYLIST',
@@ -255,7 +274,9 @@ export interface TopicProgressResponse {
   confidenceScore: number;
   masteryScore: number;
   totalStudyTimeSec: number;
+  sessionCount?: number;
   lastStudiedAt?: string | null;
+  completedAt?: string | null;
 }
 
 export interface TopicNode {
@@ -520,4 +541,92 @@ export interface NoteResponse {
   createdAt: string;
   updatedAt: string;
 }
+
+// ==========================================
+// STUDY SESSION SCHEMAS & TYPES
+// ==========================================
+
+export const CreateStudySessionSchema = z.object({
+  topicId: z.string().min(1, 'Topic ID is required'),
+  sessionType: z
+    .enum(['LEARNING', 'REVISION', 'PRACTICE', 'READING', 'NOTES', 'QUIZ'])
+    .optional()
+    .default('LEARNING'),
+  goal: z.string().optional(),
+});
+export type CreateStudySessionDto = z.input<typeof CreateStudySessionSchema>;
+
+export const FinishStudySessionSchema = z.object({
+  reflection: z.string().optional(),
+  confidence: z.number().int().min(1).max(5).optional(),
+  difficulty: z.enum(['EASY', 'MEDIUM', 'HARD']).optional(),
+  markTopicCompleted: z.boolean().optional(),
+});
+export type FinishStudySessionDto = z.input<typeof FinishStudySessionSchema>;
+
+export const StudySessionQuerySchema = z.object({
+  topicId: z.string().optional(),
+  subjectId: z.string().optional(),
+  examId: z.string().optional(),
+  sessionType: z
+    .enum(['LEARNING', 'REVISION', 'PRACTICE', 'READING', 'NOTES', 'QUIZ'])
+    .optional(),
+  status: z
+    .enum(['CREATED', 'ACTIVE', 'PAUSED', 'COMPLETED', 'DISCARDED'])
+    .optional(),
+  startDate: z.string().optional(),
+  endDate: z.string().optional(),
+  timezone: z.string().optional().default('UTC'),
+  page: z.number().int().positive().optional().default(1),
+  limit: z.number().int().positive().max(100).optional().default(20),
+});
+export type StudySessionQueryDto = z.input<typeof StudySessionQuerySchema>;
+
+export interface StudySessionResponse {
+  id: string;
+  userId: string;
+  examId?: string | null;
+  subjectId?: string | null;
+  chapterId?: string | null;
+  topicId: string;
+  sessionType: SessionType;
+  status: SessionStatus;
+  startedAt?: string | null;
+  endedAt?: string | null;
+  lastPausedAt?: string | null;
+  totalPauseSeconds: number;
+  durationSeconds: number;
+  activeDurationSeconds?: number;
+  goal?: string | null;
+  reflection?: string | null;
+  confidence?: number | null;
+  difficulty?: string | null;
+  exam?: { id: string; title: string } | null;
+  subject?: { id: string; name: string } | null;
+  chapter?: { id: string; name: string } | null;
+  topic?: { id: string; name: string } | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DailySummaryResponse {
+  date: string;
+  timezone: string;
+  totalStudySeconds: number;
+  sessionCount: number;
+  topicsStudiedCount: number;
+  topicsCompletedCount: number;
+  subjectsStudied: Array<{ id: string; name: string; colorHex?: string | null; durationSeconds: number }>;
+}
+
+export interface ProgressAggregateResponse {
+  examId: string;
+  overallProgressPercentage: number;
+  totalTopics: number;
+  completedTopics: number;
+  learningTopics: number;
+  needsRevisionTopics: number;
+  totalStudySeconds: number;
+}
+
 

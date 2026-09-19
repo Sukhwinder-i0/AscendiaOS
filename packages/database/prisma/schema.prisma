@@ -15,6 +15,23 @@ enum ProgressStatus {
   MASTERED
 }
 
+enum SessionType {
+  LEARNING
+  REVISION
+  PRACTICE
+  READING
+  NOTES
+  QUIZ
+}
+
+enum SessionStatus {
+  CREATED
+  ACTIVE
+  PAUSED
+  COMPLETED
+  DISCARDED
+}
+
 enum ResourceType {
   YOUTUBE_VIDEO
   YOUTUBE_PLAYLIST
@@ -76,6 +93,7 @@ model User {
   documents    Document[]
   resources    Resource[]
   notes        Note[]
+  studySessions StudySession[]
 
   @@map("users")
 }
@@ -98,6 +116,7 @@ model Exam {
   documents      Document[]
   resources      Resource[]
   notes          Note[]
+  studySessions  StudySession[]
 
   @@index([userId])
   @@map("exams")
@@ -141,9 +160,10 @@ model Subject {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  chapters   Chapter[]
-  resources  Resource[]
-  notes      Note[]
+  chapters      Chapter[]
+  resources     Resource[]
+  notes         Note[]
+  studySessions StudySession[]
 
   @@index([examId])
   @@index([userId])
@@ -161,9 +181,10 @@ model Chapter {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  topics     Topic[]
-  resources  Resource[]
-  notes      Note[]
+  topics        Topic[]
+  resources     Resource[]
+  notes         Note[]
+  studySessions StudySession[]
 
   @@index([subjectId])
   @@index([userId])
@@ -185,9 +206,10 @@ model Topic {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  progress   TopicProgress?
-  resources  Resource[]
-  notes      Note[]
+  progress      TopicProgress?
+  resources     Resource[]
+  notes         Note[]
+  studySessions StudySession[]
 
   @@index([chapterId])
   @@index([parentId])
@@ -196,22 +218,64 @@ model Topic {
 }
 
 model TopicProgress {
-  id                 String         @id @default(uuid())
-  topicId            String         @unique
-  topic              Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
-  userId             String
-  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  status             ProgressStatus @default(NOT_STARTED)
-  confidenceScore    Int            @default(1)
-  masteryScore       Float          @default(0.0)
-  totalStudyTimeSec  Int            @default(0)
-  lastStudiedAt      DateTime?
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  id                String         @id @default(uuid())
+  topicId           String         @unique
+  topic             Topic          @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status            ProgressStatus @default(NOT_STARTED)
+  confidenceScore   Int            @default(1)
+  masteryScore      Float          @default(0.0)
+  totalStudyTimeSec Int            @default(0)
+  sessionCount      Int            @default(0)
+  lastStudiedAt     DateTime?
+  completedAt       DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
 
+  @@unique([userId, topicId])
   @@index([userId])
   @@index([topicId])
   @@map("topic_progress")
+}
+
+model StudySession {
+  id                String        @id @default(uuid())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  examId            String?
+  exam              Exam?         @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subjectId         String?
+  subject           Subject?      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapterId         String?
+  chapter           Chapter?      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  topicId           String
+  topic             Topic         @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  sessionType       SessionType   @default(LEARNING)
+  status            SessionStatus @default(CREATED)
+
+  startedAt         DateTime?
+  endedAt           DateTime?
+  lastPausedAt      DateTime?
+  totalPauseSeconds Int           @default(0)
+  durationSeconds   Int           @default(0)
+
+  goal              String?
+  reflection        String?       @db.Text
+  confidence        Int?          // 1 to 5 scale
+  difficulty        String?       // EASY, MEDIUM, HARD
+
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@index([userId, status])
+  @@index([userId, startedAt])
+  @@index([topicId])
+  @@index([subjectId])
+  @@index([examId])
+  @@map("study_sessions")
 }
 
 model Resource {

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TopicNode, ProgressStatus } from '@studyos/shared';
+import { TopicNode, ProgressStatus, StudySessionResponse } from '@studyos/shared';
 import {
   ChevronRight,
   ChevronDown,
@@ -18,10 +18,13 @@ import {
   CircleDot,
   Bookmark,
   FileText,
+  Play,
 } from 'lucide-react';
 import { clsx } from 'clsx';
+import { api } from '@/lib/api';
 import { TopicResourcesDrawer } from '../resources/TopicResourcesDrawer';
 import { TopicNotesDrawer } from '../notes/TopicNotesDrawer';
+import { StudyTimerModal } from '../study-session/StudyTimerModal';
 
 interface TopicRowProps {
   topic: TopicNode;
@@ -110,9 +113,21 @@ export function TopicRow({
 
   const [isResourceDrawerOpen, setIsResourceDrawerOpen] = useState(false);
   const [isNotesDrawerOpen, setIsNotesDrawerOpen] = useState(false);
+  const [activeTimerSession, setActiveTimerSession] = useState<StudySessionResponse | null>(null);
 
   return (
     <div className="flex flex-col space-y-1">
+      {activeTimerSession && (
+        <StudyTimerModal
+          session={activeTimerSession}
+          onClose={() => setActiveTimerSession(null)}
+          onSessionUpdated={() => {
+            // Refetch progress
+            onUpdateStatus(topic.id, topic.progress?.status || ProgressStatus.NOT_STARTED);
+          }}
+        />
+      )}
+
       <TopicResourcesDrawer
         isOpen={isResourceDrawerOpen}
         onClose={() => setIsResourceDrawerOpen(false)}
@@ -203,6 +218,24 @@ export function TopicRow({
 
             {/* Quick Actions */}
             <div className="opacity-0 group-hover:opacity-100 flex items-center space-x-1 transition-opacity">
+              <button
+                onClick={async () => {
+                  try {
+                    const session = await api.createStudySession({ topicId: topic.id });
+                    setActiveTimerSession(session);
+                  } catch (err: any) {
+                    if (err.data?.activeSession) {
+                      setActiveTimerSession(err.data.activeSession);
+                    } else {
+                      alert(err.message || 'Failed to start study session');
+                    }
+                  }
+                }}
+                title="Start Study Session"
+                className="p-1 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 rounded transition-colors"
+              >
+                <Play className="w-3.5 h-3.5" />
+              </button>
               <button
                 onClick={() => setIsNotesDrawerOpen(true)}
                 title="Topic Notes"

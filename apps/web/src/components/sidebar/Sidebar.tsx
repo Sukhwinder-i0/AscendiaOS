@@ -13,6 +13,7 @@ import {
   Bot,
   PieChart,
   Target,
+  Clock,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '@/context/ThemeContext';
@@ -29,6 +30,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
   const primaryNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Exams', href: '/exams', icon: GraduationCap },
+    { label: 'Study History', href: '/history', icon: Clock },
     { label: 'Notes Workspace', href: '/notes', icon: FileText },
     { label: 'Resource Library', href: '/resources', icon: Bookmark },
     { label: 'Resource Inbox', href: '/resources/inbox', icon: Inbox },

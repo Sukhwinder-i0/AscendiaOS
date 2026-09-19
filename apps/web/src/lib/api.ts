@@ -31,6 +31,11 @@ import {
   NoteQueryDto,
   AttachResourceToNoteDto,
   NoteResponse,
+  CreateStudySessionDto,
+  FinishStudySessionDto,
+  StudySessionQueryDto,
+  StudySessionResponse,
+  DailySummaryResponse,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -72,7 +77,10 @@ class ApiClient {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      throw new Error(data.message || `API Error: ${response.statusText}`);
+      const err = new Error(data.message || `API Error: ${response.statusText}`) as any;
+      err.data = data;
+      err.status = response.status;
+      throw err;
     }
 
     return data as T;
@@ -456,6 +464,80 @@ class ApiClient {
   async deleteNote(id: string): Promise<{ success: boolean }> {
     return this.request<{ success: boolean }>(`/notes/${id}`, {
       method: 'DELETE',
+    });
+  }
+
+  // Study Sessions API
+  async createStudySession(dto: CreateStudySessionDto): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>('/study-sessions', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async getActiveStudySession(): Promise<StudySessionResponse | null> {
+    return this.request<StudySessionResponse | null>('/study-sessions/active');
+  }
+
+  async getDailySummary(dateStr?: string, timezone?: string): Promise<DailySummaryResponse> {
+    const params = new URLSearchParams();
+    if (dateStr) params.append('date', dateStr);
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<DailySummaryResponse>(`/study-sessions/summary/today${queryStr}`);
+  }
+
+  async getStudySessions(
+    query: StudySessionQueryDto = {},
+  ): Promise<{ data: StudySessionResponse[]; meta: any }> {
+    const params = new URLSearchParams();
+    if (query.topicId) params.append('topicId', query.topicId);
+    if (query.subjectId) params.append('subjectId', query.subjectId);
+    if (query.examId) params.append('examId', query.examId);
+    if (query.sessionType) params.append('sessionType', query.sessionType);
+    if (query.status) params.append('status', query.status);
+    if (query.startDate) params.append('startDate', query.startDate);
+    if (query.endDate) params.append('endDate', query.endDate);
+    if (query.timezone) params.append('timezone', query.timezone);
+    if (query.page) params.append('page', String(query.page));
+    if (query.limit) params.append('limit', String(query.limit));
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<{ data: StudySessionResponse[]; meta: any }>(`/study-sessions${queryStr}`);
+  }
+
+  async getStudySessionById(id: string): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>(`/study-sessions/${id}`);
+  }
+
+  async startStudySession(id: string): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>(`/study-sessions/${id}/start`, {
+      method: 'POST',
+    });
+  }
+
+  async pauseStudySession(id: string): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>(`/study-sessions/${id}/pause`, {
+      method: 'POST',
+    });
+  }
+
+  async resumeStudySession(id: string): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>(`/study-sessions/${id}/resume`, {
+      method: 'POST',
+    });
+  }
+
+  async finishStudySession(id: string, dto?: FinishStudySessionDto): Promise<StudySessionResponse> {
+    return this.request<StudySessionResponse>(`/study-sessions/${id}/finish`, {
+      method: 'POST',
+      body: dto ? JSON.stringify(dto) : undefined,
+    });
+  }
+
+  async discardStudySession(id: string): Promise<{ success: boolean; id: string }> {
+    return this.request<{ success: boolean; id: string }>(`/study-sessions/${id}/discard`, {
+      method: 'POST',
     });
   }
 }
