@@ -53,6 +53,13 @@ enum SyllabusDocumentType {
   UNKNOWN
 }
 
+enum ResourceProcessingStatus {
+  PENDING
+  PROCESSING
+  READY
+  FAILED
+}
+
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
@@ -67,6 +74,7 @@ model User {
   topics       Topic[]
   topicProgress TopicProgress[]
   documents    Document[]
+  resources    Resource[]
 
   @@map("users")
 }
@@ -87,6 +95,7 @@ model Exam {
 
   subjects       Subject[]
   documents      Document[]
+  resources      Resource[]
 
   @@index([userId])
   @@map("exams")
@@ -131,6 +140,7 @@ model Subject {
   updatedAt  DateTime @updatedAt
 
   chapters   Chapter[]
+  resources  Resource[]
 
   @@index([examId])
   @@index([userId])
@@ -149,6 +159,7 @@ model Chapter {
   updatedAt  DateTime @updatedAt
 
   topics     Topic[]
+  resources  Resource[]
 
   @@index([subjectId])
   @@index([userId])
@@ -171,6 +182,7 @@ model Topic {
   updatedAt  DateTime @updatedAt
 
   progress   TopicProgress?
+  resources  Resource[]
 
   @@index([chapterId])
   @@index([parentId])
@@ -195,4 +207,47 @@ model TopicProgress {
   @@index([userId])
   @@index([topicId])
   @@map("topic_progress")
+}
+
+model Resource {
+  id           String                   @id @default(uuid())
+  userId       String
+  user         User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  locationType ResourceLocationType     @default(INBOX)
+  type         ResourceType
+  title        String
+  description  String?                  @db.Text
+  url          String?                  @db.Text
+  filename     String?
+  mimeType     String?
+  sizeBytes    Int?
+  storageKey   String?
+  thumbnailUrl String?                  @db.Text
+  status       ResourceProcessingStatus @default(READY)
+  provider     String?
+  externalId   String?
+  metadata     Json?
+  isCompleted  Boolean                  @default(false)
+  completedAt  DateTime?
+
+  examId       String?
+  exam         Exam?                    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  subjectId    String?
+  subject      Subject?                 @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  chapterId    String?
+  chapter      Chapter?                 @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  topicId      String?
+  topic        Topic?                   @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@index([userId])
+  @@index([examId])
+  @@index([subjectId])
+  @@index([chapterId])
+  @@index([topicId])
+  @@index([locationType])
+  @@index([type])
+  @@map("resources")
 }

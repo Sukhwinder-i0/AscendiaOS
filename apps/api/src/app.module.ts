@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ExamsModule } from './exams/exams.module';
 import { SyllabusModule } from './syllabus/syllabus.module';
 import { SyllabusImportModule } from './syllabus-import/syllabus-import.module';
+import { ResourcesModule } from './resources/resources.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SyllabusImportModule } from './syllabus-import/syllabus-import.module';
     ExamsModule,
     SyllabusModule,
     SyllabusImportModule,
+    ResourcesModule,
   ],
 })
 export class AppModule {}

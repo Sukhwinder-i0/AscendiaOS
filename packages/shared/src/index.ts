@@ -55,6 +55,14 @@ export const SyllabusDocumentType = {
 } as const;
 export type SyllabusDocumentType = (typeof SyllabusDocumentType)[keyof typeof SyllabusDocumentType];
 
+export const ResourceProcessingStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  READY: 'READY',
+  FAILED: 'FAILED',
+} as const;
+export type ResourceProcessingStatus = (typeof ResourceProcessingStatus)[keyof typeof ResourceProcessingStatus];
+
 // ==========================================
 // SYLLABUS AI IMPORT SCHEMAS & TYPES
 // ==========================================
@@ -300,3 +308,141 @@ export interface SyllabusTreeResponse {
   totalTopics: number;
   completedTopics: number;
 }
+
+// ==========================================
+// RESOURCE SCHEMAS & TYPES
+// ==========================================
+
+export const CreateUrlResourceSchema = z.object({
+  url: z.string().url('Invalid URL format'),
+  title: z.string().optional(),
+  description: z.string().optional(),
+  locationType: z.enum(['INBOX', 'EXAM', 'SUBJECT', 'CHAPTER', 'TOPIC']).optional().default('INBOX'),
+  examId: z.string().optional(),
+  subjectId: z.string().optional(),
+  chapterId: z.string().optional(),
+  topicId: z.string().optional(),
+});
+export type CreateUrlResourceDto = z.infer<typeof CreateUrlResourceSchema>;
+
+export const CreateFileResourceSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().optional(),
+  locationType: z.enum(['INBOX', 'EXAM', 'SUBJECT', 'CHAPTER', 'TOPIC']).optional().default('INBOX'),
+  examId: z.string().optional(),
+  subjectId: z.string().optional(),
+  chapterId: z.string().optional(),
+  topicId: z.string().optional(),
+});
+export type CreateFileResourceDto = z.infer<typeof CreateFileResourceSchema>;
+
+export const PresignUploadSchema = z.object({
+  filename: z.string().min(1, 'Filename is required'),
+  mimeType: z.string().min(1, 'MIME type is required'),
+  sizeBytes: z.number().positive('File size must be positive'),
+});
+export type PresignUploadDto = z.infer<typeof PresignUploadSchema>;
+
+export const CompletePresignedUploadSchema = z.object({
+  storageKey: z.string().min(1, 'Storage key is required'),
+  filename: z.string().min(1, 'Filename is required'),
+  mimeType: z.string().min(1, 'MIME type is required'),
+  sizeBytes: z.number().positive(),
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().optional(),
+  locationType: z.enum(['INBOX', 'EXAM', 'SUBJECT', 'CHAPTER', 'TOPIC']).optional().default('INBOX'),
+  examId: z.string().optional(),
+  subjectId: z.string().optional(),
+  chapterId: z.string().optional(),
+  topicId: z.string().optional(),
+});
+export type CompletePresignedUploadDto = z.infer<typeof CompletePresignedUploadSchema>;
+
+export const UpdateResourceSchema = z.object({
+  title: z.string().min(1, 'Title cannot be empty').optional(),
+  description: z.string().optional(),
+  isCompleted: z.boolean().optional(),
+});
+export type UpdateResourceDto = z.infer<typeof UpdateResourceSchema>;
+
+export const AssignResourceSchema = z.object({
+  locationType: z.enum(['INBOX', 'EXAM', 'SUBJECT', 'CHAPTER', 'TOPIC']),
+  examId: z.string().optional().nullable(),
+  subjectId: z.string().optional().nullable(),
+  chapterId: z.string().optional().nullable(),
+  topicId: z.string().optional().nullable(),
+});
+export type AssignResourceDto = z.infer<typeof AssignResourceSchema>;
+
+export const MoveResourceSchema = AssignResourceSchema;
+export type MoveResourceDto = z.infer<typeof MoveResourceSchema>;
+
+export const ResourceQuerySchema = z.object({
+  search: z.string().optional(),
+  type: z.enum([
+    'YOUTUBE_VIDEO',
+    'YOUTUBE_PLAYLIST',
+    'WEBSITE',
+    'PDF',
+    'MARKDOWN',
+    'TXT',
+    'IMAGE',
+    'GENERIC_FILE',
+    'CODE',
+    'BOOKMARK',
+  ]).optional(),
+  locationType: z.enum(['INBOX', 'EXAM', 'SUBJECT', 'CHAPTER', 'TOPIC']).optional(),
+  examId: z.string().optional(),
+  subjectId: z.string().optional(),
+  chapterId: z.string().optional(),
+  topicId: z.string().optional(),
+  isCompleted: z.boolean().optional(),
+  isAssigned: z.boolean().optional(),
+  page: z.number().int().positive().optional().default(1),
+  limit: z.number().int().positive().max(100).optional().default(20),
+});
+export type ResourceQueryDto = z.input<typeof ResourceQuerySchema>;
+
+export interface ResourceResponse {
+  id: string;
+  userId: string;
+  locationType: ResourceLocationType;
+  type: ResourceType;
+  title: string;
+  description?: string | null;
+  url?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  sizeBytes?: number | null;
+  storageKey?: string | null;
+  thumbnailUrl?: string | null;
+  status: ResourceProcessingStatus;
+  provider?: string | null;
+  externalId?: string | null;
+  metadata?: Record<string, any> | null;
+  isCompleted: boolean;
+  completedAt?: string | null;
+  examId?: string | null;
+  subjectId?: string | null;
+  chapterId?: string | null;
+  topicId?: string | null;
+  exam?: { id: string; title: string } | null;
+  subject?: { id: string; name: string } | null;
+  chapter?: { id: string; name: string } | null;
+  topic?: { id: string; name: string } | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UrlMetadataResponse {
+  url: string;
+  type: ResourceType;
+  title: string;
+  description?: string | null;
+  thumbnailUrl?: string | null;
+  provider?: string | null;
+  externalId?: string | null;
+  domain?: string | null;
+  metadata?: Record<string, any>;
+}
+

@@ -46,4 +46,17 @@ export class LocalStorageProvider implements StorageProvider {
       return false;
     }
   }
+
+  async getPresignedUploadUrl(filename: string, _mimeType: string): Promise<{ uploadUrl: string; storageKey: string }> {
+    const ext = path.extname(filename) || '';
+    const storageKey = `${uuidv4()}${ext}`;
+    return {
+      uploadUrl: `/api/resources/upload`,
+      storageKey,
+    };
+  }
+
+  async getSignedDownloadUrl(storageKey: string): Promise<string> {
+    return `/api/resources/file/${storageKey}`;
+  }
 }

@@ -15,6 +15,16 @@ import {
   SyllabusTreeResponse,
   DocumentResponse,
   ApproveSyllabusImportDto,
+  CreateUrlResourceDto,
+  CreateFileResourceDto,
+  PresignUploadDto,
+  CompletePresignedUploadDto,
+  UpdateResourceDto,
+  AssignResourceDto,
+  MoveResourceDto,
+  ResourceQueryDto,
+  ResourceResponse,
+  UrlMetadataResponse,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -237,6 +247,121 @@ class ApiClient {
         body: JSON.stringify(dto),
       },
     );
+  }
+
+  // Resources API
+  async createUrlResource(dto: CreateUrlResourceDto): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>('/resources/url', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async uploadFileResource(file: File, dto: CreateFileResourceDto): Promise<ResourceResponse> {
+    const token = this.getToken();
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', dto.title);
+    if (dto.description) formData.append('description', dto.description);
+    if (dto.locationType) formData.append('locationType', dto.locationType);
+    if (dto.examId) formData.append('examId', dto.examId);
+    if (dto.subjectId) formData.append('subjectId', dto.subjectId);
+    if (dto.chapterId) formData.append('chapterId', dto.chapterId);
+    if (dto.topicId) formData.append('topicId', dto.topicId);
+
+    const response = await fetch(`${API_BASE}/resources/upload`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data.message || `File upload failed: ${response.statusText}`);
+    }
+
+    return data as ResourceResponse;
+  }
+
+  async getPresignedUpload(dto: PresignUploadDto): Promise<{ uploadUrl: string; storageKey: string }> {
+    return this.request<{ uploadUrl: string; storageKey: string }>('/resources/presign', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async completePresignedUpload(dto: CompletePresignedUploadDto): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>('/resources/complete-upload', {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async getResources(
+    query: ResourceQueryDto = {},
+  ): Promise<{ items: ResourceResponse[]; total: number; page: number; limit: number }> {
+    const params = new URLSearchParams();
+    if (query.search) params.append('search', query.search);
+    if (query.type) params.append('type', query.type);
+    if (query.locationType) params.append('locationType', query.locationType);
+    if (query.examId) params.append('examId', query.examId);
+    if (query.subjectId) params.append('subjectId', query.subjectId);
+    if (query.chapterId) params.append('chapterId', query.chapterId);
+    if (query.topicId) params.append('topicId', query.topicId);
+    if (query.isCompleted !== undefined) params.append('isCompleted', String(query.isCompleted));
+    if (query.isAssigned !== undefined) params.append('isAssigned', String(query.isAssigned));
+    if (query.page) params.append('page', String(query.page));
+    if (query.limit) params.append('limit', String(query.limit));
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<{ items: ResourceResponse[]; total: number; page: number; limit: number }>(
+      `/resources${queryStr}`,
+    );
+  }
+
+  async getInbox(): Promise<ResourceResponse[]> {
+    return this.request<ResourceResponse[]>('/resources/inbox');
+  }
+
+  async detectUrlMetadata(url: string): Promise<UrlMetadataResponse> {
+    return this.request<UrlMetadataResponse>(`/resources/detect-url?url=${encodeURIComponent(url)}`);
+  }
+
+  async getResourceById(id: string): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>(`/resources/${id}`);
+  }
+
+  async getDownloadUrl(id: string): Promise<{ downloadUrl: string }> {
+    return this.request<{ downloadUrl: string }>(`/resources/${id}/download`);
+  }
+
+  async updateResource(id: string, dto: UpdateResourceDto): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>(`/resources/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async assignResource(id: string, dto: AssignResourceDto): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>(`/resources/${id}/assign`, {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async moveResource(id: string, dto: MoveResourceDto): Promise<ResourceResponse> {
+    return this.request<ResourceResponse>(`/resources/${id}/move`, {
+      method: 'POST',
+      body: JSON.stringify(dto),
+    });
+  }
+
+  async deleteResource(id: string): Promise<{ success: boolean }> {
+    return this.request<{ success: boolean }>(`/resources/${id}`, {
+      method: 'DELETE',
+    });
   }
 }
 

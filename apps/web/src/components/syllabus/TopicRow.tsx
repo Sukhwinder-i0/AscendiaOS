@@ -16,8 +16,10 @@ import {
   AlertCircle,
   Award,
   CircleDot,
+  Bookmark,
 } from 'lucide-react';
 import { clsx } from 'clsx';
+import { TopicResourcesDrawer } from '../resources/TopicResourcesDrawer';
 
 interface TopicRowProps {
   topic: TopicNode;
@@ -104,8 +106,19 @@ export function TopicRow({
   const currentStatus = statusConfig[topic.progress?.status || ProgressStatus.NOT_STARTED];
   const StatusIcon = currentStatus.icon;
 
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <div className="flex flex-col space-y-1">
+      <TopicResourcesDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        title={topic.name}
+        locationType="TOPIC"
+        topicId={topic.id}
+        chapterId={topic.chapterId}
+      />
+
       <div
         className={clsx(
           'group flex items-center justify-between py-2 px-3 rounded-lg border border-transparent hover:border-border hover:bg-background/80 transition-all',
@@ -179,6 +192,13 @@ export function TopicRow({
 
             {/* Quick Actions */}
             <div className="opacity-0 group-hover:opacity-100 flex items-center space-x-1 transition-opacity">
+              <button
+                onClick={() => setIsDrawerOpen(true)}
+                title="Topic Resources"
+                className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+              >
+                <Bookmark className="w-3.5 h-3.5" />
+              </button>
               <button
                 onClick={() => setIsAddingSubtopic(!isAddingSubtopic)}
                 title="Add Subtopic"

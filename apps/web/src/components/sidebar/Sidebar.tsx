@@ -9,6 +9,7 @@ import {
   FolderTree,
   FileText,
   Bookmark,
+  Inbox,
   Bot,
   PieChart,
   Target,
@@ -28,6 +29,8 @@ export function Sidebar({ activeExamId }: SidebarProps) {
   const primaryNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { label: 'Exams', href: '/exams', icon: GraduationCap },
+    { label: 'Resource Library', href: '/resources', icon: Bookmark },
+    { label: 'Resource Inbox', href: '/resources/inbox', icon: Inbox },
   ];
 
   const examWorkspaceNav = activeExamId
@@ -37,7 +40,11 @@ export function Sidebar({ activeExamId }: SidebarProps) {
         href: `/workspace/${activeExamId}/syllabus`,
         icon: FolderTree,
       },
-      { label: 'Resources', href: '#', icon: Bookmark, badge: 'Soon' },
+      {
+        label: 'Resources',
+        href: `/workspace/${activeExamId}/resources`,
+        icon: Bookmark,
+      },
       { label: 'Notes', href: '#', icon: FileText, badge: 'Soon' },
       { label: 'AI Tutor', href: '#', icon: Bot, badge: 'Soon' },
       { label: 'Analytics', href: '#', icon: PieChart, badge: 'Soon' },
