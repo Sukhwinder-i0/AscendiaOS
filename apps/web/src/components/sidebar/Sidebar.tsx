@@ -19,11 +19,15 @@ import { clsx } from 'clsx';
 import { useTheme } from '@/context/ThemeContext';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
+import { X } from 'lucide-react';
+
 interface SidebarProps {
   activeExamId?: string | null;
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export function Sidebar({ activeExamId }: SidebarProps) {
+export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   const { logoSrc } = useTheme();
 
@@ -59,23 +63,34 @@ export function Sidebar({ activeExamId }: SidebarProps) {
     ]
     : [];
 
-  return (
-    <aside className="w-64 border-r border-border bg-surface flex flex-col justify-between shrink-0 h-screen sticky top-0 transition-colors">
+  const sidebarContent = (
+    <div className="flex flex-col justify-between h-full bg-surface">
       <div>
         {/* Brand Header with Theme Logo */}
         <div className="h-16 px-5 flex items-center justify-between border-b border-border">
-          <Link href="/dashboard" className="flex items-center space-x-2 shrink-0">
+          <Link href="/dashboard" onClick={onCloseMobile} className="flex items-center space-x-2 shrink-0">
             <img
               src={logoSrc}
               alt="Exam COMPETII"
               className="h-8 w-auto object-contain transition-opacity duration-200"
             />
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center space-x-2">
+            <ThemeToggle />
+            {onCloseMobile && (
+              <button
+                onClick={onCloseMobile}
+                className="p-1.5 md:hidden text-secondary hover:text-primary rounded-sm transition-colors"
+                title="Close Navigation"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Navigation Section */}
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-6 overflow-y-auto max-h-[calc(100vh-8rem)]">
           <div>
             <p className="px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">
               Main Menu
@@ -88,6 +103,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                   <Link
                     key={item.href}
                     href={item.href}
+                    onClick={onCloseMobile}
                     className={clsx(
                       'flex items-center space-x-3 px-3 py-2 rounded-sm text-xs font-medium transition-colors border',
                       active
@@ -117,7 +133,10 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                     <Link
                       key={item.label}
                       href={item.href}
-                      onClick={(e) => disabled && e.preventDefault()}
+                      onClick={(e) => {
+                        if (disabled) e.preventDefault();
+                        else if (onCloseMobile) onCloseMobile();
+                      }}
                       className={clsx(
                         'flex items-center justify-between px-3 py-2 rounded-sm text-xs font-medium transition-colors border',
                         disabled ? 'opacity-40 cursor-not-allowed text-secondary border-transparent' : '',
@@ -155,6 +174,28 @@ export function Sidebar({ activeExamId }: SidebarProps) {
           </div>
         </div>
       </div>
-    </aside>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Desktop Permanent Sidebar */}
+      <aside className="w-64 border-r border-border bg-surface hidden md:flex flex-col justify-between shrink-0 h-screen sticky top-0 transition-colors">
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile Drawer Overlay */}
+      {isMobileOpen && (
+        <div className="fixed inset-0 z-50 flex md:hidden animate-in fade-in duration-200">
+          <div
+            className="fixed inset-0 bg-zinc-950/80 backdrop-blur-xs"
+            onClick={onCloseMobile}
+          />
+          <aside className="relative w-72 max-w-[85vw] bg-surface h-full border-r border-border shadow-2xl flex flex-col z-10 animate-in slide-in-from-left duration-300">
+            {sidebarContent}
+          </aside>
+        </div>
+      )}
+    </>
   );
 }

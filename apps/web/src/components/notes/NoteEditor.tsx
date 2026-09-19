@@ -326,9 +326,9 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
       </div>
 
       {/* Editor Toolbar & View Mode Switcher */}
-      <div className="flex items-center justify-between bg-surface px-4 py-2 rounded-sm border border-border text-xs">
+      <div className="flex items-center justify-between gap-2 overflow-x-auto bg-surface px-4 py-2 rounded-sm border border-border text-xs min-w-0">
         {/* Formatting Buttons */}
-        <div className="flex items-center space-x-1 flex-wrap">
+        <div className="flex items-center space-x-1 shrink-0">
           <button
             onClick={() => insertFormatting('# ', '')}
             className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"

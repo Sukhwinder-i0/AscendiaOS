@@ -17,18 +17,21 @@ import {
   Terminal,
 } from 'lucide-react';
 
+import { useState } from 'react';
+
 export default function HomePage() {
   const { user } = useAuth();
   const { logoSrc } = useTheme();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-orange-500 selection:text-white">
       {/* Navigation Bar */}
       <header className="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img src={logoSrc} alt="Exam COMPETII" className="h-7 w-auto object-contain" />
-            <span className="text-xs font-mono px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/30 rounded-sm font-semibold uppercase tracking-wider">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center space-x-2.5 sm:space-x-3">
+            <img src={logoSrc} alt="Exam COMPETII" className="h-6 sm:h-7 w-auto object-contain" />
+            <span className="hidden sm:inline-block text-[10px] sm:text-xs font-mono px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/30 rounded-sm font-semibold uppercase tracking-wider">
               COMPETII OS
             </span>
           </div>
@@ -48,70 +51,141 @@ export default function HomePage() {
             </a>
           </nav>
 
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <Link
-                href="/dashboard"
-                className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-sm transition-all flex items-center space-x-2"
-              >
-                <span>Open Workspace</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            ) : (
-              <>
+          <div className="flex items-center space-x-2.5 sm:space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              {user ? (
                 <Link
-                  href="/login"
-                  className="text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+                  href="/dashboard"
+                  className="px-3 py-1.5 sm:px-4 sm:py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-sm transition-all flex items-center space-x-1.5 sm:space-x-2"
                 >
-                  Log In
-                </Link>
-                <Link
-                  href="/register"
-                  className="px-4 py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-sm transition-all flex items-center space-x-2"
-                >
-                  <span>Get Started</span>
+                  <span>Open Workspace</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
-              </>
-            )}
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="hidden sm:inline-block text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="px-3 py-1.5 sm:px-4 sm:py-2 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-sm transition-all flex items-center space-x-1.5 sm:space-x-2"
+                  >
+                    <span>Get Started</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
+                </>
+              )}
+            </div>
+
+            {/* Mobile Hamburger Menu Toggle */}
+            <button
+              onClick={() => setMobileMenuOpen((prev) => !prev)}
+              className="p-1.5 md:hidden text-zinc-400 hover:text-white rounded-sm transition-colors"
+              title="Toggle Menu"
+            >
+              <Layers className="w-5 h-5 text-orange-400" />
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Panel */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-b border-zinc-800 bg-zinc-950 p-4 space-y-3 font-mono text-xs">
+            <nav className="flex flex-col space-y-2.5 text-zinc-300">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-orange-400 py-1"
+              >
+                Syllabus Architecture
+              </a>
+              <a
+                href="#resources"
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-orange-400 py-1"
+              >
+                Resource Vault
+              </a>
+              <a
+                href="#notes"
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-orange-400 py-1"
+              >
+                Markdown & Math
+              </a>
+              <a
+                href="#tracking"
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-orange-400 py-1"
+              >
+                Timer & Engine
+              </a>
+            </nav>
+
+            <div className="pt-2 border-t border-zinc-800 flex items-center justify-between">
+              {user ? (
+                <Link
+                  href="/dashboard"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2 bg-orange-600 text-white text-center font-bold rounded-sm"
+                >
+                  Open Workspace →
+                </Link>
+              ) : (
+                <div className="flex items-center space-x-3 w-full">
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex-1 py-2 bg-zinc-900 border border-zinc-800 text-zinc-200 text-center font-semibold rounded-sm"
+                  >
+                    Log In
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex-1 py-2 bg-orange-600 text-white text-center font-semibold rounded-sm"
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 border-b border-zinc-800/80">
-        <div className="max-w-6xl mx-auto px-6 space-y-8">
-          {/* <div className="inline-flex items-center space-x-2 px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-sm text-xs text-zinc-400 font-mono">
-            <span className="w-1  h-1 rounded-full bg-orange-500"></span>
-            <span>SYSTEM VERSION 1.0 — COMPETITIVE EXAM PLATFORM</span>
-          </div> */}
-
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-4xl">
+      <section className="relative pt-12 sm:pt-20 pb-16 border-b border-zinc-800/80">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-6 sm:space-y-8">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-4xl">
             The Preparation Infrastructure for <span className="text-orange-500">Competitive Exams</span>.
           </h1>
 
-          <p className="text-zinc-400 text-base sm:text-lg max-w-2xl leading-relaxed">
+          <p className="text-zinc-400 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed">
             Deconstruct complex exam syllabi into interactive hierarchies, link study material without duplication, write distraction-free notes with LaTeX, and track focused study sessions with mathematical precision.
           </p>
 
-          <div className="flex flex-wrap items-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2">
             <Link
               href={user ? '/dashboard' : '/register'}
-              className="px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all flex items-center space-x-2"
+              className="w-full sm:w-auto px-5 py-3.5 bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all flex items-center justify-center space-x-2 text-center"
             >
               <span>Launch Workspace</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
             <a
               href="#features"
-              className="px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 font-semibold text-xs uppercase tracking-wider rounded-sm transition-all"
+              className="w-full sm:w-auto px-5 py-3.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 font-semibold text-xs uppercase tracking-wider rounded-sm transition-all text-center flex items-center justify-center"
             >
               Explore Architecture
             </a>
           </div>
 
           {/* Key Specs Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 border-t border-zinc-800/60 text-xs">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 sm:pt-10 border-t border-zinc-800/60 text-xs">
             <div>
               <div className="text-zinc-500 uppercase tracking-wider font-mono text-[10px]">Hierarchy</div>
               <div className="text-zinc-200 font-semibold mt-1">Exam → Subject → Topic</div>
@@ -133,14 +207,14 @@ export default function HomePage() {
       </section>
 
       {/* Interactive Platform Mockup Preview */}
-      <section className="py-16 bg-zinc-950/60 border-b border-zinc-800/80">
-        <div className="max-w-6xl mx-auto px-6 space-y-4">
+      <section className="py-12 sm:py-16 bg-zinc-950/60 border-b border-zinc-800/80 overflow-x-hidden">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 space-y-4">
           <div className="flex items-center justify-between text-xs text-zinc-500 font-mono">
             <span>// PLATFORM INTERFACE PREVIEW</span>
-            <span>OS4STUDY MONOLITH</span>
+            <span className="hidden sm:inline">OS4STUDY MONOLITH</span>
           </div>
 
-          <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-4 space-y-4 font-mono">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-3 sm:p-4 space-y-4 font-mono overflow-x-auto">
             {/* Window bar */}
             <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
               <div className="flex items-center space-x-2">

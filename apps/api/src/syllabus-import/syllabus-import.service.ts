@@ -164,79 +164,64 @@ export class SyllabusImportService {
       throw new BadRequestException(`Document cannot be approved in status: ${doc.status}`);
     }
 
-    // Wrap full hierarchy creation inside a Prisma transaction
-    const targetExamId = await this.prisma.$transaction(async (tx) => {
-      let examId = dto.targetExamId || doc.examId;
+    try {
+      // Wrap full hierarchy creation inside a Prisma transaction with extended timeout (60s)
+      const targetExamId = await this.prisma.$transaction(
+        async (tx) => {
+          let examId = dto.targetExamId || doc.examId;
 
-      if (examId) {
-        const existingExam = await tx.exam.findUnique({ where: { id: examId } });
-        if (!existingExam || existingExam.userId !== userId) {
-          throw new ForbiddenException('Access denied to target exam');
-        }
-      } else {
-        const title = dto.examTitle || (doc.extractedHierarchy as any)?.title || doc.filename.replace(/\.pdf$/i, '');
-        const newExam = await tx.exam.create({
-          data: {
-            userId,
-            title,
-            dailyGoalHours: 4.0,
-          },
-        });
-        examId = newExam.id;
-      }
-
-      // Create Subjects, Chapters, Topics, Subtopics
-      for (let sIdx = 0; sIdx < dto.subjects.length; sIdx++) {
-        const subDto = dto.subjects[sIdx];
-        const subject = await tx.subject.create({
-          data: {
-            examId: examId!,
-            userId,
-            name: subDto.name,
-            code: subDto.code,
-            orderIndex: sIdx,
-          },
-        });
-
-        for (let cIdx = 0; cIdx < subDto.chapters.length; cIdx++) {
-          const chapDto = subDto.chapters[cIdx];
-          const chapter = await tx.chapter.create({
-            data: {
-              subjectId: subject.id,
-              userId,
-              name: chapDto.name,
-              orderIndex: cIdx,
-            },
-          });
-
-          for (let tIdx = 0; tIdx < chapDto.topics.length; tIdx++) {
-            const topDto = chapDto.topics[tIdx];
-            const rootTopic = await tx.topic.create({
+          if (examId) {
+            const existingExam = await tx.exam.findUnique({ where: { id: examId } });
+            if (!existingExam || existingExam.userId !== userId) {
+              throw new ForbiddenException('Access denied to target exam');
+            }
+          } else {
+            const title =
+              dto.examTitle ||
+              (doc.extractedHierarchy as any)?.title ||
+              doc.filename.replace(/\.pdf$/i, '');
+            const newExam = await tx.exam.create({
               data: {
-                chapterId: chapter.id,
                 userId,
-                name: topDto.name,
-                orderIndex: tIdx,
-                progress: {
-                  create: {
-                    userId,
-                    status: ProgressStatus.NOT_STARTED,
-                    confidenceScore: 1,
-                  },
-                },
+                title,
+                dailyGoalHours: 4.0,
+              },
+            });
+            examId = newExam.id;
+          }
+
+          // Create Subjects, Chapters, Topics, Subtopics
+          for (let sIdx = 0; sIdx < dto.subjects.length; sIdx++) {
+            const subDto = dto.subjects[sIdx];
+            const subject = await tx.subject.create({
+              data: {
+                examId: examId!,
+                userId,
+                name: subDto.name,
+                code: subDto.code,
+                orderIndex: sIdx,
               },
             });
 
-            if (topDto.subtopics && topDto.subtopics.length > 0) {
-              for (let stIdx = 0; stIdx < topDto.subtopics.length; stIdx++) {
-                const subtopDto = topDto.subtopics[stIdx];
-                await tx.topic.create({
+            for (let cIdx = 0; cIdx < subDto.chapters.length; cIdx++) {
+              const chapDto = subDto.chapters[cIdx];
+              const chapter = await tx.chapter.create({
+                data: {
+                  subjectId: subject.id,
+                  userId,
+                  name: chapDto.name,
+                  orderIndex: cIdx,
+                },
+              });
+
+              for (let tIdx = 0; tIdx < chapDto.topics.length; tIdx++) {
+                const topDto = chapDto.topics[tIdx];
+                const rootTopic = await tx.topic.create({
                   data: {
                     chapterId: chapter.id,
                     userId,
-                    parentId: rootTopic.id,
-                    name: subtopDto.name,
-                    orderIndex: stIdx,
+                    name: topDto.name,
+                    orderIndex: tIdx,
                     progress: {
                       create: {
                         userId,
@@ -246,25 +231,51 @@ export class SyllabusImportService {
                     },
                   },
                 });
+
+                if (topDto.subtopics && topDto.subtopics.length > 0) {
+                  for (let stIdx = 0; stIdx < topDto.subtopics.length; stIdx++) {
+                    const subtopDto = topDto.subtopics[stIdx];
+                    await tx.topic.create({
+                      data: {
+                        chapterId: chapter.id,
+                        userId,
+                        parentId: rootTopic.id,
+                        name: subtopDto.name,
+                        orderIndex: stIdx,
+                        progress: {
+                          create: {
+                            userId,
+                            status: ProgressStatus.NOT_STARTED,
+                            confidenceScore: 1,
+                          },
+                        },
+                      },
+                    });
+                  }
+                }
               }
             }
           }
-        }
-      }
 
-      // Mark Document status APPROVED
-      await tx.document.update({
-        where: { id: documentId },
-        data: {
-          status: DocumentProcessingStatus.APPROVED,
-          examId,
+          // Mark Document status APPROVED
+          await tx.document.update({
+            where: { id: documentId },
+            data: {
+              status: DocumentProcessingStatus.APPROVED,
+              examId,
+            },
+          });
+
+          return examId!;
         },
-      });
+        { timeout: 60000, maxWait: 10000 },
+      );
 
-      return examId!;
-    });
-
-    return { success: true, examId: targetExamId };
+      return { success: true, examId: targetExamId };
+    } catch (err: any) {
+      this.logger.error(`Failed to approve import for document ${documentId}`, err);
+      throw err;
+    }
   }
 
   private mapToResponse(doc: any): DocumentResponse {

@@ -86,7 +86,7 @@ export function TopicNotesDrawer({
         onSelectTemplate={(tpl) => handleCreateNote(tpl)}
       />
 
-      <div className="bg-surface border-l border-border max-w-2xl w-full h-full flex flex-col justify-between p-6 space-y-6 overflow-y-auto shadow-2xl">
+      <div className="bg-surface border-l border-border max-w-full sm:max-w-2xl w-full h-full flex flex-col justify-between p-4 sm:p-6 space-y-6 overflow-y-auto shadow-2xl">
         {/* Drawer Header */}
         <div className="flex items-center justify-between border-b border-border pb-4">
           <div className="flex items-center space-x-3">

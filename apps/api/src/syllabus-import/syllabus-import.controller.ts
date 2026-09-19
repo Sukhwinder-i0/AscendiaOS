@@ -8,12 +8,14 @@ import {
   UseInterceptors,
   UploadedFile,
   Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
 import { UserPayload, ApproveSyllabusImportSchema, DocumentResponse } from '@studyos/shared';
 import { SyllabusImportService } from './syllabus-import.service';
+import { z } from 'zod';
 
 @Controller('syllabus-import')
 @UseGuards(JwtAuthGuard)
@@ -44,7 +46,17 @@ export class SyllabusImportController {
     @Param('id') documentId: string,
     @Body() body: unknown,
   ): Promise<{ success: boolean; examId: string }> {
-    const dto = ApproveSyllabusImportSchema.parse(body);
-    return this.importService.approveImport(user.id, documentId, dto);
+    try {
+      const dto = ApproveSyllabusImportSchema.parse(body);
+      return await this.importService.approveImport(user.id, documentId, dto);
+    } catch (err: any) {
+      if (err instanceof z.ZodError) {
+        throw new BadRequestException({
+          message: 'Invalid syllabus approval payload',
+          errors: err.errors,
+        });
+      }
+      throw err;
+    }
   }
 }

@@ -113,7 +113,7 @@ export function SyllabusTree({
       </div>
 
       {/* Main Header & Actions */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-xl font-bold text-primary tracking-tight">Syllabus Spine</h2>
           <p className="text-xs text-secondary mt-0.5">
@@ -121,7 +121,7 @@ export function SyllabusTree({
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-3 w-full sm:w-auto justify-between sm:justify-end">
           <button
             onClick={() => setIsImportOpen(true)}
             className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-zinc-800 text-primary border border-border text-xs font-semibold rounded-sm transition-colors"

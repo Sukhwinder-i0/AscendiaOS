@@ -14,6 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const router = useRouter();
   const [exams, setExams] = useState<ExamResponse[]>([]);
   const [activeExam, setActiveExam] = useState<ExamResponse | null>(null);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -45,10 +46,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="flex min-h-screen bg-background text-primary">
-      <Sidebar activeExamId={activeExam?.id} />
+      <Sidebar
+        activeExamId={activeExam?.id}
+        isMobileOpen={isMobileOpen}
+        onCloseMobile={() => setIsMobileOpen(false)}
+      />
       <div className="flex-1 flex flex-col min-w-0">
-        <Header activeExam={activeExam} />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto bg-background">{children}</main>
+        <Header
+          activeExam={activeExam}
+          onToggleMobile={() => setIsMobileOpen((prev) => !prev)}
+        />
+        <main className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto bg-background">{children}</main>
         <ActiveSessionBanner />
       </div>
     </div>
