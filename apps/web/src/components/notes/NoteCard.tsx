@@ -79,8 +79,8 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
     }
 
     return (
-      <span className="inline-flex items-center space-x-1 text-[11px] text-secondary truncate max-w-full">
-        <FolderTree className="w-3 h-3 text-blue-500 shrink-0" />
+      <span className="inline-flex items-center space-x-1 text-[11px] text-zinc-400 truncate max-w-full font-mono">
+        <FolderTree className="w-3 h-3 text-orange-500 shrink-0" />
         <span className="truncate">{parts.join(' / ')}</span>
       </span>
     );
@@ -98,18 +98,18 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
     <Link
       href={`/notes/${note.id}`}
       className={clsx(
-        'group relative bg-surface rounded-xl border border-border p-4 hover:border-blue-500/40 transition-all flex flex-col justify-between space-y-3',
+        'group relative bg-surface rounded-sm border border-border p-4 hover:border-orange-500/40 transition-all flex flex-col justify-between space-y-3 shadow-none',
         note.isPinned && 'border-amber-500/30 bg-amber-500/5',
-        note.isArchived && 'opacity-70 bg-slate-500/5'
+        note.isArchived && 'opacity-70 bg-zinc-900/50'
       )}
     >
       {/* Top Bar: Title & Actions */}
       <div className="flex items-start justify-between gap-2">
         <div className="flex items-center space-x-2 min-w-0 flex-1">
-          <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 shrink-0">
+          <div className="w-7 h-7 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 shrink-0">
             <FileText className="w-4 h-4" />
           </div>
-          <h3 className="text-sm font-bold text-primary hover:text-blue-500 truncate transition-colors">
+          <h3 className="text-sm font-bold text-primary group-hover:text-orange-400 truncate transition-colors tracking-tight">
             {note.title}
           </h3>
         </div>
@@ -121,10 +121,10 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
             disabled={loading}
             title={note.isPinned ? 'Unpin Note' : 'Pin Note'}
             className={clsx(
-              'p-1.5 rounded-lg border transition-colors',
+              'p-1.5 rounded-sm border transition-colors',
               note.isPinned
-                ? 'bg-amber-500/10 text-amber-500 border-amber-500/30'
-                : 'text-secondary border-border hover:text-amber-500 hover:bg-amber-500/10'
+                ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                : 'text-secondary border-border hover:text-amber-400 hover:bg-zinc-800'
             )}
           >
             <Pin className="w-3.5 h-3.5" />
@@ -135,10 +135,10 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
             disabled={loading}
             title={note.isArchived ? 'Unarchive Note' : 'Archive Note'}
             className={clsx(
-              'p-1.5 rounded-lg border transition-colors',
+              'p-1.5 rounded-sm border transition-colors',
               note.isArchived
-                ? 'bg-purple-500/10 text-purple-500 border-purple-500/30'
-                : 'text-secondary border-border hover:text-purple-500 hover:bg-purple-500/10'
+                ? 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                : 'text-secondary border-border hover:text-purple-400 hover:bg-zinc-800'
             )}
           >
             <Archive className="w-3.5 h-3.5" />
@@ -152,7 +152,7 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
                 onMove(note);
               }}
               title="Move Note Location"
-              className="p-1.5 text-secondary border border-border hover:text-blue-500 hover:bg-blue-500/10 rounded-lg transition-colors"
+              className="p-1.5 text-secondary border border-border hover:text-orange-400 hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <FolderTree className="w-3.5 h-3.5" />
             </button>
@@ -163,7 +163,7 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
               onClick={handleDelete}
               disabled={loading}
               title="Delete Note"
-              className="p-1.5 text-secondary border border-border hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+              className="p-1.5 text-secondary border border-border hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
             </button>
@@ -177,14 +177,14 @@ export function NoteCard({ note, onUpdate, onDelete, onMove }: NoteCardProps) {
       </p>
 
       {/* Footer Info */}
-      <div className="pt-2 border-t border-border flex items-center justify-between text-xs">
+      <div className="pt-2 border-t border-border flex items-center justify-between text-xs font-mono">
         <div className="flex items-center space-x-2 min-w-0 flex-1">
           {getLocationBreadcrumb()}
         </div>
 
         <div className="flex items-center space-x-3 shrink-0 text-secondary text-[11px]">
           {note.resources && note.resources.length > 0 && (
-            <span className="flex items-center space-x-1 text-blue-500 font-semibold">
+            <span className="flex items-center space-x-1 text-orange-400 font-semibold">
               <Paperclip className="w-3 h-3" />
               <span>{note.resources.length}</span>
             </span>

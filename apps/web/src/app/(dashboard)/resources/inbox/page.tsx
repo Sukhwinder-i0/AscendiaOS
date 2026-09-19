@@ -54,15 +54,15 @@ export default function ResourceInboxPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
-              <Inbox className="w-5 h-5" />
+            <div className="w-8 h-8 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400">
+              <Inbox className="w-4 h-4" />
             </div>
-            <h1 className="text-2xl font-bold text-primary">Resource Inbox</h1>
-            <span className="text-xs bg-amber-500/10 text-amber-500 border border-amber-500/20 px-2.5 py-0.5 rounded-full font-mono font-semibold">
+            <h1 className="text-xl font-bold text-primary tracking-tight">Resource Inbox</h1>
+            <span className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-0.5 rounded-sm font-mono font-medium">
               {inboxItems.length} unassigned
             </span>
           </div>
-          <p className="text-xs text-secondary mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Quickly save videos, articles, PDFs, and bookmarks here before assigning them to a syllabus topic
           </p>
         </div>
@@ -70,15 +70,15 @@ export default function ResourceInboxPage() {
         <div className="flex items-center space-x-3">
           <Link
             href="/resources"
-            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary border border-border text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-medium rounded-sm transition-colors"
           >
-            <Bookmark className="w-4 h-4 text-blue-500" />
+            <Bookmark className="w-4 h-4 text-orange-400" />
             <span>Global Library</span>
           </Link>
 
           <button
             onClick={() => setIsAddOpen(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             <span>Add to Inbox</span>
@@ -88,11 +88,11 @@ export default function ResourceInboxPage() {
 
       {/* Error Banner */}
       {error && (
-        <div className="bg-surface p-6 rounded-xl text-center border border-red-500/20">
-          <p className="text-xs font-medium text-red-500">{error}</p>
+        <div className="bg-surface p-6 rounded-sm text-center border border-red-500/20">
+          <p className="text-xs font-medium text-red-400">{error}</p>
           <button
             onClick={fetchInbox}
-            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-semibold rounded-lg border border-border hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-medium rounded-sm border border-zinc-800 hover:bg-zinc-800"
           >
             Retry
           </button>
@@ -102,23 +102,23 @@ export default function ResourceInboxPage() {
       {/* Content */}
       {loading ? (
         <div className="text-center py-16">
-          <Loader2 className="w-8 h-8 text-amber-500 animate-spin mx-auto mb-2" />
-          <p className="text-xs text-secondary">Loading inbox resources...</p>
+          <Loader2 className="w-8 h-8 text-orange-500 animate-spin mx-auto mb-2" />
+          <p className="text-xs text-zinc-500">Loading inbox resources...</p>
         </div>
       ) : inboxItems.length === 0 ? (
-        <div className="bg-surface p-12 rounded-xl text-center border border-dashed border-border space-y-3">
-          <div className="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 mx-auto">
+        <div className="bg-surface p-12 rounded-sm text-center border border-dashed border-zinc-800 space-y-3">
+          <div className="w-12 h-12 rounded-sm bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <div>
             <h3 className="text-base font-bold text-primary">You're all caught up.</h3>
-            <p className="text-xs text-secondary mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               Your Resource Inbox is empty. All saved materials have been assigned to syllabus topics!
             </p>
           </div>
           <button
             onClick={() => setIsAddOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             + Quick Save Resource
           </button>

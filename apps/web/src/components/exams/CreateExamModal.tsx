@@ -50,11 +50,11 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
-      <div className="bg-surface w-full max-w-lg rounded-xl border border-border p-6 shadow-elevation space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/70 backdrop-blur-xs">
+      <div className="bg-surface w-full max-w-lg rounded-sm border border-border p-6 space-y-6">
         <div className="flex items-center justify-between border-b border-border pb-4">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+            <div className="w-9 h-9 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
               <GraduationCap className="w-5 h-5" />
             </div>
             <div>
@@ -62,13 +62,13 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
               <p className="text-xs text-secondary">Add an exam workspace (e.g. GATE DA, UPSC, JEE, AWS)</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1.5 text-secondary hover:text-primary rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <button onClick={onClose} className="p-1.5 text-secondary hover:text-primary rounded-sm hover:bg-zinc-800">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-500">
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm text-xs text-red-500">
             {error}
           </div>
         )}
@@ -82,7 +82,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
-              className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+              className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
             />
           </div>
 
@@ -94,7 +94,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
                 placeholder="e.g. GATE-DA"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div>
@@ -103,7 +103,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
                 type="date"
                 value={targetDate}
                 onChange={(e) => setTargetDate(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -116,7 +116,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
                 placeholder="85"
                 value={targetScore}
                 onChange={(e) => setTargetScore(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div>
@@ -126,7 +126,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
                 placeholder="100"
                 value={targetRank}
                 onChange={(e) => setTargetRank(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
             </div>
             <div>
@@ -136,7 +136,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
                 step="0.5"
                 value={dailyGoalHours}
                 onChange={(e) => setDailyGoalHours(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
               />
             </div>
           </div>
@@ -152,7 +152,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+              className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
             >
               {loading ? 'Creating...' : 'Create Exam Workspace'}
             </button>

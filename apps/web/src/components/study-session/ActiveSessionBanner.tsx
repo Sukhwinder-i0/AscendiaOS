@@ -49,32 +49,32 @@ export function ActiveSessionBanner() {
 
   return (
     <>
-      <div className="fixed bottom-4 right-4 z-40 bg-gray-900/95 border border-blue-500/40 rounded-2xl p-4 shadow-2xl backdrop-blur-md flex items-center gap-4 animate-in slide-in-from-bottom-5 duration-300">
+      <div className="fixed bottom-4 right-4 z-40 bg-zinc-900/95 border border-orange-500/40 rounded-sm p-4 backdrop-blur-md flex items-center gap-4 animate-in slide-in-from-bottom-5 duration-300">
         <div className="flex items-center gap-3">
           <span
             className={`w-3 h-3 rounded-full ${
               activeSession.status === 'ACTIVE'
-                ? 'bg-green-500 animate-ping'
+                ? 'bg-emerald-500 animate-ping'
                 : 'bg-amber-500'
             }`}
           />
           <div>
-            <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            <div className="text-[10px] font-semibold text-zinc-400 uppercase tracking-wider font-mono">
               {activeSession.status === 'ACTIVE' ? 'Active Session' : 'Paused Session'}
             </div>
-            <div className="text-sm font-bold text-white truncate max-w-[180px]">
+            <div className="text-xs font-bold text-white truncate max-w-[180px]">
               {activeSession.topic?.name || 'Study Session'}
             </div>
           </div>
         </div>
 
-        <div className="text-lg font-mono font-bold text-blue-400">
+        <div className="text-base font-mono font-bold text-orange-400">
           {formatTimer(elapsed)}
         </div>
 
         <button
           onClick={() => setShowModal(true)}
-          className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md shadow-blue-600/20"
+          className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white text-xs font-semibold rounded-sm transition-all"
         >
           Open Timer
         </button>

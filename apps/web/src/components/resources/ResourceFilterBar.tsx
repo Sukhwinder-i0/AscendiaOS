@@ -70,7 +70,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
   };
 
   return (
-    <div className="bg-surface p-4 rounded-xl border border-border space-y-3">
+    <div className="bg-surface p-4 rounded-sm border border-border space-y-3">
       <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
         {/* Search Input */}
         <div className="relative flex-1">
@@ -80,7 +80,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
             placeholder="Search resources by title, description, filename, or URL..."
             value={filters.search}
             onChange={handleSearchChange}
-            className="w-full bg-background border border-border rounded-lg pl-9 pr-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="w-full bg-background border border-border rounded-sm pl-9 pr-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500"
           />
         </div>
 
@@ -90,7 +90,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
           <select
             value={filters.type || ''}
             onChange={handleTypeChange}
-            className="bg-background border border-border rounded-lg px-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="bg-background border border-border rounded-sm px-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 font-mono"
           >
             <option value="">All Resource Types</option>
             {resourceTypes.map((t) => (
@@ -105,7 +105,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
             <select
               value={filters.examId || ''}
               onChange={handleExamChange}
-              className="bg-background border border-border rounded-lg px-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+              className="bg-background border border-border rounded-sm px-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 font-mono"
             >
               <option value="">All Exams</option>
               {exams.map((ex) => (
@@ -122,7 +122,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
               filters.isAssigned === true ? 'assigned' : filters.isAssigned === false ? 'unassigned' : ''
             }
             onChange={handleAssignmentChange}
-            className="bg-background border border-border rounded-lg px-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="bg-background border border-border rounded-sm px-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 font-mono"
           >
             <option value="">All Locations</option>
             <option value="assigned">Assigned to Syllabus</option>
@@ -135,10 +135,10 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
               filters.isCompleted === true ? 'completed' : filters.isCompleted === false ? 'unread' : ''
             }
             onChange={handleCompletedChange}
-            className="bg-background border border-border rounded-lg px-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="bg-background border border-border rounded-sm px-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 font-mono"
           >
             <option value="">All Progress States</option>
-            <option value="unread font-bold">Unread / In Progress</option>
+            <option value="unread">Unread / In Progress</option>
             <option value="completed">Completed</option>
           </select>
 
@@ -146,7 +146,7 @@ export function ResourceFilterBar({ filters, onChange, exams = [] }: ResourceFil
           {hasActiveFilters && (
             <button
               onClick={handleClearFilters}
-              className="flex items-center space-x-1 px-3 py-2 bg-slate-100 dark:bg-slate-800 text-secondary hover:text-primary rounded-lg text-xs font-semibold transition-colors"
+              className="flex items-center space-x-1 px-3 py-2 bg-zinc-800 text-secondary hover:text-primary rounded-sm text-xs font-semibold transition-colors"
             >
               <X className="w-3.5 h-3.5" />
               <span>Reset</span>

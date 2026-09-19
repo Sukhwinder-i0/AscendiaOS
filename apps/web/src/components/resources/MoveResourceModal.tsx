@@ -41,36 +41,36 @@ export function MoveResourceModal({ isOpen, onClose, resource, onSuccess }: Move
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
-      <div className="bg-surface border border-border rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl">
+    <div className="fixed inset-0 z-50 bg-zinc-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-surface border border-border rounded-sm max-w-lg w-full p-6 space-y-5 shadow-none">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+            <div className="w-8 h-8 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
               <FolderTree className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-primary">Assign / Move Resource</h3>
+              <h3 className="text-base font-bold text-primary tracking-tight">Assign / Move Resource</h3>
               <p className="text-xs text-secondary truncate max-w-xs">{resource.title}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-1 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-500 font-medium">
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm text-xs text-red-400 font-medium font-mono">
             {error}
           </div>
         )}
 
         {/* Tree Picker */}
         <div>
-          <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-2">
+          <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-2 font-mono">
             Target Location
           </label>
           <SyllabusTreePicker
@@ -93,7 +93,7 @@ export function MoveResourceModal({ isOpen, onClose, resource, onSuccess }: Move
             type="button"
             onClick={handleMove}
             disabled={loading}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 rounded-sm text-xs font-semibold transition-all duration-150 active:scale-[0.98]"
           >
             <Check className="w-4 h-4" />
             <span>Save Location</span>

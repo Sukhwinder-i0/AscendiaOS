@@ -88,14 +88,14 @@ export default function ExamWorkspaceNotesPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-primary">
+            <h1 className="text-xl font-bold text-primary tracking-tight">
               {exam ? `${exam.title} Notes` : 'Exam Notes Workspace'}
             </h1>
-            <span className="text-xs bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full font-mono font-semibold">
+            <span className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-0.5 rounded-sm font-mono font-medium">
               {total} notes
             </span>
           </div>
-          <p className="text-xs text-secondary mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Personal study notes, formula sheets, summaries, and mistake logs for this exam
           </p>
         </div>
@@ -103,16 +103,16 @@ export default function ExamWorkspaceNotesPage() {
         <div className="flex items-center space-x-3">
           <Link
             href={`/workspace/${examId}/syllabus`}
-            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary border border-border text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-medium rounded-sm transition-colors"
           >
-            <GraduationCap className="w-4 h-4 text-blue-500" />
+            <GraduationCap className="w-4 h-4 text-orange-400" />
             <span>View Syllabus Spine</span>
           </Link>
 
           <button
             onClick={() => setIsTemplateOpen(true)}
             disabled={creating}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors disabled:opacity-50"
+            className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
           >
             {creating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
             <span>+ New Note</span>
@@ -121,26 +121,26 @@ export default function ExamWorkspaceNotesPage() {
       </div>
 
       {/* Search Input */}
-      <div className="bg-surface p-4 rounded-xl border border-border">
+      <div className="bg-surface p-4 rounded-sm border border-zinc-800">
         <div className="relative">
-          <Search className="w-4 h-4 text-secondary absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search exam notes by title or content..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-background border border-border rounded-lg pl-9 pr-3 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="w-full bg-background border border-zinc-800 rounded-sm pl-9 pr-3 py-2 text-xs text-primary focus:outline-none focus:border-orange-500"
           />
         </div>
       </div>
 
       {/* Error State */}
       {error && (
-        <div className="bg-surface p-6 rounded-xl text-center border border-red-500/20">
-          <p className="text-xs font-medium text-red-500">{error}</p>
+        <div className="bg-surface p-6 rounded-sm text-center border border-red-500/20">
+          <p className="text-xs font-medium text-red-400">{error}</p>
           <button
             onClick={fetchNotes}
-            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-semibold rounded-lg border border-border hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-medium rounded-sm border border-zinc-800 hover:bg-zinc-800"
           >
             Retry
           </button>
@@ -150,21 +150,21 @@ export default function ExamWorkspaceNotesPage() {
       {/* Grid */}
       {loading ? (
         <div className="text-center py-16">
-          <Loader2 className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-2" />
-          <p className="text-xs text-secondary">Loading exam notes...</p>
+          <Loader2 className="w-8 h-8 text-orange-500 animate-spin mx-auto mb-2" />
+          <p className="text-xs text-zinc-500">Loading exam notes...</p>
         </div>
       ) : notes.length === 0 ? (
-        <div className="bg-surface p-12 rounded-xl text-center border border-dashed border-border space-y-3">
-          <FileText className="w-10 h-10 text-secondary mx-auto opacity-50" />
+        <div className="bg-surface p-12 rounded-sm text-center border border-dashed border-zinc-800 space-y-3">
+          <FileText className="w-10 h-10 text-zinc-600 mx-auto opacity-50" />
           <div>
             <h3 className="text-base font-bold text-primary">No notes written for this exam yet</h3>
-            <p className="text-xs text-secondary mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               Create your first study note, formula sheet, or mistake log for this exam.
             </p>
           </div>
           <button
             onClick={() => setIsTemplateOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             + Create First Note
           </button>

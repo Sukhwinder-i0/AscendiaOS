@@ -84,14 +84,14 @@ export default function ExamWorkspaceResourcesPage() {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold text-primary">
+            <h1 className="text-xl font-bold text-primary tracking-tight">
               {exam ? `${exam.title} Resources` : 'Exam Resources'}
             </h1>
-            <span className="text-xs bg-blue-500/10 text-blue-500 border border-blue-500/20 px-2.5 py-0.5 rounded-full font-mono font-semibold">
+            <span className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2.5 py-0.5 rounded-sm font-mono font-medium">
               {total} items
             </span>
           </div>
-          <p className="text-xs text-secondary mt-1">
+          <p className="text-xs text-zinc-400 mt-1">
             Study resources associated with this exam and its subjects, chapters, and topics
           </p>
         </div>
@@ -99,15 +99,15 @@ export default function ExamWorkspaceResourcesPage() {
         <div className="flex items-center space-x-3">
           <Link
             href={`/workspace/${examId}/syllabus`}
-            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary border border-border text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-zinc-800 text-zinc-200 border border-zinc-800 text-xs font-medium rounded-sm transition-colors"
           >
-            <GraduationCap className="w-4 h-4 text-blue-500" />
+            <GraduationCap className="w-4 h-4 text-orange-400" />
             <span>View Syllabus Spine</span>
           </Link>
 
           <button
             onClick={() => setIsAddOpen(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             <span>Add Resource</span>
@@ -120,11 +120,11 @@ export default function ExamWorkspaceResourcesPage() {
 
       {/* Error state */}
       {error && (
-        <div className="bg-surface p-6 rounded-xl text-center border border-red-500/20">
-          <p className="text-xs font-medium text-red-500">{error}</p>
+        <div className="bg-surface p-6 rounded-sm text-center border border-red-500/20">
+          <p className="text-xs font-medium text-red-400">{error}</p>
           <button
             onClick={fetchResources}
-            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-semibold rounded-lg border border-border hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="mt-3 px-4 py-1.5 bg-background text-primary text-xs font-medium rounded-sm border border-zinc-800 hover:bg-zinc-800"
           >
             Retry
           </button>
@@ -134,21 +134,21 @@ export default function ExamWorkspaceResourcesPage() {
       {/* Grid */}
       {loading ? (
         <div className="text-center py-16">
-          <Loader2 className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-2" />
-          <p className="text-xs text-secondary">Loading exam resources...</p>
+          <Loader2 className="w-8 h-8 text-orange-500 animate-spin mx-auto mb-2" />
+          <p className="text-xs text-zinc-500">Loading exam resources...</p>
         </div>
       ) : resources.length === 0 ? (
-        <div className="bg-surface p-12 rounded-xl text-center border border-dashed border-border space-y-3">
-          <Bookmark className="w-10 h-10 text-secondary mx-auto opacity-50" />
+        <div className="bg-surface p-12 rounded-sm text-center border border-dashed border-zinc-800 space-y-3">
+          <Bookmark className="w-10 h-10 text-zinc-600 mx-auto opacity-50" />
           <div>
             <h3 className="text-base font-bold text-primary">No resources attached to this exam yet</h3>
-            <p className="text-xs text-secondary mt-1">
+            <p className="text-xs text-zinc-400 mt-1">
               Add lectures, PYQ PDFs, articles, or bookmarks to keep your study material organized.
             </p>
           </div>
           <button
             onClick={() => setIsAddOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             + Add Exam Resource
           </button>

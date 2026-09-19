@@ -48,15 +48,15 @@ export default function ExamsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-primary">Exams & Learning Goals</h1>
-          <p className="text-xs text-secondary">
+          <h1 className="text-xl font-bold text-primary tracking-tight">Exams & Learning Goals</h1>
+          <p className="text-xs text-secondary mt-0.5">
             Create and manage exam prep workspaces for GATE, UPSC, JEE, Certifications, or custom goals.
           </p>
         </div>
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+          className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
         >
           <Plus className="w-4 h-4" />
           <span>New Exam Workspace</span>
@@ -65,18 +65,18 @@ export default function ExamsPage() {
 
       {loading ? (
         <div className="text-center py-12">
-          <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto" />
         </div>
       ) : exams.length === 0 ? (
-        <div className="bg-surface p-12 rounded-xl text-center border border-dashed border-border">
-          <GraduationCap className="w-12 h-12 text-blue-500 mx-auto mb-3" />
+        <div className="bg-surface p-12 rounded-sm text-center border border-dashed border-border">
+          <GraduationCap className="w-12 h-12 text-orange-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-primary">No Exam Workspaces Found</h3>
           <p className="text-xs text-secondary max-w-md mx-auto mt-1 mb-6">
             StudyOS supports arbitrary learning goals (GATE DA, GATE CS, UPSC, JEE, University courses, Certifications).
           </p>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+            className="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             + Create First Exam Workspace
           </button>
@@ -86,29 +86,29 @@ export default function ExamsPage() {
           {exams.map((exam) => (
             <div
               key={exam.id}
-              className="bg-surface p-6 rounded-xl border border-border flex flex-col justify-between space-y-4 hover:border-blue-500/50 transition-colors group"
+              className="bg-surface p-6 rounded-sm border border-border flex flex-col justify-between space-y-4 hover:border-orange-500/40 transition-colors group"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-[10px] uppercase tracking-wider font-mono font-semibold bg-background text-secondary px-2.5 py-1 rounded border border-border">
+                  <span className="text-[10px] uppercase tracking-wider font-mono font-semibold bg-background text-orange-400 px-2.5 py-1 rounded-sm border border-orange-500/20">
                     {exam.code || 'EXAM'}
                   </span>
                   <button
                     onClick={() => handleDeleteExam(exam.id)}
-                    className="p-1.5 text-secondary hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                    className="p-1.5 text-secondary hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
                     title="Delete Exam"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <h3 className="text-lg font-bold text-primary group-hover:text-blue-500 transition-colors">
+                <h3 className="text-lg font-bold text-primary group-hover:text-orange-400 transition-colors tracking-tight">
                   {exam.title}
                 </h3>
 
                 {exam.daysRemaining !== null && exam.daysRemaining !== undefined && (
-                  <p className="text-xs text-amber-500 mt-1 flex items-center font-medium">
-                    <Clock className="w-3.5 h-3.5 mr-1 text-amber-500" />
+                  <p className="text-xs text-orange-400 mt-1 flex items-center font-mono">
+                    <Clock className="w-3.5 h-3.5 mr-1 text-orange-400" />
                     {exam.daysRemaining} days remaining
                   </p>
                 )}
@@ -118,14 +118,14 @@ export default function ExamsPage() {
                 {/* Progress bar */}
                 <div>
                   <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-secondary font-medium">Overall Progress</span>
+                    <span className="text-secondary font-medium font-mono">Overall Progress</span>
                     <span className="font-mono font-semibold text-primary">
                       {exam.overallProgressPercentage}%
                     </span>
                   </div>
-                  <div className="h-2 w-full bg-background rounded-full overflow-hidden border border-border">
+                  <div className="h-2 w-full bg-background rounded-sm overflow-hidden border border-border">
                     <div
-                      className="h-full bg-blue-500 transition-all duration-300"
+                      className="h-full bg-orange-500 transition-all duration-300"
                       style={{ width: `${exam.overallProgressPercentage}%` }}
                     />
                   </div>
@@ -135,7 +135,7 @@ export default function ExamsPage() {
                 <div className="grid grid-cols-2 gap-2 text-[11px] text-secondary font-mono">
                   {exam.targetScore && (
                     <div className="flex items-center space-x-1">
-                      <Target className="w-3 h-3 text-blue-500" />
+                      <Target className="w-3 h-3 text-orange-500" />
                       <span>Target: {exam.targetScore} pts</span>
                     </div>
                   )}
@@ -150,7 +150,7 @@ export default function ExamsPage() {
                 {/* Action Link */}
                 <Link
                   href={`/workspace/${exam.id}/syllabus`}
-                  className="flex items-center justify-center space-x-2 w-full py-2 bg-background hover:bg-blue-500/10 text-primary hover:text-blue-500 rounded-lg text-xs font-semibold transition-colors border border-border hover:border-blue-500/20"
+                  className="flex items-center justify-center space-x-2 w-full py-2 bg-background hover:bg-orange-500/10 text-primary hover:text-orange-400 rounded-sm text-xs font-semibold transition-colors border border-border hover:border-orange-500/30"
                 >
                   <FolderTree className="w-4 h-4" />
                   <span>Open Syllabus Workspace</span>

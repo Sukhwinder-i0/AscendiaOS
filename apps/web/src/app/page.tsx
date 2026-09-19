@@ -81,10 +81,10 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative pt-20 pb-16 border-b border-zinc-800/80">
         <div className="max-w-6xl mx-auto px-6 space-y-8">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-sm text-xs text-zinc-400 font-mono">
-            <span className="w-2 h-2 rounded-full bg-orange-500"></span>
+          {/* <div className="inline-flex items-center space-x-2 px-3 py-1 bg-zinc-900 border border-zinc-800 rounded-sm text-xs text-zinc-400 font-mono">
+            <span className="w-1  h-1 rounded-full bg-orange-500"></span>
             <span>SYSTEM VERSION 1.0 — COMPETITIVE EXAM PLATFORM</span>
-          </div>
+          </div> */}
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.1] max-w-4xl">
             The Preparation Infrastructure for <span className="text-orange-500">Competitive Exams</span>.

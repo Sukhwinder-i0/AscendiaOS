@@ -99,7 +99,7 @@ export function SyllabusReviewTree({ subjects, onChange }: SyllabusReviewTreePro
         </span>
         <button
           onClick={() => addNode([], 'subject')}
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-md bg-blue-500/10 text-blue-500 border border-blue-500/20 hover:bg-blue-500/20 transition-colors"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-sm bg-orange-500/10 text-orange-400 border border-orange-500/20 hover:bg-orange-500/20 transition-colors"
         >
           <Plus className="w-3.5 h-3.5" />
           Add Subject
@@ -107,7 +107,7 @@ export function SyllabusReviewTree({ subjects, onChange }: SyllabusReviewTreePro
       </div>
 
       {subjects.length === 0 ? (
-        <div className="text-center py-8 text-secondary text-sm">
+        <div className="text-center py-8 text-secondary text-sm font-mono">
           No subjects extracted. Click "Add Subject" to create one manually.
         </div>
       ) : (
@@ -116,17 +116,17 @@ export function SyllabusReviewTree({ subjects, onChange }: SyllabusReviewTreePro
           const isSubExpanded = expandedNodes[subKey] !== false;
 
           return (
-            <div key={subKey} className="border border-border rounded-lg bg-surface overflow-hidden">
+            <div key={subKey} className="border border-border rounded-sm bg-surface overflow-hidden">
               {/* Subject Row */}
-              <div className="flex items-center justify-between px-3 py-2.5 bg-background/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors border-b border-border">
+              <div className="flex items-center justify-between px-3 py-2.5 bg-background/50 hover:bg-zinc-800/50 transition-colors border-b border-border">
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <button
                     onClick={() => toggleExpand(subKey)}
-                    className="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-secondary"
+                    className="p-1 hover:bg-zinc-800 rounded-sm text-secondary"
                   >
                     {isSubExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
                   </button>
-                  <BookOpen className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                  <BookOpen className="w-4 h-4 text-orange-500 flex-shrink-0" />
 
                   {editingNodeId === subKey ? (
                     <div className="flex items-center gap-1 flex-1">
@@ -134,7 +134,7 @@ export function SyllabusReviewTree({ subjects, onChange }: SyllabusReviewTreePro
                         type="text"
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
-                        className="bg-background text-primary text-sm px-2 py-1 rounded border border-blue-500 focus:outline-none w-full"
+                        className="bg-background text-primary text-sm px-2 py-1 rounded-sm border border-orange-500 focus:outline-none w-full"
                         autoFocus
                       />
                       <button onClick={() => saveRename([sIdx])} className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded">

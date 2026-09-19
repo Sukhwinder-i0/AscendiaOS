@@ -89,13 +89,13 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                     key={item.href}
                     href={item.href}
                     className={clsx(
-                      'flex items-center space-x-3 px-3 py-2 rounded-lg text-xs font-medium transition-colors',
+                      'flex items-center space-x-3 px-3 py-2 rounded-sm text-xs font-medium transition-colors border',
                       active
-                        ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
-                        : 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/60',
+                        ? 'bg-orange-500/10 text-orange-400 border-orange-500/20'
+                        : 'text-secondary border-transparent hover:text-primary hover:bg-zinc-800/50',
                     )}
                   >
-                    <Icon className={clsx('w-4 h-4', active ? 'text-blue-500' : 'text-secondary')} />
+                    <Icon className={clsx('w-4 h-4', active ? 'text-orange-500' : 'text-secondary')} />
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -105,7 +105,7 @@ export function Sidebar({ activeExamId }: SidebarProps) {
 
           {activeExamId && (
             <div>
-              <p className="px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2">
+              <p className="px-3 text-[11px] font-semibold text-secondary uppercase tracking-wider mb-2 font-mono">
                 Exam Workspace
               </p>
               <nav className="space-y-1">
@@ -119,21 +119,21 @@ export function Sidebar({ activeExamId }: SidebarProps) {
                       href={item.href}
                       onClick={(e) => disabled && e.preventDefault()}
                       className={clsx(
-                        'flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors',
-                        disabled ? 'opacity-40 cursor-not-allowed text-secondary' : '',
+                        'flex items-center justify-between px-3 py-2 rounded-sm text-xs font-medium transition-colors border',
+                        disabled ? 'opacity-40 cursor-not-allowed text-secondary border-transparent' : '',
                         active
-                          ? 'bg-blue-500/10 text-blue-500 border border-blue-500/20'
+                          ? 'bg-orange-500/10 text-orange-400 border-orange-500/20'
                           : !disabled
-                            ? 'text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                            ? 'text-secondary border-transparent hover:text-primary hover:bg-zinc-800/50'
                             : '',
                       )}
                     >
                       <div className="flex items-center space-x-3">
-                        <Icon className={clsx('w-4 h-4', active ? 'text-blue-500' : 'text-secondary')} />
+                        <Icon className={clsx('w-4 h-4', active ? 'text-orange-500' : 'text-secondary')} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
-                        <span className="text-[10px] bg-slate-100 dark:bg-slate-800 text-secondary px-1.5 py-0.5 rounded border border-border font-mono">
+                        <span className="text-[10px] bg-zinc-900 text-zinc-400 px-1.5 py-0.5 rounded-sm border border-border font-mono">
                           {item.badge}
                         </span>
                       )}
@@ -148,10 +148,10 @@ export function Sidebar({ activeExamId }: SidebarProps) {
 
       {/* Footer / Settings */}
       <div className="p-4 border-t border-border">
-        <div className="bg-background rounded-lg p-3 border border-border flex items-center space-x-3">
-          <div className="text-xs">
-            <p className="font-medium text-primary">Exam Prep OS</p>
-            <p className="text-secondary text-[11px]">v1.0.2 Phase 2</p>
+        <div className="bg-background rounded-sm p-3 border border-border flex items-center space-x-3">
+          <div className="text-xs font-mono">
+            <p className="font-semibold text-primary">Prep Infrastructure</p>
+            <p className="text-secondary text-[10px]">v1.0 • Phase 5 Active</p>
           </div>
         </div>
       </div>

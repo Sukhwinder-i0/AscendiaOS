@@ -88,22 +88,22 @@ export function TopicRow({
     },
     [ProgressStatus.LEARNING]: {
       label: 'Learning',
-      bg: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
+      bg: 'bg-orange-500/10 text-orange-400 border-orange-500/20',
       icon: Clock,
     },
     [ProgressStatus.COMPLETED]: {
       label: 'Completed',
-      bg: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+      bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
       icon: CheckCircle2,
     },
     [ProgressStatus.NEEDS_REVISION]: {
       label: 'Needs Revision',
-      bg: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+      bg: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
       icon: AlertCircle,
     },
     [ProgressStatus.MASTERED]: {
       label: 'Mastered',
-      bg: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+      bg: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
       icon: Award,
     },
   };
@@ -147,8 +147,8 @@ export function TopicRow({
 
       <div
         className={clsx(
-          'group flex items-center justify-between py-2 px-3 rounded-lg border border-transparent hover:border-border hover:bg-background/80 transition-all',
-          isEditing && 'bg-surface border-blue-500 shadow-sm',
+          'group flex items-center justify-between py-2 px-3 rounded-sm border border-transparent hover:border-border hover:bg-background/80 transition-all',
+          isEditing && 'bg-surface border-orange-500 shadow-none',
         )}
         style={{ paddingLeft: `${Math.max(0.75, depth * 1.5 + 0.75)}rem` }}
       >
@@ -156,7 +156,7 @@ export function TopicRow({
           {hasSubtopics ? (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="p-1 text-secondary hover:text-primary rounded"
+              className="p-1 text-secondary hover:text-primary rounded-sm"
             >
               {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
             </button>
@@ -174,18 +174,18 @@ export function TopicRow({
                 onChange={(e) => setEditName(e.target.value)}
                 autoFocus
                 onKeyDown={(e) => e.key === 'Enter' && handleSaveEdit()}
-                className="bg-background border border-border rounded px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
+                className="bg-background border border-border rounded-sm px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-orange-500 flex-1"
               />
               <button
                 onClick={handleSaveEdit}
                 disabled={loading}
-                className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded"
+                className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded-sm"
               >
                 <Check className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="p-1 text-secondary hover:bg-slate-100 dark:hover:bg-slate-800 rounded"
+                className="p-1 text-secondary hover:bg-zinc-800 rounded-sm"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -203,7 +203,7 @@ export function TopicRow({
                 value={topic.progress?.status || ProgressStatus.NOT_STARTED}
                 onChange={(e) => onUpdateStatus(topic.id, e.target.value as ProgressStatus)}
                 className={clsx(
-                  'appearance-none text-xs font-semibold px-2.5 py-1 rounded-md border cursor-pointer focus:outline-none transition-colors pr-6',
+                  'appearance-none text-xs font-semibold px-2.5 py-1 rounded-sm border cursor-pointer focus:outline-none transition-colors pr-6 font-mono',
                   currentStatus.bg,
                 )}
               >
@@ -232,42 +232,42 @@ export function TopicRow({
                   }
                 }}
                 title="Start Study Session"
-                className="p-1 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 rounded transition-colors"
+                className="p-1 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10 rounded-sm transition-colors"
               >
                 <Play className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsNotesDrawerOpen(true)}
                 title="Topic Notes"
-                className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 text-secondary hover:text-orange-400 hover:bg-zinc-800 rounded-sm transition-colors"
               >
                 <FileText className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsResourceDrawerOpen(true)}
                 title="Topic Resources"
-                className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 text-secondary hover:text-orange-400 hover:bg-zinc-800 rounded-sm transition-colors"
               >
                 <Bookmark className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsAddingSubtopic(!isAddingSubtopic)}
                 title="Add Subtopic"
-                className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 text-secondary hover:text-orange-400 hover:bg-zinc-800 rounded-sm transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsEditing(true)}
                 title="Edit Topic"
-                className="p-1 text-secondary hover:text-amber-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 text-secondary hover:text-amber-400 hover:bg-zinc-800 rounded-sm transition-colors"
               >
                 <Edit2 className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => onDeleteTopic(topic.id)}
                 title="Delete Topic"
-                className="p-1 text-secondary hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 text-secondary hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
               >
                 <Trash2 className="w-3.5 h-3.5" />
               </button>
@@ -289,12 +289,12 @@ export function TopicRow({
             value={newSubtopicName}
             onChange={(e) => setNewSubtopicName(e.target.value)}
             autoFocus
-            className="bg-background border border-border rounded-md px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
+            className="bg-background border border-border rounded-sm px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-orange-500 flex-1"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-3 py-1.5 bg-blue-600 text-white rounded-md text-xs font-semibold hover:bg-blue-700 transition-colors"
+            className="px-3 py-1.5 bg-orange-500 text-zinc-950 rounded-sm text-xs font-semibold hover:bg-orange-600 transition-colors"
           >
             Add
           </button>

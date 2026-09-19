@@ -43,33 +43,33 @@ export function SessionFinishModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="bg-gray-900 border border-gray-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm max-w-lg w-full p-6 space-y-6">
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-xs font-semibold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-sm text-xs font-semibold uppercase tracking-wider font-mono">
             ✓ Session Complete
           </div>
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-2xl font-bold text-white tracking-tight">
             {session.topic?.name || 'Study Session'}
           </h2>
           {session.subject?.name && (
-            <p className="text-sm text-gray-400">
+            <p className="text-xs text-zinc-400 font-mono">
               {session.exam?.title} • {session.subject.name}
             </p>
           )}
 
           <div className="pt-3 pb-1">
-            <div className="text-4xl font-extrabold text-blue-400 tracking-tight">
+            <div className="text-4xl font-extrabold font-mono text-orange-400 tracking-tight">
               {durationMinutes}m {durationSeconds}s
             </div>
-            <p className="text-xs text-gray-500 mt-1">Total Focused Time</p>
+            <p className="text-xs text-zinc-500 font-mono mt-1">Total Focused Time</p>
           </div>
         </div>
 
         <div className="space-y-4">
           {/* Reflection */}
           <div>
-            <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider font-mono mb-2">
               Reflection / Notes (Optional)
             </label>
             <textarea
@@ -77,13 +77,13 @@ export function SessionFinishModal({
               onChange={(e) => setReflection(e.target.value)}
               placeholder="What did you accomplish during this session?"
               rows={3}
-              className="w-full bg-gray-800 border border-gray-700 rounded-xl p-3 text-sm text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-sm p-3 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-orange-500 transition-colors"
             />
           </div>
 
           {/* Confidence Score */}
           <div>
-            <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider font-mono mb-2">
               Confidence Level (1 - 5)
             </label>
             <div className="grid grid-cols-5 gap-2">
@@ -98,14 +98,14 @@ export function SessionFinishModal({
                   key={score}
                   type="button"
                   onClick={() => setConfidence(score)}
-                  className={`py-2 px-1 rounded-xl text-center border transition-all ${
+                  className={`py-2 px-1 rounded-sm text-center border transition-all font-mono ${
                     confidence === score
-                      ? 'bg-blue-600 border-blue-500 text-white font-bold shadow-lg shadow-blue-500/20'
-                      : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600 hover:text-gray-200'
+                      ? 'bg-orange-600 border-orange-500 text-white font-bold'
+                      : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
                   }`}
                 >
                   <div className="text-base">{score}</div>
-                  <div className="text-[10px] truncate opacity-80">{label}</div>
+                  <div className="text-[9px] truncate opacity-80">{label}</div>
                 </button>
               ))}
             </div>
@@ -113,19 +113,19 @@ export function SessionFinishModal({
 
           {/* Difficulty */}
           <div>
-            <label className="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-zinc-300 uppercase tracking-wider font-mono mb-2">
               Perceived Difficulty
             </label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-3 gap-2 font-mono">
               {(['EASY', 'MEDIUM', 'HARD'] as const).map((d) => (
                 <button
                   key={d}
                   type="button"
                   onClick={() => setDifficulty(d)}
-                  className={`py-2 text-xs font-semibold rounded-xl border transition-all ${
+                  className={`py-2 text-xs font-semibold rounded-sm border transition-all ${
                     difficulty === d
-                      ? 'bg-purple-600 border-purple-500 text-white shadow-md'
-                      : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-600'
+                      ? 'bg-orange-600 border-orange-500 text-white'
+                      : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-700'
                   }`}
                 >
                   {d}
@@ -135,15 +135,15 @@ export function SessionFinishModal({
           </div>
 
           {/* Mark topic completed toggle */}
-          <label className="flex items-center gap-3 p-3 bg-gray-800/60 border border-gray-700/60 rounded-xl cursor-pointer hover:bg-gray-800 transition-colors">
+          <label className="flex items-center gap-3 p-3 bg-zinc-950 border border-zinc-800 rounded-sm cursor-pointer hover:bg-zinc-850 transition-colors">
             <input
               type="checkbox"
               checked={markTopicCompleted}
               onChange={(e) => setMarkTopicCompleted(e.target.checked)}
-              className="w-4 h-4 rounded border-gray-600 bg-gray-900 text-blue-600 focus:ring-blue-500"
+              className="w-4 h-4 rounded-sm border-zinc-700 bg-zinc-900 text-orange-600 focus:ring-orange-500"
             />
-            <span className="text-sm font-medium text-gray-200">
-              Mark topic as <span className="text-green-400 font-semibold">Completed</span>
+            <span className="text-xs font-medium text-zinc-200">
+              Mark topic as <span className="text-emerald-400 font-semibold">Completed</span>
             </span>
           </label>
         </div>
@@ -153,7 +153,7 @@ export function SessionFinishModal({
             type="button"
             onClick={onCancel}
             disabled={saving}
-            className="px-4 py-2 text-sm text-gray-400 hover:text-gray-200 transition-colors"
+            className="px-4 py-2 text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-mono"
           >
             Back
           </button>
@@ -161,7 +161,7 @@ export function SessionFinishModal({
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-medium text-sm rounded-xl transition-all shadow-lg shadow-blue-600/20"
+            className="px-6 py-2.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white font-semibold text-xs rounded-sm transition-all uppercase tracking-wider font-mono"
           >
             {saving ? 'Saving...' : 'Save Session'}
           </button>

@@ -132,12 +132,12 @@ export function StudyTimerModal({
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
-        <div className="bg-gray-900 border border-gray-800 rounded-3xl max-w-md w-full p-8 shadow-2xl space-y-8 text-center relative overflow-hidden">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/80 backdrop-blur-md p-4 animate-in fade-in duration-200">
+        <div className="bg-zinc-900 border border-zinc-800 rounded-sm max-w-md w-full p-8 space-y-8 text-center relative overflow-hidden">
           {/* Header & Context */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-              <span className="font-semibold uppercase tracking-wider text-blue-400">
+            <div className="flex items-center justify-between text-xs text-zinc-400 font-mono mb-2">
+              <span className="font-semibold uppercase tracking-wider text-orange-400">
                 {session.sessionType} SESSION
               </span>
               <button
@@ -153,7 +153,7 @@ export function StudyTimerModal({
               {session.topic?.name || 'Study Session'}
             </h1>
             {session.subject?.name && (
-              <p className="text-sm text-gray-400">
+              <p className="text-xs text-zinc-400 font-mono">
                 {session.subject.name} • {session.chapter?.name}
               </p>
             )}
@@ -161,27 +161,27 @@ export function StudyTimerModal({
 
           {/* Error Notice */}
           {errorMsg && (
-            <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-xl">
+            <div className="p-3 bg-red-500/10 border border-red-500/20 text-red-400 text-xs rounded-sm">
               {errorMsg}
             </div>
           )}
 
           {/* Big Timer Counter */}
           <div className="py-6 space-y-3">
-            <div className="text-6xl font-black font-mono tracking-wider text-white drop-shadow-lg">
+            <div className="text-6xl font-black font-mono tracking-wider text-white drop-shadow-sm">
               {formatTimer(elapsedSeconds)}
             </div>
             <div className="flex items-center justify-center gap-2">
               <span
                 className={`w-2.5 h-2.5 rounded-full ${
                   session.status === 'ACTIVE'
-                    ? 'bg-green-500 animate-pulse'
+                    ? 'bg-emerald-500 animate-pulse'
                     : session.status === 'PAUSED'
                     ? 'bg-amber-500'
-                    : 'bg-gray-500'
+                    : 'bg-zinc-600'
                 }`}
               />
-              <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+              <span className="text-xs font-semibold uppercase tracking-wider font-mono text-zinc-400">
                 {session.status}
               </span>
             </div>
@@ -193,7 +193,7 @@ export function StudyTimerModal({
               <button
                 onClick={handleStart}
                 disabled={actionLoading}
-                className="w-full py-4 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-base rounded-2xl transition-all shadow-xl shadow-blue-600/25"
+                className="w-full py-3.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all font-mono"
               >
                 {actionLoading ? 'Starting...' : 'Start Timer'}
               </button>
@@ -204,16 +204,16 @@ export function StudyTimerModal({
                 <button
                   onClick={handlePause}
                   disabled={actionLoading}
-                  className="py-3.5 bg-gray-800 hover:bg-gray-700 text-amber-400 border border-amber-500/30 font-semibold text-sm rounded-2xl transition-all"
+                  className="py-3 bg-zinc-950 hover:bg-zinc-800 text-amber-400 border border-amber-500/30 font-semibold text-xs uppercase tracking-wider rounded-sm transition-all font-mono"
                 >
                   ⏸ Pause
                 </button>
                 <button
                   onClick={() => setShowFinishModal(true)}
                   disabled={actionLoading}
-                  className="py-3.5 bg-green-600 hover:bg-green-500 text-white font-bold text-sm rounded-2xl transition-all shadow-lg shadow-green-600/20"
+                  className="py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all font-mono"
                 >
-                  ✓ Finish Session
+                  ✓ Finish
                 </button>
               </div>
             )}
@@ -223,16 +223,16 @@ export function StudyTimerModal({
                 <button
                   onClick={handleResume}
                   disabled={actionLoading}
-                  className="py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm rounded-2xl transition-all shadow-lg shadow-blue-600/20"
+                  className="py-3 bg-orange-600 hover:bg-orange-500 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all font-mono"
                 >
                   ▶ Resume
                 </button>
                 <button
                   onClick={() => setShowFinishModal(true)}
                   disabled={actionLoading}
-                  className="py-3.5 bg-green-600 hover:bg-green-500 text-white font-bold text-sm rounded-2xl transition-all shadow-lg shadow-green-600/20"
+                  className="py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs uppercase tracking-wider rounded-sm transition-all font-mono"
                 >
-                  ✓ Finish Session
+                  ✓ Finish
                 </button>
               </div>
             )}
@@ -240,7 +240,7 @@ export function StudyTimerModal({
             <button
               onClick={handleDiscard}
               disabled={actionLoading}
-              className="text-xs text-gray-500 hover:text-red-400 transition-colors pt-2"
+              className="text-[11px] text-zinc-500 hover:text-red-400 transition-colors pt-2 font-mono"
             >
               Discard Session
             </button>

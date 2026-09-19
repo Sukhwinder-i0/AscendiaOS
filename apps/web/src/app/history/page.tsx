@@ -50,11 +50,11 @@ export default function StudyHistoryPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white p-6 md:p-10 space-y-8">
+    <div className="min-h-screen bg-background text-primary p-6 md:p-10 space-y-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Study History</h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <h1 className="text-xl font-bold tracking-tight text-primary">Study History</h1>
+          <p className="text-xs text-zinc-400 mt-1">
             Track your past study sessions, duration, reflections, and confidence progress.
           </p>
         </div>
@@ -64,15 +64,15 @@ export default function StudyHistoryPage() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="h-24 bg-gray-900 border border-gray-800 rounded-2xl animate-pulse"
+                className="h-24 bg-surface border border-zinc-800 rounded-sm animate-pulse"
               />
             ))}
           </div>
         ) : Object.keys(groupedSessions).length === 0 ? (
-          <div className="text-center py-16 bg-gray-900/40 border border-gray-800/80 rounded-2xl space-y-3">
-            <div className="text-4xl">⏱️</div>
-            <h3 className="text-lg font-semibold text-gray-300">No Study Sessions Yet</h3>
-            <p className="text-sm text-gray-500 max-w-sm mx-auto">
+          <div className="text-center py-16 bg-surface/50 border border-dashed border-zinc-800 rounded-sm space-y-3">
+            <div className="text-3xl">⏱️</div>
+            <h3 className="text-sm font-semibold text-zinc-200">No Study Sessions Yet</h3>
+            <p className="text-xs text-zinc-500 max-w-sm mx-auto">
               Start a study session from any topic in your syllabus tree to record focused study time.
             </p>
           </div>
@@ -80,7 +80,7 @@ export default function StudyHistoryPage() {
           <div className="space-y-8">
             {Object.entries(groupedSessions).map(([dayLabel, daySessions]) => (
               <div key={dayLabel} className="space-y-3">
-                <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider sticky top-0 bg-gray-950/90 backdrop-blur-sm py-2 z-10">
+                <div className="text-[11px] font-mono font-medium text-orange-400 uppercase tracking-wider sticky top-0 bg-background/90 backdrop-blur-sm py-2 z-10">
                   {dayLabel}
                 </div>
 
@@ -88,31 +88,31 @@ export default function StudyHistoryPage() {
                   {daySessions.map((s) => (
                     <div
                       key={s.id}
-                      className="bg-gray-900 border border-gray-800 hover:border-gray-700/80 rounded-2xl p-5 transition-all space-y-3 shadow-lg"
+                      className="bg-surface border border-zinc-800 hover:border-orange-500/30 rounded-sm p-5 transition-colors space-y-3"
                     >
                       <div className="flex flex-wrap items-start justify-between gap-2">
                         <div>
                           <div className="flex items-center gap-2">
-                            <span className="px-2 py-0.5 bg-blue-500/10 text-blue-400 border border-blue-500/20 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                            <span className="px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded-sm text-[10px] font-mono font-medium uppercase">
                               {s.sessionType}
                             </span>
-                            <h3 className="text-base font-bold text-white">
+                            <h3 className="text-sm font-bold text-zinc-100">
                               {s.topic?.name || 'Topic Session'}
                             </h3>
                           </div>
                           {s.subject?.name && (
-                            <p className="text-xs text-gray-400 mt-1">
+                            <p className="text-xs text-zinc-400 mt-1">
                               {s.exam?.title} • {s.subject.name} • {s.chapter?.name}
                             </p>
                           )}
                         </div>
 
                         <div className="text-right">
-                          <div className="text-lg font-bold text-blue-400 font-mono">
+                          <div className="text-base font-bold text-orange-400 font-mono">
                             {formatDuration(s.durationSeconds)}
                           </div>
                           {s.endedAt && (
-                            <div className="text-[10px] text-gray-500">
+                            <div className="text-[10px] text-zinc-500 font-mono">
                               {new Date(s.endedAt).toLocaleTimeString([], {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -123,13 +123,13 @@ export default function StudyHistoryPage() {
                       </div>
 
                       {s.reflection && (
-                        <div className="bg-gray-800/40 border border-gray-800 rounded-xl p-3 text-xs text-gray-300 italic">
+                        <div className="bg-background border border-zinc-800 rounded-sm p-3 text-xs text-zinc-300 italic">
                           "{s.reflection}"
                         </div>
                       )}
 
                       {(s.confidence !== null && s.confidence !== undefined) && (
-                        <div className="flex items-center gap-2 text-xs text-gray-400 pt-1">
+                        <div className="flex items-center gap-2 text-xs text-zinc-400 pt-1 font-mono">
                           <span>Confidence:</span>
                           <div className="flex gap-1">
                             {[1, 2, 3, 4, 5].map((star) => (
@@ -137,8 +137,8 @@ export default function StudyHistoryPage() {
                                 key={star}
                                 className={
                                   star <= (s.confidence || 0)
-                                    ? 'text-yellow-400 font-bold'
-                                    : 'text-gray-700'
+                                    ? 'text-orange-400 font-bold'
+                                    : 'text-zinc-700'
                                 }
                               >
                                 ★

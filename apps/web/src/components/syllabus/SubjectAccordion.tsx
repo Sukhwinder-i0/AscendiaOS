@@ -68,20 +68,20 @@ export function SubjectAccordion({
   };
 
   return (
-    <div className="bg-surface rounded-xl overflow-hidden mb-4 border border-border">
+    <div className="bg-surface rounded-sm overflow-hidden mb-4 border border-border">
       {/* Subject Top Header */}
       <div className="p-4 bg-background/50 flex items-center justify-between border-b border-border">
         <div className="flex items-center space-x-3 flex-1">
           <button
             onClick={() => setExpanded(!expanded)}
-            className="p-1.5 text-secondary hover:text-primary rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="p-1.5 text-secondary hover:text-primary rounded-sm hover:bg-slate-100 dark:hover:bg-zinc-800"
           >
             {expanded ? <ChevronDown className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
           </button>
 
           <span
             className="w-3.5 h-3.5 rounded-full shrink-0 border border-border"
-            style={{ backgroundColor: subject.colorHex || '#3B82F6' }}
+            style={{ backgroundColor: subject.colorHex || '#F97316' }}
           />
 
           {isEditing ? (
@@ -91,18 +91,18 @@ export function SubjectAccordion({
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
                 autoFocus
-                className="bg-background border border-border rounded-lg px-3 py-1.5 text-sm text-primary focus:outline-none focus:border-blue-500 flex-1"
+                className="bg-background border border-border rounded-sm px-3 py-1.5 text-sm text-primary focus:outline-none focus:border-orange-500 flex-1"
               />
               <button
                 onClick={handleSaveSubject}
                 disabled={loading}
-                className="p-1.5 text-emerald-500 hover:bg-emerald-500/10 rounded-lg"
+                className="p-1.5 text-emerald-500 hover:bg-emerald-500/10 rounded-sm"
               >
                 <Check className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="p-1.5 text-secondary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg"
+                className="p-1.5 text-secondary hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-sm"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -111,7 +111,7 @@ export function SubjectAccordion({
             <div className="flex items-center space-x-2">
               <h3 className="font-bold text-base text-primary">{subject.name}</h3>
               {subject.code && (
-                <span className="text-[10px] bg-background text-secondary font-mono px-2 py-0.5 rounded border border-border">
+                <span className="text-[10px] bg-background text-secondary font-mono px-2 py-0.5 rounded-sm border border-border">
                   {subject.code}
                 </span>
               )}
@@ -124,7 +124,7 @@ export function SubjectAccordion({
           <div className="hidden sm:flex items-center space-x-3 w-48">
             <div className="h-2 flex-1 bg-background rounded-full overflow-hidden border border-border">
               <div
-                className="h-full bg-blue-500 transition-all duration-300"
+                className="h-full bg-orange-500 transition-all duration-300"
                 style={{ width: `${subject.progressPercentage}%` }}
               />
             </div>
@@ -143,7 +143,7 @@ export function SubjectAccordion({
           <div className="flex items-center space-x-1.5">
             <button
               onClick={() => setIsAddingChapter(!isAddingChapter)}
-              className="flex items-center space-x-1 px-2.5 py-1.5 bg-blue-500/10 hover:bg-blue-500/20 text-blue-500 rounded-lg text-xs font-semibold border border-blue-500/20 transition-colors"
+              className="flex items-center space-x-1 px-2.5 py-1.5 bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 rounded-sm text-xs font-semibold border border-orange-500/20 transition-colors"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>Chapter</span>
@@ -151,14 +151,14 @@ export function SubjectAccordion({
             <button
               onClick={() => setIsEditing(true)}
               title="Edit Subject"
-              className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Edit2 className="w-4 h-4" />
             </button>
             <button
               onClick={() => onDeleteSubject(subject.id)}
               title="Delete Subject"
-              className="p-1.5 text-secondary hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1.5 text-secondary hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -175,12 +175,12 @@ export function SubjectAccordion({
             value={newChapterName}
             onChange={(e) => setNewChapterName(e.target.value)}
             autoFocus
-            className="bg-surface border border-border rounded-lg px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
+            className="bg-surface border border-border rounded-sm px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-orange-500 flex-1"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition-colors"
+            className="px-3.5 py-1.5 bg-orange-500 text-zinc-950 rounded-sm text-xs font-semibold hover:bg-orange-600 transition-colors"
           >
             Add Chapter
           </button>
@@ -198,7 +198,7 @@ export function SubjectAccordion({
       {expanded && (
         <div className="p-4 space-y-3 bg-background/30">
           {subject.chapters.length === 0 ? (
-            <div className="text-center py-6 text-secondary text-xs italic bg-surface rounded-lg border border-dashed border-border">
+            <div className="text-center py-6 text-secondary text-xs italic bg-surface rounded-sm border border-dashed border-border">
               No chapters in this subject. Click "+ Chapter" to create your first chapter.
             </div>
           ) : (

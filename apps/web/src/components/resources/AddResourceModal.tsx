@@ -152,45 +152,45 @@ export function AddResourceModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in">
-      <div className="bg-surface border border-border rounded-2xl max-w-xl w-full p-6 space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 bg-zinc-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-surface border border-border rounded-sm max-w-xl w-full p-6 space-y-5 shadow-none max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+            <div className="w-8 h-8 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
               <Plus className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-primary">Add Study Resource</h3>
-              <p className="text-xs text-secondary">
+              <h3 className="text-base font-bold text-primary tracking-tight">Add Study Resource</h3>
+              <p className="text-xs text-secondary mt-0.5">
                 Attach lectures, PDFs, articles, code, or bookmarks to your syllabus
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-1 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {error && (
-          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs text-red-500 font-medium flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-sm text-xs text-red-400 font-medium flex items-center space-x-2 font-mono">
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
             <span>{error}</span>
           </div>
         )}
 
         {/* Tab Switcher: URL vs Upload */}
-        <div className="flex rounded-lg bg-background p-1 border border-border">
+        <div className="flex rounded-sm bg-background p-1 border border-border">
           <button
             type="button"
             onClick={() => setTab('URL')}
             className={clsx(
-              'flex-1 flex items-center justify-center space-x-2 py-2 text-xs font-semibold rounded-md transition-colors',
+              'flex-1 flex items-center justify-center space-x-2 py-2 text-xs font-semibold rounded-sm transition-colors',
               tab === 'URL'
-                ? 'bg-surface text-blue-500 shadow-sm border border-border'
+                ? 'bg-surface text-orange-400 shadow-none border border-border'
                 : 'text-secondary hover:text-primary'
             )}
           >
@@ -202,9 +202,9 @@ export function AddResourceModal({
             type="button"
             onClick={() => setTab('FILE')}
             className={clsx(
-              'flex-1 flex items-center justify-center space-x-2 py-2 text-xs font-semibold rounded-md transition-colors',
+              'flex-1 flex items-center justify-center space-x-2 py-2 text-xs font-semibold rounded-sm transition-colors',
               tab === 'FILE'
-                ? 'bg-surface text-blue-500 shadow-sm border border-border'
+                ? 'bg-surface text-orange-400 shadow-none border border-border'
                 : 'text-secondary hover:text-primary'
             )}
           >
@@ -218,7 +218,7 @@ export function AddResourceModal({
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-secondary mb-1">
-                  Resource URL <span className="text-red-500">*</span>
+                  Resource URL <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -227,31 +227,31 @@ export function AddResourceModal({
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     required
-                    className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-blue-500 pr-10"
+                    className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 pr-10"
                   />
                   {detecting && (
-                    <Loader2 className="w-4 h-4 text-blue-500 animate-spin absolute right-3 top-2.5" />
+                    <Loader2 className="w-4 h-4 text-orange-500 animate-spin absolute right-3 top-2.5" />
                   )}
                 </div>
               </div>
 
               {/* Detected Metadata Card Preview */}
               {metadata && (
-                <div className="p-3 bg-background border border-border rounded-xl flex items-start space-x-3">
+                <div className="p-3 bg-background border border-border rounded-sm flex items-start space-x-3">
                   {metadata.thumbnailUrl ? (
                     <img
                       src={metadata.thumbnailUrl}
                       alt="Preview"
-                      className="w-16 h-12 rounded object-cover border border-border shrink-0"
+                      className="w-16 h-12 rounded-sm object-cover border border-border shrink-0"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 shrink-0">
+                    <div className="w-10 h-10 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 shrink-0">
                       <Globe className="w-5 h-5" />
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-[10px] font-bold text-blue-500 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20 uppercase">
+                    <div className="flex items-center space-x-2 font-mono">
+                      <span className="text-[10px] font-bold text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded-sm border border-orange-500/20 uppercase">
                         {metadata.type}
                       </span>
                       {metadata.provider && (
@@ -260,7 +260,7 @@ export function AddResourceModal({
                         </span>
                       )}
                     </div>
-                    <p className="text-xs font-semibold text-primary truncate mt-0.5">
+                    <p className="text-xs font-semibold text-primary truncate mt-0.5 tracking-tight">
                       {metadata.title}
                     </p>
                   </div>
@@ -271,12 +271,12 @@ export function AddResourceModal({
             <div className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-secondary mb-1">
-                  Select File (Max 50MB) <span className="text-red-500">*</span>
+                  Select File (Max 50MB) <span className="text-red-400">*</span>
                 </label>
                 <div
                   onDragOver={(e) => e.preventDefault()}
                   onDrop={handleFileDrop}
-                  className="border-2 border-dashed border-border hover:border-blue-500 rounded-xl p-6 text-center bg-background/50 transition-colors cursor-pointer"
+                  className="border-2 border-dashed border-border hover:border-orange-500 rounded-sm p-6 text-center bg-background/50 transition-colors cursor-pointer"
                   onClick={() => document.getElementById('file-input')?.click()}
                 >
                   <input
@@ -288,17 +288,17 @@ export function AddResourceModal({
                   <Upload className="w-8 h-8 text-secondary mx-auto mb-2" />
                   {selectedFile ? (
                     <div>
-                      <p className="text-xs font-bold text-blue-500">{selectedFile.name}</p>
-                      <p className="text-[11px] text-secondary mt-0.5">
+                      <p className="text-xs font-bold text-orange-400">{selectedFile.name}</p>
+                      <p className="text-[11px] text-secondary font-mono mt-0.5">
                         {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
                       </p>
                     </div>
                   ) : (
                     <div>
                       <p className="text-xs font-medium text-primary">
-                        Drag and drop file here, or <span className="text-blue-500 font-semibold">browse</span>
+                        Drag and drop file here, or <span className="text-orange-400 font-semibold">browse</span>
                       </p>
-                      <p className="text-[11px] text-secondary mt-1">
+                      <p className="text-[11px] text-secondary mt-1 font-mono">
                         PDF, Markdown (.md), Text (.txt), Images, Code files, Generic documents
                       </p>
                     </div>
@@ -317,7 +317,7 @@ export function AddResourceModal({
                 placeholder={tab === 'URL' ? 'Resource title (auto-detected if blank)...' : 'File title...'}
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-blue-500"
+                className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-orange-500"
               />
             </div>
 
@@ -328,14 +328,14 @@ export function AddResourceModal({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={2}
-                className="w-full bg-background border border-border rounded-lg px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-blue-500 resize-none"
+                className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-xs text-primary focus:outline-none focus:border-orange-500 resize-none"
               />
             </div>
           </div>
 
           {/* Target Syllabus Location */}
           <div>
-            <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-2">
+            <label className="block text-xs font-semibold text-secondary uppercase tracking-wider mb-2 font-mono">
               Assign Location
             </label>
             <SyllabusTreePicker selectedLocation={location} onSelect={setLocation} />
@@ -353,7 +353,7 @@ export function AddResourceModal({
             <button
               type="submit"
               disabled={submitting}
-              className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition-colors disabled:opacity-50"
+              className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 rounded-sm text-xs font-semibold transition-all duration-150 active:scale-[0.98] disabled:opacity-50"
             >
               {submitting && <Loader2 className="w-4 h-4 animate-spin" />}
               <span>Save Resource</span>

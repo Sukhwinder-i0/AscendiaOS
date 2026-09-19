@@ -25,9 +25,9 @@ export function DailySummaryCard() {
 
   if (loading) {
     return (
-      <div className="bg-gray-900 border border-gray-800 rounded-2xl p-5 animate-pulse">
-        <div className="h-4 bg-gray-800 rounded w-1/3 mb-4"></div>
-        <div className="h-8 bg-gray-800 rounded w-1/2"></div>
+      <div className="bg-surface border border-border rounded-sm p-5 animate-pulse">
+        <div className="h-4 bg-background rounded-sm w-1/3 mb-4" />
+        <div className="h-8 bg-background rounded-sm w-1/2" />
       </div>
     );
   }
@@ -38,41 +38,41 @@ export function DailySummaryCard() {
   const minutes = Math.floor((summary.totalStudySeconds % 3600) / 60);
 
   return (
-    <div className="bg-gray-900/90 border border-gray-800 rounded-2xl p-5 shadow-xl space-y-4">
+    <div className="bg-surface border border-border rounded-sm p-5 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+        <h3 className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
           Today's Study Overview
         </h3>
-        <span className="text-[10px] text-gray-500 font-mono">
+        <span className="text-[10px] text-secondary font-mono">
           {summary.date}
         </span>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-gray-800/50 border border-gray-800 rounded-xl p-3">
-          <div className="text-xs text-gray-400 font-medium mb-1">Focused Time</div>
-          <div className="text-xl font-bold text-blue-400">
+        <div className="bg-background border border-border rounded-sm p-3">
+          <div className="text-[11px] text-secondary font-medium mb-1 font-mono">Focused Time</div>
+          <div className="text-xl font-bold font-mono text-orange-400">
             {hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`}
           </div>
         </div>
 
-        <div className="bg-gray-800/50 border border-gray-800 rounded-xl p-3">
-          <div className="text-xs text-gray-400 font-medium mb-1">Sessions</div>
-          <div className="text-xl font-bold text-purple-400">
+        <div className="bg-background border border-border rounded-sm p-3">
+          <div className="text-[11px] text-secondary font-medium mb-1 font-mono">Sessions</div>
+          <div className="text-xl font-bold font-mono text-primary">
             {summary.sessionCount}
           </div>
         </div>
 
-        <div className="bg-gray-800/50 border border-gray-800 rounded-xl p-3">
-          <div className="text-xs text-gray-400 font-medium mb-1">Topics Studied</div>
-          <div className="text-xl font-bold text-emerald-400">
+        <div className="bg-background border border-border rounded-sm p-3">
+          <div className="text-[11px] text-secondary font-medium mb-1 font-mono">Topics Studied</div>
+          <div className="text-xl font-bold font-mono text-orange-400">
             {summary.topicsStudiedCount}
           </div>
         </div>
 
-        <div className="bg-gray-800/50 border border-gray-800 rounded-xl p-3">
-          <div className="text-xs text-gray-400 font-medium mb-1">Completed</div>
-          <div className="text-xl font-bold text-green-400">
+        <div className="bg-background border border-border rounded-sm p-3">
+          <div className="text-[11px] text-secondary font-medium mb-1 font-mono">Completed</div>
+          <div className="text-xl font-bold font-mono text-emerald-400">
             {summary.topicsCompletedCount}
           </div>
         </div>
@@ -80,7 +80,7 @@ export function DailySummaryCard() {
 
       {summary.subjectsStudied.length > 0 && (
         <div className="pt-2">
-          <div className="text-[11px] text-gray-400 font-medium mb-2">
+          <div className="text-[11px] text-secondary font-medium mb-2 font-mono">
             Subjects Studied Today:
           </div>
           <div className="flex flex-wrap gap-2">
@@ -89,11 +89,11 @@ export function DailySummaryCard() {
               return (
                 <span
                   key={sub.id}
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-800 border border-gray-700/60 rounded-lg text-xs font-medium text-gray-200"
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-background border border-border rounded-sm text-xs font-medium text-primary font-mono"
                 >
                   <span
                     className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: sub.colorHex || '#3B82F6' }}
+                    style={{ backgroundColor: sub.colorHex || '#F97316' }}
                   />
                   {sub.name} ({subMins}m)
                 </span>

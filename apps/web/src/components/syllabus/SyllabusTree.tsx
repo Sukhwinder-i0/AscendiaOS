@@ -69,42 +69,42 @@ export function SyllabusTree({
 
       {/* Top Aggregate Metrics Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-surface p-4 rounded-xl border border-border flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
+        <div className="bg-surface p-4 rounded-sm border border-border flex items-center space-x-3.5">
+          <div className="w-9 h-9 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
             <Target className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">Overall Progress</p>
+            <p className="text-xs text-secondary font-medium font-mono">Overall Progress</p>
             <p className="text-xl font-bold font-mono text-primary">{tree.overallProgressPercentage}%</p>
           </div>
         </div>
 
-        <div className="bg-surface p-4 rounded-xl border border-border flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-background border border-border flex items-center justify-center text-secondary">
+        <div className="bg-surface p-4 rounded-sm border border-border flex items-center space-x-3.5">
+          <div className="w-9 h-9 rounded-sm bg-background border border-border flex items-center justify-center text-secondary">
             <BookOpen className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">Subjects</p>
+            <p className="text-xs text-secondary font-medium font-mono">Subjects</p>
             <p className="text-xl font-bold font-mono text-primary">{tree.totalSubjects}</p>
           </div>
         </div>
 
-        <div className="bg-surface p-4 rounded-xl border border-border flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-background border border-border flex items-center justify-center text-secondary">
+        <div className="bg-surface p-4 rounded-sm border border-border flex items-center space-x-3.5">
+          <div className="w-9 h-9 rounded-sm bg-background border border-border flex items-center justify-center text-secondary">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">Chapters</p>
+            <p className="text-xs text-secondary font-medium font-mono">Chapters</p>
             <p className="text-xl font-bold font-mono text-primary">{tree.totalChapters}</p>
           </div>
         </div>
 
-        <div className="bg-surface p-4 rounded-xl border border-border flex items-center space-x-3.5">
-          <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
+        <div className="bg-surface p-4 rounded-sm border border-border flex items-center space-x-3.5">
+          <div className="w-9 h-9 rounded-sm bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs text-secondary font-medium">Topics Completed</p>
+            <p className="text-xs text-secondary font-medium font-mono">Topics Completed</p>
             <p className="text-xl font-bold font-mono text-primary">
               {tree.completedTopics} / {tree.totalTopics}
             </p>
@@ -115,8 +115,8 @@ export function SyllabusTree({
       {/* Main Header & Actions */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-primary">Syllabus Spine</h2>
-          <p className="text-xs text-secondary">
+          <h2 className="text-xl font-bold text-primary tracking-tight">Syllabus Spine</h2>
+          <p className="text-xs text-secondary mt-0.5">
             Interactive hierarchy: Subject → Chapter → Topic → Subtopic
           </p>
         </div>
@@ -124,14 +124,14 @@ export function SyllabusTree({
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsImportOpen(true)}
-            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary border border-border text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-3.5 py-2 bg-surface hover:bg-zinc-800 text-primary border border-border text-xs font-semibold rounded-sm transition-colors"
           >
             <span>Import PDF Syllabus</span>
           </button>
 
           <button
             onClick={() => setIsAddingSubject(!isAddingSubject)}
-            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition-colors"
+            className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             <span>Add Subject</span>
@@ -141,8 +141,8 @@ export function SyllabusTree({
 
       {/* Add Subject Form */}
       {isAddingSubject && (
-        <form onSubmit={handleCreateSubject} className="bg-surface p-4 rounded-xl border border-border space-y-3">
-          <h3 className="text-xs font-bold text-primary uppercase tracking-wider">New Subject</h3>
+        <form onSubmit={handleCreateSubject} className="bg-surface p-4 rounded-sm border border-border space-y-3">
+          <h3 className="text-xs font-bold text-primary uppercase tracking-wider font-mono">New Subject</h3>
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <input
               type="text"
@@ -150,7 +150,7 @@ export function SyllabusTree({
               value={newSubjectName}
               onChange={(e) => setNewSubjectName(e.target.value)}
               autoFocus
-              className="bg-background border border-border rounded-lg px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-blue-500 flex-1"
+              className="bg-background border border-border rounded-sm px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 flex-1"
             />
 
             {/* Color Palette Selector */}
@@ -160,7 +160,7 @@ export function SyllabusTree({
                   key={c}
                   type="button"
                   onClick={() => setNewSubjectColor(c)}
-                  className={`w-5 h-5 rounded-full transition-transform ${newSubjectColor === c ? 'scale-125 ring-2 ring-blue-500 ring-offset-2' : 'opacity-70 hover:opacity-100'
+                  className={`w-5 h-5 rounded-full transition-transform ${newSubjectColor === c ? 'scale-125 ring-2 ring-orange-500 ring-offset-2 ring-offset-zinc-950' : 'opacity-70 hover:opacity-100'
                     }`}
                   style={{ backgroundColor: c }}
                 />
@@ -171,7 +171,7 @@ export function SyllabusTree({
               <button
                 type="submit"
                 disabled={loading}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition-colors"
+                className="px-4 py-2 bg-orange-500 text-zinc-950 rounded-sm text-xs font-semibold hover:bg-orange-600 transition-colors"
               >
                 Create Subject
               </button>
@@ -189,14 +189,14 @@ export function SyllabusTree({
 
       {/* Subject Tree */}
       {tree.subjects.length === 0 ? (
-        <div className="bg-surface p-12 rounded-xl text-center border border-dashed border-border">
+        <div className="bg-surface p-12 rounded-sm text-center border border-dashed border-border">
           <h3 className="text-base font-bold text-primary">Your Syllabus is Empty</h3>
           <p className="text-xs text-secondary mt-1 mb-4">
             Start building your exam syllabus by adding your first subject.
           </p>
           <button
             onClick={() => setIsAddingSubject(true)}
-            className="px-4 py-2 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-2 bg-orange-500 text-zinc-950 text-xs font-semibold rounded-sm hover:bg-orange-600 transition-colors"
           >
             + Create First Subject
           </button>

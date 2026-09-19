@@ -195,8 +195,8 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
     if (parts.length === 0) return <span className="text-xs text-secondary">General Note</span>;
 
     return (
-      <nav className="flex items-center space-x-1 text-xs text-secondary">
-        <FolderTree className="w-3.5 h-3.5 text-blue-500 shrink-0" />
+      <nav className="flex items-center space-x-1 text-xs text-secondary font-mono">
+        <FolderTree className="w-3.5 h-3.5 text-orange-500 shrink-0" />
         {parts.map((p, idx) => (
           <React.Fragment key={idx}>
             {idx > 0 && <span>/</span>}
@@ -222,7 +222,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
 
       {/* Draft Conflict Banner */}
       {localDraftFound && (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 flex items-center justify-between text-xs text-amber-500 font-medium">
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-sm p-3 flex items-center justify-between text-xs text-amber-400 font-medium">
           <div className="flex items-center space-x-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>An unsaved local draft was found from an offline session.</span>
@@ -230,7 +230,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <div className="flex items-center space-x-2">
             <button
               onClick={restoreDraft}
-              className="px-3 py-1 bg-amber-500 text-white rounded-lg font-semibold hover:bg-amber-600 transition-colors"
+              className="px-3 py-1 bg-amber-500 text-zinc-950 rounded-sm font-semibold hover:bg-amber-600 transition-colors"
             >
               Restore Draft
             </button>
@@ -245,12 +245,12 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
       )}
 
       {/* Top Header & Navigation */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-surface p-4 rounded-xl border border-border">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-surface p-4 rounded-sm border border-border">
         <div className="space-y-1 min-w-0 flex-1">
           <div className="flex items-center space-x-2">
             <button
               onClick={() => router.back()}
-              className="p-1 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              className="p-1 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
             </button>
@@ -261,30 +261,30 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Note title..."
-            className="w-full text-xl font-bold bg-transparent text-primary focus:outline-none placeholder:text-secondary"
+            className="w-full text-xl font-bold bg-transparent text-primary focus:outline-none placeholder:text-secondary tracking-tight"
           />
         </div>
 
         {/* Right Actions & Autosave Indicator */}
         <div className="flex items-center space-x-3 shrink-0">
           {/* Autosave Status Badge */}
-          <div className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-md border border-border bg-background">
+          <div className="flex items-center space-x-1.5 text-xs font-semibold px-2.5 py-1 rounded-sm border border-border bg-background font-mono">
             {saveStatus === 'SAVING' && (
               <>
-                <Loader2 className="w-3.5 h-3.5 text-blue-500 animate-spin" />
-                <span className="text-blue-500">Saving...</span>
+                <Loader2 className="w-3.5 h-3.5 text-orange-500 animate-spin" />
+                <span className="text-orange-400">Saving...</span>
               </>
             )}
             {saveStatus === 'SAVED' && (
               <>
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                 <span className="text-secondary">Saved</span>
               </>
             )}
             {saveStatus === 'FAILED' && (
               <>
-                <AlertTriangle className="w-3.5 h-3.5 text-red-500" />
-                <span className="text-red-500">Failed to save</span>
+                <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                <span className="text-red-400">Failed to save</span>
               </>
             )}
           </div>
@@ -292,10 +292,10 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <button
             onClick={togglePin}
             className={clsx(
-              'p-2 rounded-lg border transition-colors',
+              'p-2 rounded-sm border transition-colors',
               note.isPinned
-                ? 'bg-amber-500/10 text-amber-500 border-amber-500/30'
-                : 'text-secondary border-border hover:text-amber-500 hover:bg-amber-500/10'
+                ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                : 'text-secondary border-border hover:text-amber-400 hover:bg-zinc-800'
             )}
             title={note.isPinned ? 'Unpin' : 'Pin'}
           >
@@ -305,10 +305,10 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <button
             onClick={toggleArchive}
             className={clsx(
-              'p-2 rounded-lg border transition-colors',
+              'p-2 rounded-sm border transition-colors',
               note.isArchived
-                ? 'bg-purple-500/10 text-purple-500 border-purple-500/30'
-                : 'text-secondary border-border hover:text-purple-500 hover:bg-purple-500/10'
+                ? 'bg-purple-500/10 text-purple-400 border-purple-500/30'
+                : 'text-secondary border-border hover:text-purple-400 hover:bg-zinc-800'
             )}
             title={note.isArchived ? 'Unarchive' : 'Archive'}
           >
@@ -317,7 +317,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
 
           <button
             onClick={handleDelete}
-            className="p-2 text-secondary border border-border hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors"
+            className="p-2 text-secondary border border-border hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
             title="Delete Note"
           >
             <Trash2 className="w-4 h-4" />
@@ -326,19 +326,19 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
       </div>
 
       {/* Editor Toolbar & View Mode Switcher */}
-      <div className="flex items-center justify-between bg-surface px-4 py-2 rounded-xl border border-border text-xs">
+      <div className="flex items-center justify-between bg-surface px-4 py-2 rounded-sm border border-border text-xs">
         {/* Formatting Buttons */}
         <div className="flex items-center space-x-1 flex-wrap">
           <button
             onClick={() => insertFormatting('# ', '')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Heading 1"
           >
             <Heading1 className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('## ', '')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Heading 2"
           >
             <Heading2 className="w-4 h-4" />
@@ -346,14 +346,14 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <div className="w-px h-4 bg-border mx-1" />
           <button
             onClick={() => insertFormatting('**', '**')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Bold (Ctrl+B)"
           >
             <Bold className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('*', '*')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Italic (Ctrl+I)"
           >
             <Italic className="w-4 h-4" />
@@ -361,21 +361,21 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <div className="w-px h-4 bg-border mx-1" />
           <button
             onClick={() => insertFormatting('- ', '')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Unordered List"
           >
             <List className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('1. ', '')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Ordered List"
           >
             <ListOrdered className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('- [ ] ', '')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Checklist"
           >
             <CheckSquare className="w-4 h-4" />
@@ -383,40 +383,40 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <div className="w-px h-4 bg-border mx-1" />
           <button
             onClick={() => insertFormatting('`', '`')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Inline Code"
           >
             <Code className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('\n$$\n', '\n$$\n')}
-            className="p-1.5 text-blue-500 bg-blue-500/10 hover:bg-blue-500/20 rounded transition-colors font-bold"
+            className="p-1.5 text-orange-400 bg-orange-500/10 hover:bg-orange-500/20 rounded-sm transition-colors font-bold"
             title="LaTeX KaTeX Math Formula"
           >
             <Sigma className="w-4 h-4" />
           </button>
           <button
             onClick={() => insertFormatting('[', '](https://)')}
-            className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+            className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             title="Link (Ctrl+K)"
           >
             <LinkIcon className="w-4 h-4" />
           </button>
 
           {/* Image Upload Button */}
-          <label className="p-1.5 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors cursor-pointer" title="Upload Image">
+          <label className="p-1.5 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors cursor-pointer" title="Upload Image">
             <ImageIcon className="w-4 h-4" />
             <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
           </label>
         </div>
 
         {/* View Mode Toggle: Split / Write / Preview */}
-        <div className="flex rounded-lg bg-background p-1 border border-border">
+        <div className="flex rounded-sm bg-background p-1 border border-border">
           <button
             onClick={() => setMode('WRITE')}
             className={clsx(
-              'flex items-center space-x-1 px-2.5 py-1 rounded text-xs font-semibold transition-colors',
-              mode === 'WRITE' ? 'bg-surface text-blue-500 shadow-sm' : 'text-secondary'
+              'flex items-center space-x-1 px-2.5 py-1 rounded-sm text-xs font-semibold transition-colors',
+              mode === 'WRITE' ? 'bg-surface text-orange-400 shadow-none' : 'text-secondary'
             )}
           >
             <Edit3 className="w-3.5 h-3.5" />
@@ -425,8 +425,8 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <button
             onClick={() => setMode('SPLIT')}
             className={clsx(
-              'flex items-center space-x-1 px-2.5 py-1 rounded text-xs font-semibold transition-colors',
-              mode === 'SPLIT' ? 'bg-surface text-blue-500 shadow-sm' : 'text-secondary'
+              'flex items-center space-x-1 px-2.5 py-1 rounded-sm text-xs font-semibold transition-colors',
+              mode === 'SPLIT' ? 'bg-surface text-orange-400 shadow-none' : 'text-secondary'
             )}
           >
             <Columns className="w-3.5 h-3.5" />
@@ -435,8 +435,8 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
           <button
             onClick={() => setMode('PREVIEW')}
             className={clsx(
-              'flex items-center space-x-1 px-2.5 py-1 rounded text-xs font-semibold transition-colors',
-              mode === 'PREVIEW' ? 'bg-surface text-blue-500 shadow-sm' : 'text-secondary'
+              'flex items-center space-x-1 px-2.5 py-1 rounded-sm text-xs font-semibold transition-colors',
+              mode === 'PREVIEW' ? 'bg-surface text-orange-400 shadow-none' : 'text-secondary'
             )}
           >
             <Eye className="w-3.5 h-3.5" />
@@ -449,7 +449,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-h-[500px]">
         {/* Write Pane */}
         {(mode === 'WRITE' || mode === 'SPLIT') && (
-          <div className={clsx('bg-surface p-4 rounded-xl border border-border flex flex-col', mode === 'WRITE' && 'md:col-span-2')}>
+          <div className={clsx('bg-surface p-4 rounded-sm border border-border flex flex-col', mode === 'WRITE' && 'md:col-span-2')}>
             <textarea
               ref={textareaRef}
               value={content}
@@ -462,7 +462,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
 
         {/* Live KaTeX & Markdown Preview Pane */}
         {(mode === 'PREVIEW' || mode === 'SPLIT') && (
-          <div className={clsx('bg-surface p-6 rounded-xl border border-border overflow-y-auto min-h-[500px]', mode === 'PREVIEW' && 'md:col-span-2')}>
+          <div className={clsx('bg-surface p-6 rounded-sm border border-border overflow-y-auto min-h-[500px]', mode === 'PREVIEW' && 'md:col-span-2')}>
             <div className="prose dark:prose-invert max-w-none text-primary text-sm leading-relaxed space-y-3">
               <MathRenderer content={content} />
             </div>
@@ -471,21 +471,21 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
       </div>
 
       {/* Sources & Referenced Study Materials */}
-      <div className="bg-surface p-5 rounded-xl border border-border space-y-4">
+      <div className="bg-surface p-5 rounded-sm border border-border space-y-4">
         <div className="flex items-center justify-between border-b border-border pb-3">
           <div className="flex items-center space-x-2">
-            <Paperclip className="w-4 h-4 text-blue-500" />
-            <h4 className="text-sm font-bold text-primary">Sources & Referenced Materials</h4>
-            <span className="text-xs bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded-full font-mono font-semibold">
+            <Paperclip className="w-4 h-4 text-orange-500" />
+            <h4 className="text-sm font-bold text-primary tracking-tight">Sources & Referenced Materials</h4>
+            <span className="text-xs bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded-sm font-mono font-semibold">
               {(note.resources || []).length}
             </span>
           </div>
 
           <button
             onClick={() => setIsAttachModalOpen(true)}
-            className="flex items-center space-x-1.5 px-3 py-1.5 bg-surface hover:bg-slate-100 dark:hover:bg-slate-800 text-primary border border-border rounded-lg text-xs font-semibold transition-colors"
+            className="flex items-center space-x-1.5 px-3 py-1.5 bg-surface hover:bg-zinc-800 text-primary border border-border rounded-sm text-xs font-semibold transition-colors"
           >
-            <Paperclip className="w-3.5 h-3.5 text-blue-500" />
+            <Paperclip className="w-3.5 h-3.5 text-orange-500" />
             <span>Attach Resource</span>
           </button>
         </div>

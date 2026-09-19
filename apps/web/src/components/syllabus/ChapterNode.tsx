@@ -62,17 +62,17 @@ export function ChapterNode({
   };
 
   return (
-    <div className="bg-surface rounded-lg border border-border overflow-hidden mb-2.5">
+    <div className="bg-surface rounded-sm border border-border overflow-hidden mb-2.5">
       {/* Chapter Header */}
       <div className="p-3 bg-background/50 flex items-center justify-between border-b border-border">
         <div className="flex items-center space-x-3 flex-1">
           <button
             onClick={() => setExpanded(!expanded)}
-            className="p-1 text-secondary hover:text-primary rounded"
+            className="p-1 text-secondary hover:text-primary rounded-sm"
           >
             {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
           </button>
-          <BookOpen className="w-4 h-4 text-blue-500 shrink-0" />
+          <BookOpen className="w-4 h-4 text-orange-400 shrink-0" />
 
           {isEditing ? (
             <div className="flex items-center space-x-2 flex-1">
@@ -81,18 +81,18 @@ export function ChapterNode({
                 value={editName}
                 onChange={(e) => setEditName(e.target.value)}
                 autoFocus
-                className="bg-background border border-border rounded px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
+                className="bg-background border border-border rounded-sm px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-orange-500 flex-1"
               />
               <button
                 onClick={handleSaveChapter}
                 disabled={loading}
-                className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded"
+                className="p-1 text-emerald-500 hover:bg-emerald-500/10 rounded-sm"
               >
                 <Check className="w-3.5 h-3.5" />
               </button>
               <button
                 onClick={() => setIsEditing(false)}
-                className="p-1 text-secondary hover:bg-slate-100 dark:hover:bg-slate-800 rounded"
+                className="p-1 text-secondary hover:bg-slate-100 dark:hover:bg-zinc-800 rounded-sm"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -107,7 +107,7 @@ export function ChapterNode({
           <div className="hidden sm:flex items-center space-x-3 w-40">
             <div className="h-1.5 flex-1 bg-background rounded-full overflow-hidden border border-border">
               <div
-                className="h-full bg-blue-500 transition-all duration-300"
+                className="h-full bg-orange-500 transition-all duration-300"
                 style={{ width: `${chapter.progressPercentage}%` }}
               />
             </div>
@@ -124,21 +124,21 @@ export function ChapterNode({
             <button
               onClick={() => setIsAddingTopic(!isAddingTopic)}
               title="Add Topic"
-              className="p-1 text-secondary hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+              className="p-1 text-secondary hover:text-orange-400 hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Plus className="w-4 h-4" />
             </button>
             <button
               onClick={() => setIsEditing(true)}
               title="Edit Chapter"
-              className="p-1 text-secondary hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+              className="p-1 text-secondary hover:text-primary hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Edit2 className="w-3.5 h-3.5" />
             </button>
             <button
               onClick={() => onDeleteChapter(chapter.id)}
               title="Delete Chapter"
-              className="p-1 text-secondary hover:text-red-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+              className="p-1 text-secondary hover:text-red-400 hover:bg-zinc-800 rounded-sm transition-colors"
             >
               <Trash2 className="w-3.5 h-3.5" />
             </button>
@@ -155,12 +155,12 @@ export function ChapterNode({
             value={newTopicName}
             onChange={(e) => setNewTopicName(e.target.value)}
             autoFocus
-            className="bg-surface border border-border rounded-md px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-blue-500 flex-1"
+            className="bg-surface border border-border rounded-sm px-3 py-1.5 text-xs text-primary focus:outline-none focus:border-orange-500 flex-1"
           />
           <button
             type="submit"
             disabled={loading}
-            className="px-3 py-1.5 bg-blue-600 text-white rounded-md text-xs font-semibold hover:bg-blue-700 transition-colors"
+            className="px-3 py-1.5 bg-orange-500 text-zinc-950 rounded-sm text-xs font-semibold hover:bg-orange-600 transition-colors"
           >
             Add Topic
           </button>

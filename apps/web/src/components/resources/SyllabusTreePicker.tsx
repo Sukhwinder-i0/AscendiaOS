@@ -73,15 +73,15 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
   };
 
   return (
-    <div className="space-y-3 bg-surface p-4 rounded-xl border border-border">
+    <div className="space-y-3 bg-surface p-4 rounded-sm border border-border">
       {/* Exam Selector if multiple exams exist */}
       {exams.length > 1 && (
         <div className="flex items-center space-x-2 pb-2 border-b border-border">
-          <span className="text-xs font-semibold text-secondary uppercase">Select Exam:</span>
+          <span className="text-xs font-semibold text-secondary uppercase font-mono">Select Exam:</span>
           <select
             value={activeExamId}
             onChange={(e) => setActiveExamId(e.target.value)}
-            className="bg-background border border-border rounded-lg px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-blue-500"
+            className="bg-background border border-border rounded-sm px-2.5 py-1 text-xs text-primary focus:outline-none focus:border-orange-500 font-mono"
           >
             {exams.map((ex) => (
               <option key={ex.id} value={ex.id}>
@@ -93,22 +93,22 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
       )}
 
       {/* Location Tree */}
-      <div className="space-y-1 max-h-64 overflow-y-auto pr-1">
+      <div className="space-y-1 max-h-64 overflow-y-auto pr-1 font-mono">
         {/* Inbox Option */}
         <div
           onClick={() => onSelect({ locationType: 'INBOX' })}
           className={clsx(
-            'flex items-center justify-between p-2 rounded-lg cursor-pointer text-xs font-semibold transition-colors border',
+            'flex items-center justify-between p-2 rounded-sm cursor-pointer text-xs font-semibold transition-colors border',
             isSelected('INBOX')
-              ? 'bg-amber-500/10 border-amber-500/30 text-amber-500'
+              ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
               : 'border-transparent text-primary hover:bg-background'
           )}
         >
           <div className="flex items-center space-x-2">
-            <Inbox className="w-4 h-4 text-amber-500" />
+            <Inbox className="w-4 h-4 text-orange-500" />
             <span>Resource Inbox (Unassigned)</span>
           </div>
-          {isSelected('INBOX') && <Check className="w-4 h-4" />}
+          {isSelected('INBOX') && <Check className="w-4 h-4 text-orange-400" />}
         </div>
 
         {/* Exam Level Option */}
@@ -116,23 +116,23 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
           <div
             onClick={() => onSelect({ locationType: 'EXAM', examId: activeExamId })}
             className={clsx(
-              'flex items-center justify-between p-2 rounded-lg cursor-pointer text-xs font-semibold transition-colors border ml-2',
+              'flex items-center justify-between p-2 rounded-sm cursor-pointer text-xs font-semibold transition-colors border ml-2',
               isSelected('EXAM')
-                ? 'bg-blue-500/10 border-blue-500/30 text-blue-500'
+                ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
                 : 'border-transparent text-primary hover:bg-background'
             )}
           >
             <div className="flex items-center space-x-2">
-              <FolderTree className="w-4 h-4 text-blue-500" />
+              <FolderTree className="w-4 h-4 text-orange-500" />
               <span>Full Exam Scope</span>
             </div>
-            {isSelected('EXAM') && <Check className="w-4 h-4" />}
+            {isSelected('EXAM') && <Check className="w-4 h-4 text-orange-400" />}
           </div>
         )}
 
         {/* Syllabus Nodes */}
         {loading ? (
-          <div className="p-4 text-center text-xs text-secondary">Loading syllabus structure...</div>
+          <div className="p-4 text-center text-xs text-secondary font-mono">Loading syllabus structure...</div>
         ) : tree ? (
           tree.subjects.map((sub) => {
             const subExpanded = expandedNodes[sub.id];
@@ -148,23 +148,23 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
                     })
                   }
                   className={clsx(
-                    'flex items-center justify-between p-2 rounded-lg cursor-pointer text-xs font-semibold transition-colors border',
+                    'flex items-center justify-between p-2 rounded-sm cursor-pointer text-xs font-semibold transition-colors border',
                     isSelected('SUBJECT', sub.id)
-                      ? 'bg-blue-500/10 border-blue-500/30 text-blue-500'
+                      ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
                       : 'border-transparent text-primary hover:bg-background'
                   )}
                 >
                   <div className="flex items-center space-x-2">
                     <button
                       onClick={(e) => toggleExpand(sub.id, e)}
-                      className="p-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded"
+                      className="p-0.5 hover:bg-zinc-800 rounded-sm"
                     >
                       {subExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
                     </button>
-                    <BookOpen className="w-3.5 h-3.5 text-blue-500" />
+                    <BookOpen className="w-3.5 h-3.5 text-orange-500" />
                     <span>{sub.name}</span>
                   </div>
-                  {isSelected('SUBJECT', sub.id) && <Check className="w-3.5 h-3.5" />}
+                  {isSelected('SUBJECT', sub.id) && <Check className="w-3.5 h-3.5 text-orange-400" />}
                 </div>
 
                 {/* Chapters */}
@@ -183,16 +183,16 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
                             })
                           }
                           className={clsx(
-                            'flex items-center justify-between p-1.5 rounded-lg cursor-pointer text-xs transition-colors border',
+                            'flex items-center justify-between p-1.5 rounded-sm cursor-pointer text-xs transition-colors border',
                             isSelected('CHAPTER', chap.id)
-                              ? 'bg-blue-500/10 border-blue-500/30 text-blue-500 font-semibold'
+                              ? 'bg-orange-500/10 border-orange-500/30 text-orange-400 font-semibold'
                               : 'border-transparent text-secondary hover:bg-background'
                           )}
                         >
                           <div className="flex items-center space-x-2">
                             <button
                               onClick={(e) => toggleExpand(chap.id, e)}
-                              className="p-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded"
+                              className="p-0.5 hover:bg-zinc-800 rounded-sm"
                             >
                               {chapExpanded ? (
                                 <ChevronDown className="w-3 h-3" />
@@ -203,7 +203,7 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
                             <Layers className="w-3.5 h-3.5" />
                             <span>{chap.name}</span>
                           </div>
-                          {isSelected('CHAPTER', chap.id) && <Check className="w-3.5 h-3.5" />}
+                          {isSelected('CHAPTER', chap.id) && <Check className="w-3.5 h-3.5 text-orange-400" />}
                         </div>
 
                         {/* Topics */}
@@ -221,14 +221,14 @@ export function SyllabusTreePicker({ selectedLocation, onSelect, examId }: Sylla
                                 })
                               }
                               className={clsx(
-                                'flex items-center justify-between p-1.5 pl-6 rounded-lg cursor-pointer text-xs transition-colors border ml-2',
+                                'flex items-center justify-between p-1.5 pl-6 rounded-sm cursor-pointer text-xs transition-colors border ml-2',
                                 isSelected('TOPIC', top.id)
-                                  ? 'bg-blue-500/10 border-blue-500/30 text-blue-500 font-semibold'
+                                  ? 'bg-orange-500/10 border-orange-500/30 text-orange-400 font-semibold'
                                   : 'border-transparent text-secondary hover:bg-background'
                               )}
                             >
                               <span>{top.name}</span>
-                              {isSelected('TOPIC', top.id) && <Check className="w-3.5 h-3.5" />}
+                              {isSelected('TOPIC', top.id) && <Check className="w-3.5 h-3.5 text-orange-400" />}
                             </div>
                           ))}
                       </div>
