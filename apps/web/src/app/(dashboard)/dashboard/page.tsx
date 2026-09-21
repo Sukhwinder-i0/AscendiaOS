@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
-import { ExamResponse } from '@studyos/shared';
+import { ExamResponse, StreakResponse } from '@studyos/shared';
 import { api } from '@/lib/api';
 import {
   GraduationCap,
@@ -20,12 +20,16 @@ import { DailySummaryCard } from '@/components/analytics/DailySummaryCard';
 export default function DashboardPage() {
   const { user } = useAuth();
   const [exams, setExams] = useState<ExamResponse[]>([]);
+  const [streak, setStreak] = useState<StreakResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
-      .getExams()
-      .then((res) => setExams(res))
+    const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    Promise.all([api.getExams(), api.getStreak(userTz)])
+      .then(([examsRes, streakRes]) => {
+        setExams(examsRes);
+        setStreak(streakRes);
+      })
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
@@ -121,22 +125,35 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="bg-surface p-6 rounded-sm border border-border space-y-4">
+          <Link
+            href="/activity"
+            className="bg-surface p-6 rounded-sm border border-border space-y-4 hover:border-orange-500/40 transition-colors group block"
+          >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
                 Study Consistency
               </span>
-              <Flame className="w-4 h-4 text-orange-500 fill-orange-500" />
+              <Flame
+                className={`w-4 h-4 ${
+                  (streak?.currentStreak || 0) > 0
+                    ? 'text-orange-500 fill-orange-500 animate-pulse'
+                    : 'text-secondary'
+                }`}
+              />
             </div>
             <div>
-              <p className="text-3xl font-extrabold font-mono text-primary">0 Days</p>
+              <p className="text-3xl font-extrabold font-mono text-primary">
+                {streak?.currentStreak || 0} {streak?.currentStreak === 1 ? 'Day' : 'Days'}
+              </p>
               <p className="text-xs text-secondary mt-1">Current daily study streak</p>
             </div>
             <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-secondary font-mono">
               <span>Longest Streak:</span>
-              <span className="font-semibold text-primary">0 Days</span>
+              <span className="font-semibold text-primary">
+                {streak?.longestStreak || 0} Days
+              </span>
             </div>
-          </div>
+          </Link>
         </div>
       ) : (
         <div className="bg-surface p-8 rounded-sm text-center border border-dashed border-border">

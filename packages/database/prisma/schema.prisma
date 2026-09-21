@@ -235,6 +235,7 @@ model TopicProgress {
 
   @@unique([userId, topicId])
   @@index([userId])
+  @@index([userId, completedAt])
   @@index([topicId])
   @@map("topic_progress")
 }
@@ -272,6 +273,7 @@ model StudySession {
 
   @@index([userId, status])
   @@index([userId, startedAt])
+  @@index([userId, endedAt])
   @@index([topicId])
   @@index([subjectId])
   @@index([examId])

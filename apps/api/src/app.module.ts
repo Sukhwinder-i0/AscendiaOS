@@ -8,6 +8,7 @@ import { SyllabusImportModule } from './syllabus-import/syllabus-import.module';
 import { ResourcesModule } from './resources/resources.module';
 import { NotesModule } from './notes/notes.module';
 import { StudySessionsModule } from './study-sessions/study-sessions.module';
+import { ActivityModule } from './activity/activity.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { StudySessionsModule } from './study-sessions/study-sessions.module';
     ResourcesModule,
     NotesModule,
     StudySessionsModule,
+    ActivityModule,
   ],
 })
 export class AppModule {}

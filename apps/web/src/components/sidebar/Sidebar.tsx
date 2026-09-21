@@ -14,6 +14,7 @@ import {
   PieChart,
   Target,
   Clock,
+  Flame,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '@/context/ThemeContext';
@@ -33,6 +34,7 @@ export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarPr
 
   const primaryNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { label: 'Activity & Streaks', href: '/activity', icon: Flame },
     { label: 'Exams', href: '/exams', icon: GraduationCap },
     { label: 'Study History', href: '/history', icon: Clock },
     { label: 'Notes Workspace', href: '/notes', icon: FileText },
@@ -170,7 +172,7 @@ export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarPr
         <div className="bg-background rounded-sm p-3 border border-border flex items-center space-x-3">
           <div className="text-xs font-mono">
             <p className="font-semibold text-primary">Prep Infrastructure</p>
-            <p className="text-secondary text-[10px]">v1.0 • Phase 5 Active</p>
+            <p className="text-secondary text-[10px]">v1.0 • Phase 6 Active</p>
           </div>
         </div>
       </div>

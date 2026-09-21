@@ -629,4 +629,122 @@ export interface ProgressAggregateResponse {
   totalStudySeconds: number;
 }
 
+// ==========================================
+// PHASE 6: ACTIVITY, STREAKS & CONSISTENCY
+// ==========================================
+
+export const MIN_STUDY_MINUTES_FOR_ACTIVITY = 15;
+export const MIN_STUDY_SECONDS_FOR_ACTIVITY = 900;
+
+export function getActivityLevel(studySeconds: number): number {
+  if (studySeconds < MIN_STUDY_SECONDS_FOR_ACTIVITY) return 0; // < 15 mins
+  if (studySeconds < 1800) return 1; // 15–29 mins
+  if (studySeconds < 3600) return 2; // 30–59 mins
+  if (studySeconds < 7200) return 3; // 60–119 mins
+  return 4; // 120+ mins
+}
+
+export const ActivityHeatmapQuerySchema = z.object({
+  from: z.string().optional(),
+  to: z.string().optional(),
+  timezone: z.string().optional().default('UTC'),
+});
+export type ActivityHeatmapQueryDto = z.input<typeof ActivityHeatmapQuerySchema>;
+
+export const ActivityQuerySchema = z.object({
+  timezone: z.string().optional().default('UTC'),
+});
+export type ActivityQueryDto = z.input<typeof ActivityQuerySchema>;
+
+export const ActivityHistoryQuerySchema = z.object({
+  timezone: z.string().optional().default('UTC'),
+  page: z.number().int().positive().optional().default(1),
+  limit: z.number().int().positive().max(100).optional().default(20),
+});
+export type ActivityHistoryQueryDto = z.input<typeof ActivityHistoryQuerySchema>;
+
+export interface DailyActivityItem {
+  date: string; // YYYY-MM-DD
+  studySeconds: number;
+  sessions: number;
+  topicsStudied: number;
+  topicsCompleted: number;
+  activityLevel: number; // 0..4
+  isActive: boolean;
+}
+
+export interface ActivityHeatmapResponse {
+  from: string;
+  to: string;
+  timezone: string;
+  totalActiveDays: number;
+  totalStudySeconds: number;
+  days: DailyActivityItem[];
+}
+
+export interface StreakResponse {
+  currentStreak: number;
+  longestStreak: number;
+  totalActiveDays: number;
+  lastActiveDate: string | null;
+  isTodayActive: boolean;
+}
+
+export interface WeeklyDayItem {
+  date: string; // YYYY-MM-DD
+  dayName: string; // Mon, Tue, etc.
+  studySeconds: number;
+  isActive: boolean;
+}
+
+export interface WeeklyActivityResponse {
+  days: WeeklyDayItem[];
+  totalStudySeconds: number;
+  activeDaysCount: number;
+  totalDaysCount: number;
+}
+
+export interface ConsistencyStatsResponse {
+  consistency7d: number; // Percentage 0..100
+  consistency30d: number;
+  consistency90d: number;
+  activeDays7d: number;
+  activeDays30d: number;
+  activeDays90d: number;
+}
+
+export interface ActivityHistoryItemResponse {
+  id: string;
+  topicId: string;
+  topicName: string;
+  subjectId?: string | null;
+  subjectName?: string | null;
+  subjectColorHex?: string | null;
+  examId?: string | null;
+  examTitle?: string | null;
+  startedAt: string | null;
+  endedAt: string | null;
+  durationSeconds: number;
+  sessionType: SessionType;
+  confidence?: number | null;
+}
+
+export interface ActivityHistoryResponse {
+  data: ActivityHistoryItemResponse[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface ActivitySummaryResponse {
+  today: DailySummaryResponse;
+  streak: StreakResponse;
+  weekly: WeeklyActivityResponse;
+  consistency: ConsistencyStatsResponse;
+}
+
+
 

@@ -36,6 +36,14 @@ import {
   StudySessionQueryDto,
   StudySessionResponse,
   DailySummaryResponse,
+  ActivityHeatmapQueryDto,
+  ActivityHeatmapResponse,
+  StreakResponse,
+  WeeklyActivityResponse,
+  ConsistencyStatsResponse,
+  ActivityHistoryQueryDto,
+  ActivityHistoryResponse,
+  ActivitySummaryResponse,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -539,6 +547,67 @@ class ApiClient {
     return this.request<{ success: boolean; id: string }>(`/study-sessions/${id}/discard`, {
       method: 'POST',
     });
+  }
+
+  // Activity & Streak API
+  async getActivitySummary(timezone?: string): Promise<ActivitySummaryResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<ActivitySummaryResponse>(`/activity/summary${queryStr}`);
+  }
+
+  async getDailyActivityToday(timezone?: string): Promise<DailySummaryResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<DailySummaryResponse>(`/activity/today${queryStr}`);
+  }
+
+  async getActivityHeatmap(
+    from?: string,
+    to?: string,
+    timezone?: string,
+  ): Promise<ActivityHeatmapResponse> {
+    const params = new URLSearchParams();
+    if (from) params.append('from', from);
+    if (to) params.append('to', to);
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<ActivityHeatmapResponse>(`/activity/heatmap${queryStr}`);
+  }
+
+  async getStreak(timezone?: string): Promise<StreakResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<StreakResponse>(`/activity/streak${queryStr}`);
+  }
+
+  async getWeeklyActivity(timezone?: string): Promise<WeeklyActivityResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<WeeklyActivityResponse>(`/activity/weekly${queryStr}`);
+  }
+
+  async getConsistencyStats(timezone?: string): Promise<ConsistencyStatsResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<ConsistencyStatsResponse>(`/activity/consistency${queryStr}`);
+  }
+
+  async getActivityHistory(
+    query: ActivityHistoryQueryDto = {},
+  ): Promise<ActivityHistoryResponse> {
+    const params = new URLSearchParams();
+    if (query.timezone) params.append('timezone', query.timezone);
+    if (query.page) params.append('page', String(query.page));
+    if (query.limit) params.append('limit', String(query.limit));
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<ActivityHistoryResponse>(`/activity/history${queryStr}`);
   }
 }
 
