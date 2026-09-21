@@ -44,6 +44,12 @@ import {
   ActivityHistoryQueryDto,
   ActivityHistoryResponse,
   ActivitySummaryResponse,
+  AnalyticsDashboardQueryDto,
+  DashboardAnalyticsResponse,
+  SubjectDetailAnalyticsResponse,
+  TopicProgressQueryDto,
+  PaginatedTopicProgressResponse,
+  TrendPeriod,
 } from '@studyos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
@@ -608,6 +614,49 @@ class ApiClient {
 
     const queryStr = params.toString() ? `?${params.toString()}` : '';
     return this.request<ActivityHistoryResponse>(`/activity/history${queryStr}`);
+  }
+
+  // Analytics API
+  async getDashboardAnalytics(
+    query: AnalyticsDashboardQueryDto = {},
+  ): Promise<DashboardAnalyticsResponse> {
+    const params = new URLSearchParams();
+    if (query.examId) params.append('examId', query.examId);
+    if (query.timezone) params.append('timezone', query.timezone);
+    if (query.trendPeriod) params.append('trendPeriod', query.trendPeriod);
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<DashboardAnalyticsResponse>(`/analytics/dashboard${queryStr}`);
+  }
+
+  async getSubjectAnalytics(
+    subjectId: string,
+    timezone?: string,
+  ): Promise<SubjectDetailAnalyticsResponse> {
+    const params = new URLSearchParams();
+    if (timezone) params.append('timezone', timezone);
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<SubjectDetailAnalyticsResponse>(
+      `/analytics/subjects/${subjectId}${queryStr}`,
+    );
+  }
+
+  async getTopicProgressOverview(
+    query: TopicProgressQueryDto = {},
+    timezone?: string,
+  ): Promise<PaginatedTopicProgressResponse> {
+    const params = new URLSearchParams();
+    if (query.examId) params.append('examId', query.examId);
+    if (query.status) params.append('status', query.status);
+    if (query.sortBy) params.append('sortBy', query.sortBy);
+    if (query.page) params.append('page', String(query.page));
+    if (query.limit) params.append('limit', String(query.limit));
+    if (timezone) params.append('timezone', timezone);
+
+    const queryStr = params.toString() ? `?${params.toString()}` : '';
+    return this.request<PaginatedTopicProgressResponse>(
+      `/analytics/topic-progress${queryStr}`,
+    );
   }
 }
 

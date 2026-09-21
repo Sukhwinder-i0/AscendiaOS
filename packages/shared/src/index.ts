@@ -746,5 +746,219 @@ export interface ActivitySummaryResponse {
   consistency: ConsistencyStatsResponse;
 }
 
+// ==========================================
+// PHASE 7: PROGRESS DASHBOARD & ANALYTICS
+// ==========================================
+
+export const TrendPeriodSchema = z.enum(['7d', '30d', '90d', '365d']);
+export type TrendPeriod = z.infer<typeof TrendPeriodSchema>;
+
+export const AnalyticsDashboardQuerySchema = z.object({
+  examId: z.string().optional(),
+  timezone: z.string().optional().default('UTC'),
+  trendPeriod: TrendPeriodSchema.optional().default('30d'),
+});
+export type AnalyticsDashboardQueryDto = z.input<typeof AnalyticsDashboardQuerySchema>;
+
+export const TopicSortBySchema = z.enum([
+  'RECENTLY_STUDIED',
+  'RECENTLY_COMPLETED',
+  'LEAST_STUDIED',
+  'MOST_STUDIED',
+  'ALPHABETICAL',
+]);
+export type TopicSortBy = z.infer<typeof TopicSortBySchema>;
+
+export const TopicProgressQuerySchema = z.object({
+  examId: z.string().optional(),
+  status: z.nativeEnum(ProgressStatus).optional(),
+  sortBy: TopicSortBySchema.optional().default('RECENTLY_STUDIED'),
+  page: z.number().int().positive().optional().default(1),
+  limit: z.number().int().positive().max(100).optional().default(10),
+});
+export type TopicProgressQueryDto = z.input<typeof TopicProgressQuerySchema>;
+
+export interface OverallProgressResponse {
+  completedTopics: number;
+  totalTopics: number;
+  percentage: number;
+  methodology: string;
+}
+
+export interface StudyTimeBreakdownResponse {
+  todaySeconds: number;
+  weekSeconds: number;
+  monthSeconds: number;
+  last30DaysSeconds: number;
+}
+
+export interface SubjectAnalyticsItem {
+  id: string;
+  name: string;
+  code?: string | null;
+  colorHex?: string | null;
+  progressPercentage: number;
+  completedTopicsCount: number;
+  totalTopicsCount: number;
+  studyTimeSeconds: number;
+  lastStudiedAt: string | null;
+}
+
+export interface ChapterAnalyticsItem {
+  id: string;
+  name: string;
+  orderIndex: number;
+  progressPercentage: number;
+  completedTopicsCount: number;
+  totalTopicsCount: number;
+}
+
+export interface SubjectDetailAnalyticsResponse {
+  subject: SubjectAnalyticsItem;
+  sessionsCount: number;
+  activeDaysCount: number;
+  chapters: ChapterAnalyticsItem[];
+}
+
+export interface StudyTrendPoint {
+  date: string; // YYYY-MM-DD
+  studySeconds: number;
+  formattedDuration: string;
+}
+
+export interface ComparisonMetric {
+  currentValue: number;
+  previousValue: number;
+  difference: number;
+  formattedDifference: string;
+  text: string;
+}
+
+export interface StudyTrendResponse {
+  period: TrendPeriod;
+  points: StudyTrendPoint[];
+  totalStudySeconds: number;
+  comparison: ComparisonMetric;
+  accessibleSummary: string;
+}
+
+export interface SubjectDistributionItem {
+  subjectId: string;
+  subjectName: string;
+  colorHex: string | null;
+  studyTimeSeconds: number;
+  percentage: number;
+}
+
+export interface SubjectDistributionResponse {
+  periodDays: number;
+  totalStudySeconds: number;
+  items: SubjectDistributionItem[];
+}
+
+export interface TopicProgressSummaryItem {
+  id: string;
+  name: string;
+  subjectId: string;
+  subjectName: string;
+  chapterId: string;
+  chapterName: string;
+  status: ProgressStatus;
+  confidenceScore: number;
+  totalStudyTimeSec: number;
+  lastStudiedAt: string | null;
+  completedAt: string | null;
+}
+
+export interface PaginatedTopicProgressResponse {
+  data: TopicProgressSummaryItem[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface TopicSummaryCountsResponse {
+  total: number;
+  completed: number;
+  learning: number;
+  notStarted: number;
+  needsRevision: number;
+  mastered: number;
+}
+
+export interface TopicSummariesResponse {
+  counts: TopicSummaryCountsResponse;
+  notStarted: TopicProgressSummaryItem[];
+  recentlyCompleted: TopicProgressSummaryItem[];
+  needsRevision: TopicProgressSummaryItem[];
+}
+
+export interface RecentActivityItem {
+  id: string;
+  type: 'SESSION' | 'TOPIC_COMPLETED';
+  date: string; // YYYY-MM-DD
+  timestamp: string;
+  durationSeconds?: number;
+  topicId: string;
+  topicName: string;
+  subjectId?: string | null;
+  subjectName?: string | null;
+  subjectColorHex?: string | null;
+}
+
+export interface GroupedRecentActivity {
+  date: string; // YYYY-MM-DD
+  label: string; // Today, Yesterday, or Sep 20
+  items: RecentActivityItem[];
+}
+
+export interface QuickActionsContextResponse {
+  activeSessionId: string | null;
+  lastStudiedTopic: {
+    id: string;
+    name: string;
+    subjectName?: string;
+  } | null;
+}
+
+export interface SummaryPeriodMetric {
+  studySeconds: number;
+  activeDays: number;
+  totalDays: number;
+  topicsCompleted: number;
+  sessionsCount: number;
+  averageStudySecondsPerActiveDay: number;
+  comparisonWithPrevious?: ComparisonMetric;
+}
+
+export interface DashboardAnalyticsResponse {
+  exam: {
+    id: string;
+    title: string;
+    code?: string | null;
+    targetDate?: string | null;
+    daysRemaining?: number | null;
+    dailyGoalHours: number;
+  } | null;
+  availableExams: Array<{ id: string; title: string; code?: string | null }>;
+  overallProgress: OverallProgressResponse;
+  studyTime: StudyTimeBreakdownResponse;
+  streak: StreakResponse;
+  subjects: SubjectAnalyticsItem[];
+  studyTrend: StudyTrendResponse;
+  subjectDistribution: SubjectDistributionResponse;
+  heatmap: ActivityHeatmapResponse;
+  recentActivity: GroupedRecentActivity[];
+  topicSummaries: TopicSummariesResponse;
+  quickActions: QuickActionsContextResponse;
+  weeklySummary: SummaryPeriodMetric;
+  monthlySummary: SummaryPeriodMetric;
+  isEmpty: boolean;
+}
+
+
 
 

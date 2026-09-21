@@ -1,227 +1,203 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
-import { ExamResponse, StreakResponse } from '@studyos/shared';
 import { api } from '@/lib/api';
-import {
-  GraduationCap,
-  FolderTree,
-  Flame,
-  Clock,
-  ArrowRight,
-  Plus,
-  Target,
-} from 'lucide-react';
+import { DashboardAnalyticsResponse, TrendPeriod } from '@studyos/shared';
 
-import { DailySummaryCard } from '@/components/analytics/DailySummaryCard';
+import { ExamSelector } from '@/components/dashboard/ExamSelector';
+import { OverallProgressCard } from '@/components/dashboard/OverallProgressCard';
+import { StudyTimeBreakdown } from '@/components/dashboard/StudyTimeBreakdown';
+import { SubjectProgressList } from '@/components/dashboard/SubjectProgressList';
+import { StudyTrendChart } from '@/components/dashboard/StudyTrendChart';
+import { SubjectDistributionChart } from '@/components/dashboard/SubjectDistributionChart';
+import { RecentActivityList } from '@/components/dashboard/RecentActivityList';
+import { TopicProgressOverview } from '@/components/dashboard/TopicProgressOverview';
+import { SummaryCards } from '@/components/dashboard/SummaryCards';
+import { CompactTopicLists } from '@/components/dashboard/CompactTopicLists';
+import { QuickActions } from '@/components/dashboard/QuickActions';
+import { EmptyDashboardState } from '@/components/dashboard/EmptyDashboardState';
+import { StudyHeatmap } from '@/components/activity/StudyHeatmap';
+import { Flame } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const [exams, setExams] = useState<ExamResponse[]>([]);
-  const [streak, setStreak] = useState<StreakResponse | null>(null);
+  const [data, setData] = useState<DashboardAnalyticsResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [selectedExamId, setSelectedExamId] = useState<string | undefined>(undefined);
+  const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('30d');
 
-  useEffect(() => {
-    const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
-    Promise.all([api.getExams(), api.getStreak(userTz)])
-      .then(([examsRes, streakRes]) => {
-        setExams(examsRes);
-        setStreak(streakRes);
+  const userTimezone = React.useMemo(() => {
+    if (typeof window !== 'undefined') {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+    }
+    return 'UTC';
+  }, []);
+
+  const loadDashboard = useCallback(() => {
+    setLoading(true);
+    api
+      .getDashboardAnalytics({
+        examId: selectedExamId,
+        timezone: userTimezone,
+        trendPeriod,
+      })
+      .then((res) => {
+        setData(res);
+        if (!selectedExamId && res.exam) {
+          setSelectedExamId(res.exam.id);
+        }
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, []);
+  }, [selectedExamId, userTimezone, trendPeriod]);
 
-  const activeExam = exams.length > 0 ? exams[0] : null;
+  useEffect(() => {
+    loadDashboard();
+  }, [loadDashboard]);
 
-  return (
-    <div className="space-y-8 max-w-7xl mx-auto">
-      {/* Welcome Banner */}
-      <div className="bg-surface p-6 sm:p-8 rounded-sm border border-border relative transition-colors shadow-none">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+  if (loading && !data) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-6 animate-pulse">
+        <div className="h-10 bg-surface border border-border rounded-sm w-1/3" />
+        <div className="h-44 bg-surface border border-border rounded-sm w-full" />
+        <div className="h-32 bg-surface border border-border rounded-sm w-full" />
+      </div>
+    );
+  }
+
+  if (!data || data.isEmpty) {
+    return (
+      <div className="max-w-7xl mx-auto space-y-6">
+        <div className="flex items-center justify-between border-b border-border pb-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-primary tracking-tight">
-              Welcome back, {user?.fullName || 'Student'}
+            <h1 className="text-xl font-bold text-primary tracking-tight">
+              Progress & Analytics Dashboard
             </h1>
-            <p className="text-secondary text-xs sm:text-sm mt-1 max-w-xl">
-              Track your syllabus progress, organize subjects and topics, and maintain your learning consistency in one workspace.
+            <p className="text-xs text-secondary mt-0.5">
+              Welcome, {user?.fullName || 'Student'}. Track your study progress and consistency.
             </p>
           </div>
-
-          {activeExam ? (
-            <Link
-              href={`/workspace/${activeExam.id}/syllabus`}
-              className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98] shrink-0"
-            >
-              <FolderTree className="w-4 h-4" />
-              <span>Open Syllabus Editor</span>
-              <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-          ) : (
-            <Link
-              href="/exams"
-              className="flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98] shrink-0"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Create First Exam</span>
-            </Link>
+          {data?.availableExams && (
+            <ExamSelector
+              currentExam={data.exam}
+              availableExams={data.availableExams}
+              onSelectExam={(id) => setSelectedExamId(id)}
+            />
           )}
         </div>
+        <EmptyDashboardState />
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-7xl mx-auto space-y-8">
+      {/* Dashboard Top Header with Exam Switcher */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-primary tracking-tight">
+            Progress & Analytics Dashboard
+          </h1>
+          <p className="text-xs text-secondary mt-0.5">
+            Factual study stats and syllabus preparation overview for {user?.fullName || 'Student'}
+          </p>
+        </div>
+
+        <ExamSelector
+          currentExam={data.exam}
+          availableExams={data.availableExams}
+          onSelectExam={(id) => setSelectedExamId(id)}
+        />
       </div>
 
-      {/* Daily Summary Card */}
-      <DailySummaryCard />
+      {/* Priority 1: Overall Progress & Primary Action */}
+      <OverallProgressCard
+        examTitle={data.exam?.title || null}
+        overallProgress={data.overallProgress}
+        quickActions={data.quickActions}
+        daysRemaining={data.exam?.daysRemaining}
+      />
 
-      {/* Active Exam Overview */}
-      {activeExam ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-surface p-6 rounded-sm border border-border space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
-                Active Goal
-              </span>
-              <span className="text-xs bg-background text-orange-400 px-2.5 py-0.5 rounded-sm border border-orange-500/20 font-mono">
-                {activeExam.code || 'EXAM'}
-              </span>
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-primary tracking-tight">{activeExam.title}</h3>
-              {activeExam.daysRemaining !== null && (
-                <p className="text-xs text-orange-400 mt-1 flex items-center font-mono">
-                  <Clock className="w-3.5 h-3.5 mr-1 text-orange-400" />
-                  {activeExam.daysRemaining} days remaining until exam
-                </p>
-              )}
-            </div>
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-secondary font-mono">
-              <span>Daily Target:</span>
-              <span className="font-semibold text-primary">{activeExam.dailyGoalHours} hours/day</span>
-            </div>
-          </div>
-
-          <div className="bg-surface p-6 rounded-sm border border-border space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
-                Syllabus Completion
-              </span>
-              <Target className="w-4 h-4 text-orange-500" />
-            </div>
-            <div>
-              <p className="text-3xl font-extrabold font-mono text-primary">
-                {activeExam.overallProgressPercentage}%
-              </p>
-              <div className="h-2 w-full bg-background rounded-sm mt-3 overflow-hidden border border-border">
-                <div
-                  className="h-full bg-orange-500 transition-all duration-300"
-                  style={{ width: `${activeExam.overallProgressPercentage}%` }}
-                />
-              </div>
-            </div>
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-secondary font-mono">
-              <span>Status:</span>
-              <span className="font-semibold text-emerald-400">Active Learning</span>
-            </div>
-          </div>
-
-          <Link
-            href="/activity"
-            className="bg-surface p-6 rounded-sm border border-border space-y-4 hover:border-orange-500/40 transition-colors group block"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
-                Study Consistency
-              </span>
-              <Flame
-                className={`w-4 h-4 ${
-                  (streak?.currentStreak || 0) > 0
-                    ? 'text-orange-500 fill-orange-500 animate-pulse'
-                    : 'text-secondary'
-                }`}
-              />
-            </div>
-            <div>
-              <p className="text-3xl font-extrabold font-mono text-primary">
-                {streak?.currentStreak || 0} {streak?.currentStreak === 1 ? 'Day' : 'Days'}
-              </p>
-              <p className="text-xs text-secondary mt-1">Current daily study streak</p>
-            </div>
-            <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-secondary font-mono">
-              <span>Longest Streak:</span>
-              <span className="font-semibold text-primary">
-                {streak?.longestStreak || 0} Days
-              </span>
-            </div>
-          </Link>
+      {/* Priority 2: Study Time Breakdown & Streak Stats */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <StudyTimeBreakdown studyTime={data.studyTime} />
         </div>
-      ) : (
-        <div className="bg-surface p-8 rounded-sm text-center border border-dashed border-border">
-          <GraduationCap className="w-10 h-10 text-orange-500 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-primary">No Exam Workspace Selected</h3>
-          <p className="text-xs text-secondary max-w-md mx-auto mt-1 mb-4">
-            Create an exam workspace like GATE DA 2027, UPSC, or JEE to start organizing your syllabus hierarchy.
-          </p>
-          <Link
-            href="/exams"
-            className="inline-flex items-center space-x-2 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-zinc-950 text-xs font-semibold rounded-sm transition-all duration-150 active:scale-[0.98]"
-          >
-            <Plus className="w-4 h-4" />
-            <span>Create Exam Workspace</span>
-          </Link>
+
+        <div className="bg-surface p-6 rounded-sm border border-border flex flex-col justify-between space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-secondary uppercase tracking-wider font-mono">
+              Study Consistency
+            </span>
+            <Flame
+              className={`w-4 h-4 ${
+                data.streak.currentStreak > 0
+                  ? 'text-orange-500 fill-orange-500 animate-pulse'
+                  : 'text-secondary'
+              }`}
+            />
+          </div>
+
+          <div>
+            <p className="text-3xl font-extrabold font-mono text-primary">
+              {data.streak.currentStreak} {data.streak.currentStreak === 1 ? 'Day' : 'Days'}
+            </p>
+            <p className="text-xs text-secondary mt-1">Current daily study streak</p>
+          </div>
+
+          <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-secondary font-mono">
+            <span>Longest Streak:</span>
+            <span className="font-semibold text-primary">{data.streak.longestStreak} Days</span>
+          </div>
         </div>
-      )}
-
-      {/* Quick Navigation Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Link
-          href="/exams"
-          className="bg-surface p-6 rounded-sm border border-border hover:border-orange-500/40 transition-colors group"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-9 h-9 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
-              <GraduationCap className="w-5 h-5" />
-            </div>
-            <ArrowRight className="w-5 h-5 text-secondary group-hover:text-orange-500 transition-colors" />
-          </div>
-          <h3 className="text-base font-bold text-primary group-hover:text-orange-400 transition-colors">
-            Exams & Learning Goals
-          </h3>
-          <p className="text-xs text-secondary mt-1">
-            Manage your active exams, target scores, exam dates, and create new learning goals.
-          </p>
-        </Link>
-
-        {activeExam ? (
-          <Link
-            href={`/workspace/${activeExam.id}/syllabus`}
-            className="bg-surface p-6 rounded-sm border border-border hover:border-orange-500/40 transition-colors group"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-9 h-9 rounded-sm bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500">
-                <FolderTree className="w-5 h-5" />
-              </div>
-              <ArrowRight className="w-5 h-5 text-secondary group-hover:text-orange-500 transition-colors" />
-            </div>
-            <h3 className="text-base font-bold text-primary group-hover:text-orange-400 transition-colors">
-              Interactive Syllabus Spine
-            </h3>
-            <p className="text-xs text-secondary mt-1">
-              Add, edit, rename, move, and nest subjects, chapters, topics, and subtopics for {activeExam.title}.
-            </p>
-          </Link>
-        ) : (
-          <div className="bg-surface p-6 rounded-sm border border-border opacity-60">
-            <div className="w-9 h-9 rounded-sm bg-background flex items-center justify-center text-secondary mb-4">
-              <FolderTree className="w-5 h-5" />
-            </div>
-            <h3 className="text-base font-bold text-secondary">Interactive Syllabus Spine</h3>
-            <p className="text-xs text-secondary mt-1">
-              Create an exam first to unlock the syllabus editor.
-            </p>
-          </div>
-        )}
       </div>
+
+      {/* Priority 3: Quick Actions */}
+      <QuickActions
+        quickActions={data.quickActions}
+        activeExamId={data.exam?.id}
+      />
+
+      {/* Priority 4: Subject Progress & Subject Time Distribution */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <SubjectProgressList subjects={data.subjects} />
+        </div>
+        <div>
+          <SubjectDistributionChart distribution={data.subjectDistribution} />
+        </div>
+      </div>
+
+      {/* Priority 5: Study Trend Chart & Activity Heatmap */}
+      <StudyTrendChart
+        trend={data.studyTrend}
+        onPeriodChange={(period) => setTrendPeriod(period)}
+      />
+
+      <StudyHeatmap
+        days={data.heatmap.days}
+        totalActiveDays={data.heatmap.totalActiveDays}
+        totalStudySeconds={data.heatmap.totalStudySeconds}
+      />
+
+      {/* Priority 6: Weekly & Monthly Summaries with Neutral Comparisons */}
+      <SummaryCards
+        weeklySummary={data.weeklySummary}
+        monthlySummary={data.monthlySummary}
+      />
+
+      {/* Priority 7: Recent Activity Timeline */}
+      <RecentActivityList activities={data.recentActivity} />
+
+      {/* Priority 8: Topic Progress Overview */}
+      <TopicProgressOverview
+        examId={data.exam?.id}
+        timezone={userTimezone}
+      />
+
+      {/* Priority 9: Compact Topic Lists (Not Started, Recently Completed, Needs Revision) */}
+      <CompactTopicLists topicSummaries={data.topicSummaries} />
     </div>
   );
 }
