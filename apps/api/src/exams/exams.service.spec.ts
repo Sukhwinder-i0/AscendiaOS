@@ -31,7 +31,7 @@ describe('ExamsService', () => {
 
   describe('create', () => {
     it('should create an exam bound to the current user', async () => {
-      const dto = { title: 'GATE DA 2027', code: 'GATE_DA', dailyGoalHours: 4 };
+      const dto = { title: 'GATE / UGC / UPSC 2027', code: 'GATE_UGC_UPSC', dailyGoalHours: 4 };
       const createdExam = {
         id: 'exam-1',
         userId: 'user-1',
@@ -53,7 +53,7 @@ describe('ExamsService', () => {
       expect(mockPrismaService.exam.create).toHaveBeenCalledWith({
         data: expect.objectContaining({
           userId: 'user-1',
-          title: 'GATE DA 2027',
+          title: 'GATE / UGC / UPSC 2027',
         }),
       });
       expect(result.id).toBe('exam-1');
@@ -66,7 +66,7 @@ describe('ExamsService', () => {
       const exam = {
         id: 'exam-1',
         userId: 'user-1',
-        title: 'GATE DA',
+        title: 'GATE / UGC / UPSC',
         subjects: [],
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -82,7 +82,7 @@ describe('ExamsService', () => {
       const exam = {
         id: 'exam-1',
         userId: 'user-1',
-        title: 'GATE DA',
+        title: 'GATE / UGC / UPSC',
         subjects: [],
       };
 
@@ -100,7 +100,7 @@ describe('ExamsService', () => {
 
   describe('update & delete tenant isolation', () => {
     it('should throw ForbiddenException when updating an exam owned by another user', async () => {
-      const exam = { id: 'exam-1', userId: 'user-1', title: 'GATE DA', subjects: [] };
+      const exam = { id: 'exam-1', userId: 'user-1', title: 'GATE / UGC / UPSC', subjects: [] };
       mockPrismaService.exam.findUnique.mockResolvedValue(exam);
 
       await expect(service.update('user-2', 'exam-1', { title: 'Hacked' })).rejects.toThrow(
@@ -109,7 +109,7 @@ describe('ExamsService', () => {
     });
 
     it('should throw ForbiddenException when deleting an exam owned by another user', async () => {
-      const exam = { id: 'exam-1', userId: 'user-1', title: 'GATE DA', subjects: [] };
+      const exam = { id: 'exam-1', userId: 'user-1', title: 'GATE / UGC / UPSC', subjects: [] };
       mockPrismaService.exam.findUnique.mockResolvedValue(exam);
 
       await expect(service.remove('user-2', 'exam-1')).rejects.toThrow(ForbiddenException);

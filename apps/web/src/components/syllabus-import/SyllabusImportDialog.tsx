@@ -235,7 +235,7 @@ export function SyllabusImportDialog({
                     value={examTitle}
                     onChange={(e) => setExamTitle(e.target.value)}
                     className="w-full bg-background text-primary text-sm px-3 py-2 rounded-sm border border-border focus:outline-none focus:border-orange-500"
-                    placeholder="e.g., GATE DA 2027"
+                    placeholder="e.g., GATE / UGC / UPSC 2027"
                   />
                 </div>
               )}

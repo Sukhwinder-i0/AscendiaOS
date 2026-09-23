@@ -22,7 +22,7 @@ async function main() {
 
   // 2. Check if Exam already exists for user
   const existingExam = await prisma.exam.findFirst({
-    where: { userId: user.id, title: 'GATE DA 2027' },
+    where: { userId: user.id },
   });
 
   if (existingExam) {
@@ -30,12 +30,12 @@ async function main() {
     return;
   }
 
-  // 3. Create Sample GATE DA Exam
+  // 3. Create Sample GATE / UGC / UPSC Exam
   const exam = await prisma.exam.create({
     data: {
       userId: user.id,
-      title: 'GATE DA 2027',
-      code: 'GATE-DA',
+      title: 'GATE / UGC / UPSC 2027',
+      code: 'GATE-UGC-UPSC',
       targetDate: new Date('2027-02-01'),
       targetScore: 85,
       targetRank: 100,

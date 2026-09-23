@@ -84,7 +84,7 @@ describe('SyllabusImportService', () => {
       });
 
       mockDocumentParser.parsePdf.mockResolvedValue({
-        text: 'GATE DA Syllabus Mathematics Probability',
+        text: 'GATE / UGC / UPSC Syllabus Mathematics Probability',
         numPages: 2,
         pages: [],
         isScannedOrEmpty: false,
@@ -93,7 +93,7 @@ describe('SyllabusImportService', () => {
       mockAIProvider.analyzeSyllabusText.mockResolvedValue({
         documentType: 'FULL_EXAM_SYLLABUS',
         confidence: 0.95,
-        title: 'GATE DA Syllabus',
+        title: 'GATE / UGC / UPSC Syllabus',
         subjects: [
           {
             name: 'Mathematics',
@@ -202,11 +202,11 @@ describe('SyllabusImportService', () => {
       mockPrismaService.exam.create.mockResolvedValue({
         id: 'exam-new-1',
         userId: 'user-1',
-        title: 'GATE DA 2027',
+        title: 'GATE / UGC / UPSC 2027',
       });
 
       const dto = {
-        examTitle: 'GATE DA 2027',
+        examTitle: 'GATE / UGC / UPSC 2027',
         subjects: [
           {
             name: 'Linear Algebra',

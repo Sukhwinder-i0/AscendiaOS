@@ -23,7 +23,7 @@ Analyze the provided syllabus text and return a JSON object strictly matching th
   "documentType": "FULL_EXAM_SYLLABUS" | "SUBJECT_SYLLABUS" | "CHAPTER_OR_TOPIC_DOCUMENT" | "UNKNOWN",
   "confidence": number between 0.0 and 1.0,
   "title": "Main title of the exam/syllabus document",
-  "examName": "Optional name of the exam e.g. GATE DA 2027",
+  "examName": "Optional name of the exam e.g. GATE / UGC / UPSC 2027",
   "subjects": [
     {
       "name": "Subject Name",

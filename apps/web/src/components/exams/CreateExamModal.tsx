@@ -59,7 +59,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
             </div>
             <div>
               <h2 className="text-base font-bold text-primary">Create Learning Goal / Exam</h2>
-              <p className="text-xs text-secondary">Add an exam workspace (e.g. GATE DA, UPSC, JEE, AWS)</p>
+              <p className="text-xs text-secondary">Add an exam workspace (e.g. GATE / UGC / UPSC / JEE / AWS)</p>
             </div>
           </div>
           <button onClick={onClose} className="p-1.5 text-secondary hover:text-primary rounded-sm hover:bg-zinc-800">
@@ -78,7 +78,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
             <label className="block text-xs font-medium text-secondary mb-1.5">Exam Title *</label>
             <input
               type="text"
-              placeholder="e.g. GATE DA 2027"
+              placeholder="e.g. GATE / UGC / UPSC 2027"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
@@ -91,7 +91,7 @@ export function CreateExamModal({ isOpen, onClose, onSubmit }: CreateExamModalPr
               <label className="block text-xs font-medium text-secondary mb-1.5">Short Code</label>
               <input
                 type="text"
-                placeholder="e.g. GATE-DA"
+                placeholder="e.g. GATE / UGC / UPSC"
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 className="w-full bg-background border border-border rounded-sm px-3.5 py-2 text-sm text-primary focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"

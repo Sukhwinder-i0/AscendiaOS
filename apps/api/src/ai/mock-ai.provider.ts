@@ -116,8 +116,15 @@ export class MockAIProvider implements AIProvider {
       } else if (currentSubject) {
         currentTextBuf += ' ' + line;
       } else {
-        // Look for title header at the beginning before first section
-        if (line.toUpperCase().includes('SYLLABUS') || line.toUpperCase().includes('GATE')) {
+        const upperLine = line.toUpperCase();
+        if (
+          upperLine.includes('SYLLABUS') ||
+          upperLine.includes('GATE') ||
+          upperLine.includes('UGC') ||
+          upperLine.includes('UPSC') ||
+          upperLine.includes('JEE') ||
+          upperLine.includes('EXAM')
+        ) {
           // Keep title context
         }
       }

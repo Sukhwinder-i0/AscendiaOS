@@ -57,7 +57,7 @@ describe('StudySessionsService', () => {
     topic: { id: mockTopicId, name: 'Bayes Theorem' },
     chapter: { id: mockChapterId, name: 'Probability' },
     subject: { id: mockSubjectId, name: 'Probability & Statistics' },
-    exam: { id: mockExamId, title: 'GATE DA' },
+    exam: { id: mockExamId, title: 'GATE / UGC / UPSC' },
   };
 
   beforeEach(async () => {

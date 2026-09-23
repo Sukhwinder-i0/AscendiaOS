@@ -24,7 +24,7 @@ describe('NotesService', () => {
     topicId: 'topic-1',
     createdAt: new Date(),
     updatedAt: new Date(),
-    exam: { id: 'exam-1', title: 'GATE DA' },
+    exam: { id: 'exam-1', title: 'GATE / UGC / UPSC' },
     subject: { id: 'sub-1', name: 'Probability' },
     chapter: { id: 'chap-1', name: 'Probability Rules' },
     topic: { id: 'topic-1', name: 'Bayes Theorem' },

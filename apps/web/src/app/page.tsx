@@ -222,7 +222,7 @@ export default function HomePage() {
                 <span className="w-3 h-3 bg-zinc-700 rounded-sm inline-block"></span>
                 <span className="w-3 h-3 bg-zinc-700 rounded-sm inline-block"></span>
                 <span className="text-xs text-zinc-400 font-sans ml-2">
-                  COMPETII / GATE DA / Probability & Statistics
+                  COMPETII / GATE / UGC / UPSC / Probability & Statistics
                 </span>
               </div>
               <span className="text-xs text-orange-400 font-mono">Status: ACTIVE_LEARNING</span>

@@ -50,7 +50,7 @@ export default function ExamsPage() {
         <div>
           <h1 className="text-xl font-bold text-primary tracking-tight">Exams & Learning Goals</h1>
           <p className="text-xs text-secondary mt-0.5">
-            Create and manage exam prep workspaces for GATE, UPSC, JEE, Certifications, or custom goals.
+            Create and manage exam prep workspaces for GATE, UGC, UPSC, JEE, Certifications, or custom goals.
           </p>
         </div>
 
@@ -72,7 +72,7 @@ export default function ExamsPage() {
           <GraduationCap className="w-12 h-12 text-orange-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-primary">No Exam Workspaces Found</h3>
           <p className="text-xs text-secondary max-w-md mx-auto mt-1 mb-6">
-            StudyOS supports arbitrary learning goals (GATE DA, GATE CS, UPSC, JEE, University courses, Certifications).
+            StudyOS supports arbitrary learning goals (GATE, UGC, UPSC, JEE, University courses, Certifications).
           </p>
           <button
             onClick={() => setIsModalOpen(true)}

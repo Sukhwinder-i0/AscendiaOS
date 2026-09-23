@@ -215,7 +215,7 @@ describe('ResourcesService', () => {
       db.resource.create.mockResolvedValue(mockFileResource);
 
       const result = await service.createFileResource(mockUser.id, fileBuffer, 'gate_pyqs.pdf', 'application/pdf', {
-        title: 'GATE DA PYQs',
+        title: 'GATE / UGC / UPSC PYQs',
       });
 
       expect(storage.upload).toHaveBeenCalledWith(fileBuffer, 'gate_pyqs.pdf', 'application/pdf');

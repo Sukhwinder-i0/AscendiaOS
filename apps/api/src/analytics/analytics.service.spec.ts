@@ -19,8 +19,8 @@ describe('AnalyticsService', () => {
         findMany: jest.fn().mockResolvedValue([
           {
             id: mockExamId,
-            title: 'GATE DA',
-            code: 'GATE_DA',
+            title: 'GATE / UGC / UPSC',
+            code: 'GATE_UGC_UPSC',
             targetDate: new Date('2027-02-01T00:00:00.000Z'),
             dailyGoalHours: 4.0,
           },
