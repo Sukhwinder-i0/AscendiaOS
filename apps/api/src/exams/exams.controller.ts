@@ -2,7 +2,7 @@ import { Controller, Get, Post, Patch, Delete, Param, Body, UseGuards } from '@n
 import { ExamsService } from './exams.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
-import { CreateExamSchema, UpdateExamSchema, UserPayload, ExamResponse } from '@studyos/shared';
+import { CreateExamSchema, UpdateExamSchema, UserPayload, ExamResponse } from '@ascendiaos/shared';
 
 @UseGuards(JwtAuthGuard)
 @Controller('exams')

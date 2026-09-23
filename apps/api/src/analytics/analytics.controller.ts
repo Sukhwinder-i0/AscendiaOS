@@ -6,7 +6,7 @@ import {
   AnalyticsDashboardQueryDto,
   TopicProgressQueryDto,
   TrendPeriod,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Controller('analytics')
 @UseGuards(JwtAuthGuard)

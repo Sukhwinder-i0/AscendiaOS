@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { api } from '@/lib/api';
-import { DashboardAnalyticsResponse, TrendPeriod } from '@studyos/shared';
+import { DashboardAnalyticsResponse, TrendPeriod } from '@ascendiaos/shared';
 
 import { ExamSelector } from '@/components/dashboard/ExamSelector';
 import { OverallProgressCard } from '@/components/dashboard/OverallProgressCard';

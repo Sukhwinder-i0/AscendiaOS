@@ -18,7 +18,7 @@ import {
   MoveNoteSchema,
   NoteQuerySchema,
   AttachResourceToNoteSchema,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Controller('notes')
 @UseGuards(JwtAuthGuard)

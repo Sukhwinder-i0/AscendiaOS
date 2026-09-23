@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ActivitySummaryResponse, ActivityHeatmapResponse } from '@studyos/shared';
+import { ActivitySummaryResponse, ActivityHeatmapResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 
 import { StreakCard } from '@/components/activity/StreakCard';

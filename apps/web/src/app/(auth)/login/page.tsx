@@ -41,7 +41,7 @@ export default function LoginPage() {
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <div className="flex justify-center mb-4">
-          <img src={logoSrc} alt="Exam COMPETII" className="h-12 w-auto object-contain" />
+          <img src={logoSrc} alt="AscendiaOS" className="h-12 w-auto object-contain" />
         </div>
         <h2 className="text-xl font-bold text-primary tracking-tight">
           Welcome back

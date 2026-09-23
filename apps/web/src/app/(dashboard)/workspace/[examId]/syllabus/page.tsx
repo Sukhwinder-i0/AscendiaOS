@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
-import { SyllabusTreeResponse, ProgressStatus } from '@studyos/shared';
+import { SyllabusTreeResponse, ProgressStatus } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { SyllabusTree } from '@/components/syllabus/SyllabusTree';
 

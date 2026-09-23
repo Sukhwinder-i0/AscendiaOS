@@ -13,7 +13,7 @@ import {
   ChapterNode,
   TopicNode,
   ProgressStatus,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class SyllabusService {

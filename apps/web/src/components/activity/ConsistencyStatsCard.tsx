@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ConsistencyStatsResponse } from '@studyos/shared';
+import { ConsistencyStatsResponse } from '@ascendiaos/shared';
 import { Target } from 'lucide-react';
 
 interface ConsistencyStatsCardProps {

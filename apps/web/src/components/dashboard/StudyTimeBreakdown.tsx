@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Clock } from 'lucide-react';
-import { StudyTimeBreakdownResponse } from '@studyos/shared';
+import { StudyTimeBreakdownResponse } from '@ascendiaos/shared';
 
 interface StudyTimeBreakdownProps {
   studyTime: StudyTimeBreakdownResponse;

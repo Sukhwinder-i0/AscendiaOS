@@ -18,7 +18,7 @@ import {
   TopicSortBy,
   TopicProgressSummaryItem,
   PaginatedTopicProgressResponse,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 
 interface TopicProgressOverviewProps {

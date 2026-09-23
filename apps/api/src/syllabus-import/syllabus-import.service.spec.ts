@@ -5,7 +5,7 @@ import { STORAGE_PROVIDER } from '../storage/storage.interface';
 import { AI_PROVIDER } from '../ai/ai.interface';
 import { DocumentParserService } from '../document-parser/document-parser.service';
 import { ForbiddenException, NotFoundException, BadRequestException } from '@nestjs/common';
-import { DocumentProcessingStatus, SyllabusDocumentType } from '@studyos/shared';
+import { DocumentProcessingStatus, SyllabusDocumentType } from '@ascendiaos/shared';
 
 describe('SyllabusImportService', () => {
   let service: SyllabusImportService;

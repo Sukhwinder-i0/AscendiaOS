@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { UserPayload, LoginDto, RegisterDto } from '@studyos/shared';
+import { UserPayload, LoginDto, RegisterDto } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 
 interface AuthContextType {

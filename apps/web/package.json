@@ -1,7 +1,7 @@
 {
-  "name": "@studyos/web",
+  "name": "@ascendiaos/web",
   "version": "1.0.0",
-  "description": "StudyOS Frontend Next.js Web Application",
+  "description": "AscendiaOS Frontend Next.js Web Application",
   "private": true,
   "license": "MIT",
   "author": {
@@ -20,7 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@studyos/shared": "workspace:*",
+    "@ascendiaos/shared": "workspace:*",
     "clsx": "^2.1.1",
     "katex": "^0.18.7",
     "lucide-react": "^0.475.0",

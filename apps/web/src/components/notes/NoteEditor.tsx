@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { NoteResponse, ResourceResponse } from '@studyos/shared';
+import { NoteResponse, ResourceResponse } from '@ascendiaos/shared';
 import { MathRenderer } from './MathRenderer';
 import { AttachResourceModal } from './AttachResourceModal';
 import { ResourceCard } from '../resources/ResourceCard';
@@ -52,7 +52,7 @@ export function NoteEditor({ initialNote }: NoteEditorProps) {
   const [isAttachModalOpen, setIsAttachModalOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const draftKey = `studyos_note_draft_${note.id}`;
+  const draftKey = `ascendiaos_note_draft_${note.id}`;
 
   // Check for local draft on mount
   useEffect(() => {

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { PieChart } from 'lucide-react';
-import { SubjectDistributionResponse } from '@studyos/shared';
+import { SubjectDistributionResponse } from '@ascendiaos/shared';
 
 interface SubjectDistributionChartProps {
   distribution: SubjectDistributionResponse;

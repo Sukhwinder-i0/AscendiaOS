@@ -16,7 +16,7 @@ import {
   DocumentProcessingStatus,
   SyllabusDocumentType,
   ProgressStatus,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class SyllabusImportService {

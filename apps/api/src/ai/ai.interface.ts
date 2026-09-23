@@ -1,4 +1,4 @@
-import { ExtractedHierarchy } from '@studyos/shared';
+import { ExtractedHierarchy } from '@ascendiaos/shared';
 
 export const AI_PROVIDER = 'AI_PROVIDER';
 

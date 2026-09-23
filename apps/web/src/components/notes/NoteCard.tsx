@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { NoteResponse } from '@studyos/shared';
+import { NoteResponse } from '@ascendiaos/shared';
 import { Pin, Archive, Trash2, FolderTree, FileText, Clock, ExternalLink, Paperclip } from 'lucide-react';
 import { clsx } from 'clsx';
 import { api } from '@/lib/api';

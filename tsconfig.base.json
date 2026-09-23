@@ -20,8 +20,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@studyos/shared": ["./packages/shared/src/index.ts"],
-      "@studyos/database": ["./packages/database/src/index.ts"]
+      "@ascendiaos/shared": ["./packages/shared/src/index.ts"],
+      "@ascendiaos/database": ["./packages/database/src/index.ts"]
     }
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { TopicNode, ProgressStatus, StudySessionResponse } from '@studyos/shared';
+import { TopicNode, ProgressStatus, StudySessionResponse } from '@ascendiaos/shared';
 import {
   ChevronRight,
   ChevronDown,

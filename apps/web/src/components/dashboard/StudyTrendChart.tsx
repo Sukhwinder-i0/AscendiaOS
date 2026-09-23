@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { TrendingUp } from 'lucide-react';
-import { StudyTrendResponse, TrendPeriod } from '@studyos/shared';
+import { StudyTrendResponse, TrendPeriod } from '@ascendiaos/shared';
 
 interface StudyTrendChartProps {
   trend: StudyTrendResponse;

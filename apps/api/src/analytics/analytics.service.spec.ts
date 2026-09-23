@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AnalyticsService } from './analytics.service';
 import { ActivityService } from '../activity/activity.service';
 import { PrismaService } from '../database/prisma.service';
-import { SessionStatus, ProgressStatus } from '@studyos/shared';
+import { SessionStatus, ProgressStatus } from '@ascendiaos/shared';
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService;

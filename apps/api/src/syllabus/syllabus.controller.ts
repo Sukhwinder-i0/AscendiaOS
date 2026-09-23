@@ -12,7 +12,7 @@ import {
   UpdateTopicProgressSchema,
   UserPayload,
   SyllabusTreeResponse,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @UseGuards(JwtAuthGuard)
 @Controller()

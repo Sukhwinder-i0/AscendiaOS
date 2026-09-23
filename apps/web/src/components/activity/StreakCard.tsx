@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Flame, Award, Calendar } from 'lucide-react';
-import { StreakResponse } from '@studyos/shared';
+import { StreakResponse } from '@ascendiaos/shared';
 
 interface StreakCardProps {
   streak: StreakResponse | null;

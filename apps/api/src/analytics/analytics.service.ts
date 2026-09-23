@@ -24,7 +24,7 @@ import {
   ComparisonMetric,
   QuickActionsContextResponse,
   MIN_STUDY_SECONDS_FOR_ACTIVITY,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class AnalyticsService {

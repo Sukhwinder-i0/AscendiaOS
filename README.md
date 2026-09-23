@@ -1,6 +1,6 @@
-# 🎓 StudyOS Monorepo
+# 🎓 AscendiaOS Monorepo
 
-> **StudyOS** is an end-to-end, production-grade Smart Exam & Study Infrastructure platform built with NestJS, Next.js 14, PostgreSQL (Prisma ORM), TailwindCSS, and TypeScript.
+> **AscendiaOS** is an end-to-end, production-grade Smart Exam & Study Infrastructure platform built with NestJS, Next.js 14, PostgreSQL (Prisma ORM), TailwindCSS, and TypeScript.
 
 ---
 
@@ -49,7 +49,7 @@ os4study/
 
 ## ⚙️ Environment Configuration (`.env`)
 
-StudyOS requires environment configuration for local development and production deployments. Sample `.env.example` templates are provided across the repository.
+AscendiaOS requires environment configuration for local development and production deployments. Sample `.env.example` templates are provided across the repository.
 
 ### 1. Root Environment File (`.env`)
 
@@ -63,7 +63,7 @@ cp .env.example .env
 | :--- | :--- | :--- |
 | `NODE_ENV` | Application environment (`development` \| `production` \| `test`) | `development` |
 | `PORT` | NestJS API HTTP Listening Port | `3001` |
-| `DATABASE_URL` | PostgreSQL connection string for Prisma ORM | `postgresql://postgres:postgrespassword@localhost:5432/studyos?schema=public` |
+| `DATABASE_URL` | PostgreSQL connection string for Prisma ORM | `postgresql://postgres:postgrespassword@localhost:5432/ascendiaos?schema=public` |
 | `JWT_SECRET` | Secret key for JWT session token authentication | *Random secure string (32+ chars)* |
 | `JWT_EXPIRES_IN` | Token validity duration | `7d` |
 | `CORS_ORIGIN` | Allowed HTTP origin for browser clients | `http://localhost:3000` |
@@ -74,7 +74,7 @@ cp .env.example .env
 | `OPENAI_MODEL` | OpenAI LLM model ID | `gpt-4o-mini` |
 | `STORAGE_PROVIDER` | Storage backend (`local` \| `s3`) | `local` |
 | `STORAGE_LOCAL_PATH` | Storage folder path for local uploads | `./uploads` |
-| `S3_BUCKET` | AWS S3 Bucket name | `studyos-storage` |
+| `S3_BUCKET` | AWS S3 Bucket name | `ascendiaos-storage` |
 | `S3_REGION` | AWS S3 Region | `us-east-1` |
 | `S3_ACCESS_KEY_ID` | AWS IAM Access Key ID | `AKIA...` |
 | `S3_SECRET_ACCESS_KEY` | AWS IAM Secret Access Key | `...` |
@@ -92,7 +92,7 @@ cp apps/web/.env.example apps/web/.env.local
 ```ini
 NEXT_PUBLIC_API_URL="http://localhost:3001/api"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
-NEXT_PUBLIC_APP_NAME="StudyOS"
+NEXT_PUBLIC_APP_NAME="AscendiaOS"
 NEXT_PUBLIC_APP_VERSION="1.0.0"
 ```
 
@@ -110,7 +110,7 @@ cp apps/api/.env.example apps/api/.env
 NODE_ENV=development
 PORT=3001
 CORS_ORIGIN="http://localhost:3000"
-DATABASE_URL="postgresql://postgres:postgrespassword@localhost:5432/studyos?schema=public"
+DATABASE_URL="postgresql://postgres:postgrespassword@localhost:5432/ascendiaos?schema=public"
 JWT_SECRET="studyos-dev-jwt-secret"
 AI_PROVIDER=mock
 STORAGE_PROVIDER=local

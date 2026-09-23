@@ -14,7 +14,7 @@ import {
   ActivitySummaryResponse,
   ActivityHistoryQueryDto,
   DailySummaryResponse,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class ActivityService {

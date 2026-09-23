@@ -12,7 +12,7 @@ export class S3StorageProvider implements StorageProvider {
   private readonly bucketName: string;
 
   constructor(private readonly configService: ConfigService) {
-    this.bucketName = this.configService.get<string>('S3_BUCKET') || 'studyos-storage';
+    this.bucketName = this.configService.get<string>('S3_BUCKET') || 'ascendiaos-storage';
     this.s3Client = new S3Client({
       region: this.configService.get<string>('S3_REGION') || 'us-east-1',
       endpoint: this.configService.get<string>('S3_ENDPOINT'),

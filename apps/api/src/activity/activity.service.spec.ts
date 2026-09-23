@@ -5,7 +5,7 @@ import {
   SessionStatus,
   MIN_STUDY_SECONDS_FOR_ACTIVITY,
   getActivityLevel,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 describe('ActivityService', () => {
   let service: ActivityService;

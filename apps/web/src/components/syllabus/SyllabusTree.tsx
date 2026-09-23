@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SyllabusTreeResponse, ProgressStatus } from '@studyos/shared';
+import { SyllabusTreeResponse, ProgressStatus } from '@ascendiaos/shared';
 import { SubjectAccordion } from './SubjectAccordion';
 import { Plus, CheckCircle2, BookOpen, Layers, Target } from 'lucide-react';
 import { SyllabusImportDialog } from '../syllabus-import/SyllabusImportDialog';

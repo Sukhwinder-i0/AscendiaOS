@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Calendar, Clock, CheckCircle2, Flame, Layers } from 'lucide-react';
-import { SummaryPeriodMetric } from '@studyos/shared';
+import { SummaryPeriodMetric } from '@ascendiaos/shared';
 
 interface SummaryCardsProps {
   weeklySummary: SummaryPeriodMetric;

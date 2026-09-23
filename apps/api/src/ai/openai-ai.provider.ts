@@ -1,7 +1,7 @@
 import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AIProvider } from './ai.interface';
-import { ExtractedHierarchy, ExtractedHierarchySchema } from '@studyos/shared';
+import { ExtractedHierarchy, ExtractedHierarchySchema } from '@ascendiaos/shared';
 import OpenAI from 'openai';
 
 @Injectable()

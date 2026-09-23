@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ResourceType, ResourceLocationType } from '@studyos/shared';
+import { ResourceType, ResourceLocationType } from '@ascendiaos/shared';
 import { Search, Filter, X, CheckCircle2, Bookmark } from 'lucide-react';
 import { clsx } from 'clsx';
 

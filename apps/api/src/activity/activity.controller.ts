@@ -10,7 +10,7 @@ import { ActivityService } from './activity.service';
 import {
   ActivityHeatmapQueryDto,
   ActivityHistoryQueryDto,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Controller('activity')
 @UseGuards(JwtAuthGuard)

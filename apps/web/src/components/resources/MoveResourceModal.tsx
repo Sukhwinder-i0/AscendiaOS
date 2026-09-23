@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ResourceResponse } from '@studyos/shared';
+import { ResourceResponse } from '@ascendiaos/shared';
 import { SyllabusTreePicker, LocationSelection } from './SyllabusTreePicker';
 import { api } from '@/lib/api';
 import { FolderTree, X, Check } from 'lucide-react';

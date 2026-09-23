@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ResourceResponse, ResourceType } from '@studyos/shared';
+import { ResourceResponse, ResourceType } from '@ascendiaos/shared';
 import {
   Youtube,
   FileText,

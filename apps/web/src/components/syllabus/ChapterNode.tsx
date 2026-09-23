@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChapterNode as ChapterNodeType, ProgressStatus } from '@studyos/shared';
+import { ChapterNode as ChapterNodeType, ProgressStatus } from '@ascendiaos/shared';
 import { TopicRow } from './TopicRow';
 import { ChevronRight, ChevronDown, Plus, Trash2, Edit2, Check, X, BookOpen } from 'lucide-react';
 

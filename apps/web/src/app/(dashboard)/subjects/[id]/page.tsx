@@ -4,7 +4,7 @@ import React, { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, BookOpen, Clock, Layers, Flame, Calendar, ChevronRight } from 'lucide-react';
 import { api } from '@/lib/api';
-import { SubjectDetailAnalyticsResponse } from '@studyos/shared';
+import { SubjectDetailAnalyticsResponse } from '@ascendiaos/shared';
 
 function formatDuration(seconds: number): string {
   if (!seconds || seconds <= 0) return '0m';

@@ -5,7 +5,7 @@ import { api } from '@/lib/api';
 import {
   DocumentResponse,
   ExtractedSubject,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 import { SyllabusReviewTree } from './SyllabusReviewTree';
 import {
   UploadCloud,

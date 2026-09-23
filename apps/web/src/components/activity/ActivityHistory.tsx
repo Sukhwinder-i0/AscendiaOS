@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ActivityHistoryItemResponse } from '@studyos/shared';
+import { ActivityHistoryItemResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { History, Clock, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
 

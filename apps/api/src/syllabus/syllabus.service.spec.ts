@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SyllabusService } from './syllabus.service';
 import { PrismaService } from '../database/prisma.service';
 import { ForbiddenException } from '@nestjs/common';
-import { ProgressStatus } from '@studyos/shared';
+import { ProgressStatus } from '@ascendiaos/shared';
 
 describe('SyllabusService', () => {
   let service: SyllabusService;

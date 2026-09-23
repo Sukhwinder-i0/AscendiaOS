@@ -14,7 +14,7 @@ import {
   SessionType,
   ProgressStatus,
   DailySummaryResponse,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class StudySessionsService {

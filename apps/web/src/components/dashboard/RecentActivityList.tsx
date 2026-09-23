@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Activity, CheckCircle2, Clock } from 'lucide-react';
-import { GroupedRecentActivity } from '@studyos/shared';
+import { GroupedRecentActivity } from '@ascendiaos/shared';
 
 interface RecentActivityListProps {
   activities: GroupedRecentActivity[];

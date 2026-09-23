@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { DailySummaryResponse } from '@studyos/shared';
+import { DailySummaryResponse } from '@ascendiaos/shared';
 import { Clock, BookOpen, CheckCircle, Flame } from 'lucide-react';
 
 interface DailyActivityCardProps {

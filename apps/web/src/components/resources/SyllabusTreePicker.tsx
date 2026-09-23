@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { SyllabusTreeResponse, ResourceLocationType } from '@studyos/shared';
+import { SyllabusTreeResponse, ResourceLocationType } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { FolderTree, Inbox, ChevronRight, ChevronDown, BookOpen, Layers, Check } from 'lucide-react';
 import { clsx } from 'clsx';

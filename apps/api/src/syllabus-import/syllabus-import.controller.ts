@@ -13,7 +13,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../auth/current-user.decorator';
-import { UserPayload, ApproveSyllabusImportSchema, DocumentResponse } from '@studyos/shared';
+import { UserPayload, ApproveSyllabusImportSchema, DocumentResponse } from '@ascendiaos/shared';
 import { SyllabusImportService } from './syllabus-import.service';
 import { z } from 'zod';
 

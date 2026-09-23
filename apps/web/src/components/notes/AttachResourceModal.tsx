@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ResourceResponse } from '@studyos/shared';
+import { ResourceResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { Paperclip, Search, X, Check, Bookmark, Youtube, FileText, Globe, Loader2 } from 'lucide-react';
 import { clsx } from 'clsx';

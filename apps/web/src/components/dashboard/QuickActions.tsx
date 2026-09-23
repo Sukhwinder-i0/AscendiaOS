@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Play, FolderTree, FilePlus, BookmarkPlus } from 'lucide-react';
-import { QuickActionsContextResponse } from '@studyos/shared';
+import { QuickActionsContextResponse } from '@ascendiaos/shared';
 
 interface QuickActionsProps {
   quickActions: QuickActionsContextResponse;

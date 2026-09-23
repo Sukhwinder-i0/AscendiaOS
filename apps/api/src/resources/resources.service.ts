@@ -23,7 +23,7 @@ import {
   ResourceResponse,
   ResourceLocationType,
   ResourceProcessingStatus,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class ResourcesService {

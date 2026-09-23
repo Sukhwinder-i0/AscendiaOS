@@ -1,7 +1,7 @@
 {
-  "name": "studyos-monorepo",
+  "name": "ascendiaos-monorepo",
   "version": "1.0.0",
-  "description": "StudyOS - End-to-End Smart Exam & Study Infrastructure Monorepo",
+  "description": "AscendiaOS - End-to-End Smart Exam & Study Infrastructure Monorepo",
   "private": true,
   "license": "MIT",
   "author": {
@@ -13,16 +13,16 @@
     "url": "https://github.com/sukhwinder-i0/os4study.git"
   },
   "scripts": {
-    "dev:api": "pnpm --filter @studyos/api start:dev",
-    "dev:web": "pnpm --filter @studyos/web dev",
+    "dev:api": "pnpm --filter @ascendiaos/api start:dev",
+    "dev:web": "pnpm --filter @ascendiaos/web dev",
     "build": "pnpm --recursive build",
     "lint": "pnpm --recursive lint",
     "typecheck": "pnpm --recursive typecheck",
     "test": "pnpm --recursive test",
     "db:docker": "docker compose -f docker/docker-compose.yml up -d",
-    "db:generate": "pnpm --filter @studyos/database generate",
-    "db:migrate": "pnpm --filter @studyos/database migrate",
-    "db:seed": "pnpm --filter @studyos/database seed"
+    "db:generate": "pnpm --filter @ascendiaos/database generate",
+    "db:migrate": "pnpm --filter @ascendiaos/database migrate",
+    "db:seed": "pnpm --filter @ascendiaos/database seed"
   },
   "devDependencies": {
     "typescript": "^5.6.3"

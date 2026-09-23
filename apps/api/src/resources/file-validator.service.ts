@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import * as path from 'path';
-import { ResourceType } from '@studyos/shared';
+import { ResourceType } from '@ascendiaos/shared';
 
 export interface ValidatedFileInfo {
   sanitizedFilename: string;

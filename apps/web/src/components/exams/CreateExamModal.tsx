@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CreateExamDto } from '@studyos/shared';
+import { CreateExamDto } from '@ascendiaos/shared';
 import { X, GraduationCap } from 'lucide-react';
 
 interface CreateExamModalProps {

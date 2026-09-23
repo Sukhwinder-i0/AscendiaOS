@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ResourceType } from '@studyos/shared';
+import { ResourceType } from '@ascendiaos/shared';
 
 export interface DetectedUrlInfo {
   type: ResourceType;

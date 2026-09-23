@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { ResourceResponse, ResourceLocationType } from '@studyos/shared';
+import { ResourceResponse, ResourceLocationType } from '@ascendiaos/shared';
 import { ResourceCard } from './ResourceCard';
 import { AddResourceModal } from './AddResourceModal';
 import { MoveResourceModal } from './MoveResourceModal';

@@ -28,7 +28,7 @@ import {
   AssignResourceSchema,
   MoveResourceSchema,
   ResourceQuerySchema,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Controller('resources')
 @UseGuards(JwtAuthGuard)

@@ -1,7 +1,7 @@
 {
-  "name": "@studyos/shared",
+  "name": "@ascendiaos/shared",
   "version": "1.0.0",
-  "description": "StudyOS Shared Types, DTOs, and Utilities",
+  "description": "AscendiaOS Shared Types, DTOs, and Utilities",
   "private": true,
   "license": "MIT",
   "author": {

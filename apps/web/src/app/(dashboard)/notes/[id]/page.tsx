@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { NoteResponse } from '@studyos/shared';
+import { NoteResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { NoteEditor } from '@/components/notes/NoteEditor';
 import { Loader2 } from 'lucide-react';

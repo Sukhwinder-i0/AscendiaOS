@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { SubjectNode as SubjectNodeType, ProgressStatus } from '@studyos/shared';
+import { SubjectNode as SubjectNodeType, ProgressStatus } from '@ascendiaos/shared';
 import { ChapterNode } from './ChapterNode';
 import { ChevronRight, ChevronDown, Plus, Trash2, Edit2, Check, X, Layers } from 'lucide-react';
 

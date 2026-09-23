@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { NoteResponse } from '@studyos/shared';
+import { NoteResponse } from '@ascendiaos/shared';
 import { NoteCard } from './NoteCard';
 import { NoteTemplateSelector, NoteTemplateType } from './NoteTemplateSelector';
 import { MoveResourceModal } from '../resources/MoveResourceModal';

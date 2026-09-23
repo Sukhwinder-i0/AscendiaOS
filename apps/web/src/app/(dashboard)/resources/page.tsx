@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useCallback } from 'react';
-import { ResourceResponse } from '@studyos/shared';
+import { ResourceResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { ResourceCard } from '@/components/resources/ResourceCard';
 import { ResourceFilterBar, ResourceFilterState } from '@/components/resources/ResourceFilterBar';

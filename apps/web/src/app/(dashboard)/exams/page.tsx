@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ExamResponse } from '@studyos/shared';
+import { ExamResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { CreateExamModal } from '@/components/exams/CreateExamModal';
 import {
@@ -72,7 +72,7 @@ export default function ExamsPage() {
           <GraduationCap className="w-12 h-12 text-orange-500 mx-auto mb-3" />
           <h3 className="text-base font-bold text-primary">No Exam Workspaces Found</h3>
           <p className="text-xs text-secondary max-w-md mx-auto mt-1 mb-6">
-            StudyOS supports arbitrary learning goals (GATE, UGC, UPSC, JEE, University courses, Certifications).
+            AscendiaOS supports arbitrary learning goals (GATE, UGC, UPSC, JEE, University courses, Certifications).
           </p>
           <button
             onClick={() => setIsModalOpen(true)}

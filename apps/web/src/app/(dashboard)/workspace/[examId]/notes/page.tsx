@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { NoteResponse, ExamResponse } from '@studyos/shared';
+import { NoteResponse, ExamResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { NoteCard } from '@/components/notes/NoteCard';
 import { NoteTemplateSelector, NoteTemplateType } from '@/components/notes/NoteTemplateSelector';

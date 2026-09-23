@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { BookOpen, ChevronRight, Clock } from 'lucide-react';
-import { SubjectAnalyticsItem } from '@studyos/shared';
+import { SubjectAnalyticsItem } from '@ascendiaos/shared';
 
 interface SubjectProgressListProps {
   subjects: SubjectAnalyticsItem[];

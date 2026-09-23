@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Circle, CheckCircle2, AlertCircle } from 'lucide-react';
-import { TopicSummariesResponse } from '@studyos/shared';
+import { TopicSummariesResponse } from '@ascendiaos/shared';
 
 interface CompactTopicListsProps {
   topicSummaries: TopicSummariesResponse;

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
-import { ResourceResponse, ExamResponse } from '@studyos/shared';
+import { ResourceResponse, ExamResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { ResourceCard } from '@/components/resources/ResourceCard';
 import { ResourceFilterBar, ResourceFilterState } from '@/components/resources/ResourceFilterBar';

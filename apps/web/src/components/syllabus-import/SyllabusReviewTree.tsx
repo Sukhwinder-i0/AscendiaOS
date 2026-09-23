@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ExtractedSubject, ExtractedChapter, ExtractedTopic } from '@studyos/shared';
+import { ExtractedSubject, ExtractedChapter, ExtractedTopic } from '@ascendiaos/shared';
 import {
   BookOpen,
   ChevronRight,

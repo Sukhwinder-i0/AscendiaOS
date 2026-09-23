@@ -6,7 +6,7 @@ import { STORAGE_PROVIDER } from '../storage/storage.interface';
 import { UrlDetectorService } from './url-detector.service';
 import { UrlMetadataScraperService } from './url-metadata-scraper.service';
 import { FileValidatorService } from './file-validator.service';
-import { ResourceType, ResourceLocationType, ResourceProcessingStatus } from '@studyos/shared';
+import { ResourceType, ResourceLocationType, ResourceProcessingStatus } from '@ascendiaos/shared';
 
 describe('ResourcesService', () => {
   let service: ResourcesService;

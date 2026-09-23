@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ResourceLocationType, ResourceType, UrlMetadataResponse } from '@studyos/shared';
+import { ResourceLocationType, ResourceType, UrlMetadataResponse } from '@ascendiaos/shared';
 import { SyllabusTreePicker, LocationSelection } from './SyllabusTreePicker';
 import { api } from '@/lib/api';
 import {

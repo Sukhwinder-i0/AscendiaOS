@@ -1,7 +1,7 @@
 {
-  "name": "@studyos/database",
+  "name": "@ascendiaos/database",
   "version": "1.0.0",
-  "description": "StudyOS Database Schema and Prisma Client Package",
+  "description": "AscendiaOS Database Schema and Prisma Client Package",
   "private": true,
   "license": "MIT",
   "author": {

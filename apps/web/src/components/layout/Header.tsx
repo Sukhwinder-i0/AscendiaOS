@@ -3,7 +3,7 @@
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { LogOut, Flame, Clock, Menu } from 'lucide-react';
-import { ExamResponse } from '@studyos/shared';
+import { ExamResponse } from '@ascendiaos/shared';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
 interface HeaderProps {

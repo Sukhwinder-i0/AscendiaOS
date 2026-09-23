@@ -14,7 +14,7 @@ import {
   CreateStudySessionSchema,
   FinishStudySessionSchema,
   StudySessionQuerySchema,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Controller('study-sessions')
 @UseGuards(JwtAuthGuard)

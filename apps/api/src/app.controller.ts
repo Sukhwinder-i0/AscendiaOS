@@ -8,7 +8,7 @@ export class AppController {
   @ApiOperation({ summary: 'API Root & System Metadata' })
   getSystemInfo() {
     return {
-      name: 'StudyOS Monorepo API',
+      name: 'AscendiaOS Monorepo API',
       status: 'online',
       version: '1.0.0',
       author: 'sukhwinder-i0',

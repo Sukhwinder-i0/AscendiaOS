@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DailySummaryResponse } from '@studyos/shared';
+import { DailySummaryResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 
 export function DailySummaryCard() {

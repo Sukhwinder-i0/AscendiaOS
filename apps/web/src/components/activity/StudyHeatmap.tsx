@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { DailyActivityItem } from '@studyos/shared';
+import { DailyActivityItem } from '@ascendiaos/shared';
 
 interface StudyHeatmapProps {
   days: DailyActivityItem[];

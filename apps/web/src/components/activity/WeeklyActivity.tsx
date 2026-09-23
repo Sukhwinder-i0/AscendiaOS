@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { WeeklyActivityResponse } from '@studyos/shared';
+import { WeeklyActivityResponse } from '@ascendiaos/shared';
 import { CalendarRange } from 'lucide-react';
 
 interface WeeklyActivityProps {

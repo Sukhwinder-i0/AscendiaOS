@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { StudySessionResponse } from '@studyos/shared';
+import { StudySessionResponse } from '@ascendiaos/shared';
 
 interface SessionFinishModalProps {
   session: StudySessionResponse;

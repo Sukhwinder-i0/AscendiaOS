@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Info, Play, ArrowRight } from 'lucide-react';
-import { OverallProgressResponse, QuickActionsContextResponse } from '@studyos/shared';
+import { OverallProgressResponse, QuickActionsContextResponse } from '@ascendiaos/shared';
 
 interface OverallProgressCardProps {
   examTitle: string | null;

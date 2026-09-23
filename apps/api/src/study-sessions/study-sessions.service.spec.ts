@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { StudySessionsService } from './study-sessions.service';
 import { PrismaService } from '../database/prisma.service';
-import { SessionStatus, SessionType, ProgressStatus } from '@studyos/shared';
+import { SessionStatus, SessionType, ProgressStatus } from '@ascendiaos/shared';
 
 describe('StudySessionsService', () => {
   let service: StudySessionsService;

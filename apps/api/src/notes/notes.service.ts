@@ -13,7 +13,7 @@ import {
   NoteQueryDto,
   AttachResourceToNoteDto,
   NoteResponse,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 @Injectable()
 export class NotesService {

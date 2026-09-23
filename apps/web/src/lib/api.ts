@@ -50,7 +50,7 @@ import {
   TopicProgressQueryDto,
   PaginatedTopicProgressResponse,
   TrendPeriod,
-} from '@studyos/shared';
+} from '@ascendiaos/shared';
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
 

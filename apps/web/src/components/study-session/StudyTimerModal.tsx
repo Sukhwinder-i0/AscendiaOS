@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { StudySessionResponse } from '@studyos/shared';
+import { StudySessionResponse } from '@ascendiaos/shared';
 import { api } from '@/lib/api';
 import { SessionFinishModal } from './SessionFinishModal';
 

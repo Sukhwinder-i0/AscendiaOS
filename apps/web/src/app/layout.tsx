@@ -4,7 +4,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { ThemeProvider } from '@/context/ThemeContext';
 
 export const metadata: Metadata = {
-  title: 'StudyOS - AI Personal Study & Exam Prep OS',
+  title: 'AscendiaOS - AI Personal Study & Exam Prep OS',
   description: 'Manage your entire study preparation, syllabus, resources, notes, sessions, and progress in one place.',
 };
 

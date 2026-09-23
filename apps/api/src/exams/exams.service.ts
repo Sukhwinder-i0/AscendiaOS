@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
-import { CreateExamDto, UpdateExamDto, ExamResponse } from '@studyos/shared';
+import { CreateExamDto, UpdateExamDto, ExamResponse } from '@ascendiaos/shared';
 
 @Injectable()
 export class ExamsService {

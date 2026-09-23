@@ -73,7 +73,7 @@ export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarPr
           <Link href="/dashboard" onClick={onCloseMobile} className="flex items-center space-x-2 shrink-0">
             <img
               src={logoSrc}
-              alt="Exam COMPETII"
+              alt="AscendiaOS"
               className="h-8 w-auto object-contain transition-opacity duration-200"
             />
           </Link>

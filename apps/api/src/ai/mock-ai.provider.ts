@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { AIProvider } from './ai.interface';
-import { ExtractedHierarchy, SyllabusDocumentType } from '@studyos/shared';
+import { ExtractedHierarchy, SyllabusDocumentType } from '@ascendiaos/shared';
 
 @Injectable()
 export class MockAIProvider implements AIProvider {
