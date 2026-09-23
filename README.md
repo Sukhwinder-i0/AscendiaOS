@@ -6,17 +6,17 @@
 
 ## 👤 Author & Creator
 
-This project was designed and created by **[sukhwinder-i0](https://github.com/sukhwinder-i0)**.
+This project was designed and created by **[Sukhwinder-i0](https://github.com/Sukhwinder-i0)**.
 
-- **GitHub Profile**: [https://github.com/sukhwinder-i0](https://github.com/sukhwinder-i0)
-- **Repository Link**: [https://github.com/sukhwinder-i0/os4study](https://github.com/sukhwinder-i0/os4study)
+- **GitHub Profile**: [https://github.com/Sukhwinder-i0](https://github.com/Sukhwinder-i0)
+- **Repository Link**: [https://github.com/Sukhwinder-i0/AscendiaOS](https://github.com/Sukhwinder-i0/AscendiaOS)
 
 ---
 
 ## 📜 License
 
 This project is open-source software licensed under the **[MIT License](LICENSE)**.
-Copyright (c) 2026 **Sukhwinder Singh ([sukhwinder-i0](https://github.com/sukhwinder-i0))**.
+Copyright (c) 2026 **Sukhwinder Singh ([Sukhwinder-i0](https://github.com/sukhwinder-i0))**.
 
 ---
 
@@ -187,5 +187,5 @@ When running the API server, interactive Swagger documentation is automatically 
 ---
 
 <p center align="center">
-  Crafted with ❤️ by <a href="https://github.com/sukhwinder-i0"><strong>sukhwinder-i0</strong></a>
+  Crafted with ❤️ by <a href="https://github.com/Sukhwinder-i0"><strong>Sukhwinder-i0</strong></a>
 </p>
