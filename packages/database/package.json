@@ -1,29 +1,32 @@
 {
   "name": "@studyos/database",
   "version": "1.0.0",
+  "description": "StudyOS Database Schema and Prisma Client Package",
   "private": true,
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "scripts": {
-    "build": "prisma generate && tsc",
-    "typecheck": "tsc --noEmit",
-    "generate": "prisma generate",
-    "db:push": "prisma db push",
-    "migrate": "prisma migrate dev",
-    "seed": "tsx prisma/seed.ts"
+  "license": "MIT",
+  "author": {
+    "name": "sukhwinder-i0",
+    "url": "https://github.com/sukhwinder-i0"
   },
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sukhwinder-i0/os4study.git"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "seed": "ts-node src/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^6.4.1",
-    "@types/bcryptjs": "^3.0.0",
-    "bcryptjs": "^3.0.3"
+    "@prisma/client": "^6.3.1"
   },
   "devDependencies": {
     "@types/node": "^22.13.4",
-    "prisma": "^6.4.1",
-    "tsx": "^4.19.3",
+    "prisma": "^6.3.1",
+    "ts-node": "^10.9.2",
     "typescript": "^5.6.3"
   }
 }

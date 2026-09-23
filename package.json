@@ -1,6 +1,17 @@
 {
   "name": "studyos-monorepo",
+  "version": "1.0.0",
+  "description": "StudyOS - End-to-End Smart Exam & Study Infrastructure Monorepo",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "sukhwinder-i0",
+    "url": "https://github.com/sukhwinder-i0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sukhwinder-i0/os4study.git"
+  },
   "scripts": {
     "dev:api": "pnpm --filter @studyos/api start:dev",
     "dev:web": "pnpm --filter @studyos/web dev",

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { ExamsModule } from './exams/exams.module';
@@ -28,5 +29,6 @@ import { AnalyticsModule } from './analytics/analytics.module';
     ActivityModule,
     AnalyticsModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}

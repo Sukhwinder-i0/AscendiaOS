@@ -167,12 +167,23 @@ export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarPr
         </div>
       </div>
 
-      {/* Footer / Settings */}
+      {/* Footer / Author Credit */}
       <div className="p-4 border-t border-border">
-        <div className="bg-background rounded-sm p-3 border border-border flex items-center space-x-3">
-          <div className="text-xs font-mono">
+        <div className="bg-background rounded-sm p-3 border border-border flex flex-col space-y-1.5 font-mono">
+          <div className="text-xs">
             <p className="font-semibold text-primary">Prep Infrastructure</p>
             <p className="text-secondary text-[10px]">v1.0 • Phase 6 Active</p>
+          </div>
+          <div className="pt-2 border-t border-border/60 flex items-center justify-between text-[11px] text-secondary">
+            <span>Created by</span>
+            <a
+              href="https://github.com/sukhwinder-i0"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-400 hover:text-orange-300 hover:underline font-semibold transition-colors"
+            >
+              sukhwinder-i0
+            </a>
           </div>
         </div>
       </div>

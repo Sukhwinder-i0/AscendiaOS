@@ -1,7 +1,17 @@
 {
   "name": "@studyos/web",
   "version": "1.0.0",
+  "description": "StudyOS Frontend Next.js Web Application",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "sukhwinder-i0",
+    "url": "https://github.com/sukhwinder-i0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sukhwinder-i0/os4study.git"
+  },
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
