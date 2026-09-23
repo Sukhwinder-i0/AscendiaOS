@@ -6,6 +6,28 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import express from 'express';
 
 const server = express();
+
+// Express CORS & Preflight Middleware for Vercel Serverless
+server.use((req, res, next) => {
+  const origin = req.headers.origin || '*';
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization',
+  );
+
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+  next();
+});
+
 let cachedServer: any;
 
 async function bootstrapServer() {
@@ -18,6 +40,13 @@ async function bootstrapServer() {
     app.enableCors({
       origin: true,
       credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Accept',
+        'X-Requested-With',
+      ],
     });
 
     app.setGlobalPrefix('api');
