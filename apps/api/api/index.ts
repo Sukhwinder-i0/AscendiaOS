@@ -95,6 +95,11 @@ export default async function handler(req: any, res: any) {
     return res.status(200).end();
   }
 
+  // Ensure request URL has NestJS /api global prefix
+  if (req.url && !req.url.startsWith('/api')) {
+    req.url = '/api' + (req.url === '/' ? '' : req.url);
+  }
+
   try {
     await bootstrapServer();
     server(req, res);
