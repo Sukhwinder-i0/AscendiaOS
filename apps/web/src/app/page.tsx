@@ -37,6 +37,13 @@ import {
   HelpCircle,
   RefreshCw,
   Sliders,
+  Github,
+  GitFork,
+  Star,
+  MessageSquare,
+  Send,
+  Heart,
+  Sparkles,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -46,6 +53,37 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeWorkflowStep, setActiveWorkflowStep] = useState(1);
   const [activeSandboxTab, setActiveSandboxTab] = useState<'workspace' | 'syllabus' | 'resources' | 'notes' | 'timer' | 'streak' | 'analytics'>('workspace');
+
+  // Feedback & Suggestion Form State
+  const [feedbackCategory, setFeedbackCategory] = useState<'suggestion' | 'syllabus' | 'bug' | 'other'>('suggestion');
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackEmail, setFeedbackEmail] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+
+  const handleFeedbackSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!feedbackText.trim()) return;
+    setIsSubmittingFeedback(true);
+    setTimeout(() => {
+      setIsSubmittingFeedback(false);
+      setFeedbackSubmitted(true);
+    }, 500);
+  };
+
+  const getGitHubIssueUrl = () => {
+    const categoryLabels: Record<string, string> = {
+      suggestion: 'Feature Suggestion',
+      syllabus: 'Syllabus / Content Request',
+      bug: 'Bug Report',
+      other: 'Feedback',
+    };
+    const title = encodeURIComponent(`[${categoryLabels[feedbackCategory] || 'FEEDBACK'}] Landing Page Submission`);
+    const body = encodeURIComponent(
+      `### Category\n${categoryLabels[feedbackCategory] || feedbackCategory}\n\n### Message\n${feedbackText}\n\n### Contact (Optional)\n${feedbackEmail || 'N/A'}\n\n---\n*Submitted via AscendiaOS Landing Page*`
+    );
+    return `https://github.com/Sukhwinder-i0/AscendiaOS/issues/new?title=${title}&body=${body}`;
+  };
 
   const workflowSteps = [
     {
@@ -252,15 +290,14 @@ export default function HomePage() {
               {Array.from({ length: 36 }).map((_, i) => (
                 <div
                   key={i}
-                  className={`h-3 w-3 rounded-sm ${
-                    i % 5 === 0
-                      ? 'bg-orange-500'
-                      : i % 3 === 0
+                  className={`h-3 w-3 rounded-sm ${i % 5 === 0
+                    ? 'bg-orange-500'
+                    : i % 3 === 0
                       ? 'bg-orange-700'
                       : i % 2 === 0
-                      ? 'bg-orange-900/60'
-                      : 'bg-zinc-800'
-                  }`}
+                        ? 'bg-orange-900/60'
+                        : 'bg-zinc-800'
+                    }`}
                   title={`Day ${i + 1}`}
                 />
               ))}
@@ -319,7 +356,7 @@ export default function HomePage() {
           <div className="flex items-center space-x-2.5 sm:space-x-3">
             <img src={logoSrc} alt="AscendiaOS" className="h-6 sm:h-7 w-auto object-contain" />
             <span className="hidden sm:inline-block text-[10px] sm:text-xs font-mono px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/30 rounded-sm font-semibold uppercase tracking-wider">
-              AscendiaOS
+              Open Source
             </span>
           </div>
 
@@ -540,11 +577,10 @@ export default function HomePage() {
                 <button
                   key={step.id}
                   onClick={() => setActiveWorkflowStep(step.id)}
-                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-sm font-mono text-xs whitespace-nowrap transition-all border ${
-                    isActive
-                      ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 font-bold'
-                      : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
-                  }`}
+                  className={`flex items-center space-x-2 px-3.5 py-2 rounded-sm font-mono text-xs whitespace-nowrap transition-all border ${isActive
+                    ? 'bg-orange-500/10 border-orange-500/40 text-orange-400 font-bold'
+                    : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
+                    }`}
                 >
                   <span className={isActive ? 'text-orange-400' : 'text-zinc-500'}>{step.number}.</span>
                   <span>{step.title}</span>
@@ -646,11 +682,10 @@ export default function HomePage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveSandboxTab(tab.id as any)}
-                className={`px-3 py-1.5 rounded-sm text-xs font-mono transition-all border whitespace-nowrap ${
-                  activeSandboxTab === tab.id
-                    ? 'bg-orange-600 text-white border-orange-500 font-bold'
-                    : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
-                }`}
+                className={`px-3 py-1.5 rounded-sm text-xs font-mono transition-all border whitespace-nowrap ${activeSandboxTab === tab.id
+                  ? 'bg-orange-600 text-white border-orange-500 font-bold'
+                  : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white'
+                  }`}
               >
                 {tab.label}
               </button>
@@ -786,9 +821,8 @@ export default function HomePage() {
                   {Array.from({ length: 42 }).map((_, i) => (
                     <div
                       key={i}
-                      className={`h-3.5 w-3.5 rounded-sm ${
-                        i % 4 === 0 ? 'bg-orange-500' : i % 3 === 0 ? 'bg-orange-700' : 'bg-zinc-800'
-                      }`}
+                      className={`h-3.5 w-3.5 rounded-sm ${i % 4 === 0 ? 'bg-orange-500' : i % 3 === 0 ? 'bg-orange-700' : 'bg-zinc-800'
+                        }`}
                     />
                   ))}
                 </div>
@@ -992,25 +1026,247 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Feedback & Suggestion Form Section */}
+      <section id="feedback" className="py-16 bg-zinc-950/90 border-t border-b border-zinc-800/80">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-8">
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center space-x-2 px-3 py-1 bg-orange-500/10 text-orange-400 border border-orange-500/30 text-xs font-mono uppercase tracking-wider rounded-sm font-semibold">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>BUILDER & STUDENT FEEDBACK</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight">
+              Help Us Improve AscendiaOS.
+            </h2>
+            <p className="text-zinc-400 text-sm max-w-xl mx-auto leading-relaxed">
+              Have a feature request, syllabus update suggestion, or bug report? We build this in the open for students and builders.
+            </p>
+          </div>
+
+          <div className="bg-zinc-900/80 border border-zinc-800 rounded-sm p-6 sm:p-8 backdrop-blur-sm">
+            {feedbackSubmitted ? (
+              <div className="text-center py-8 space-y-4">
+                <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center rounded-full mx-auto">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h3 className="text-xl font-bold text-white">Thank You for Your Feedback!</h3>
+                <p className="text-zinc-400 text-xs max-w-md mx-auto leading-relaxed font-mono">
+                  Your suggestion helps make AscendiaOS better for students and developers worldwide.
+                </p>
+                <div className="pt-2 flex justify-center gap-3">
+                  <button
+                    onClick={() => {
+                      setFeedbackSubmitted(false);
+                      setFeedbackText('');
+                    }}
+                    className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-mono rounded-sm transition-all"
+                  >
+                    Submit Another Feedback
+                  </button>
+                  <a
+                    href={getGitHubIssueUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 bg-orange-600/20 border border-orange-500/40 text-orange-400 hover:bg-orange-600/30 text-xs font-mono font-bold rounded-sm transition-all flex items-center space-x-1.5"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>View / Post as GitHub Issue</span>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleFeedbackSubmit} className="space-y-5">
+                {/* Category Selection */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                    Feedback Category
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      { id: 'suggestion', label: 'Feature Request', icon: Sparkles },
+                      { id: 'syllabus', label: 'Syllabus Tree', icon: FolderTree },
+                      { id: 'bug', label: 'Bug Report', icon: HelpCircle },
+                      { id: 'other', label: 'General Idea', icon: MessageSquare },
+                    ].map((cat) => {
+                      const Icon = cat.icon;
+                      const active = feedbackCategory === cat.id;
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => setFeedbackCategory(cat.id as any)}
+                          className={`p-2.5 text-xs font-mono rounded-sm border flex items-center justify-center space-x-2 transition-all ${active
+                            ? 'bg-orange-500/10 border-orange-500/50 text-orange-400 font-bold'
+                            : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-300'
+                            }`}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                          <span>{cat.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Message Input */}
+                <div className="space-y-2">
+                  <label className="block text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                    Your Suggestion or Feedback <span className="text-orange-500">*</span>
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
+                    placeholder="Tell us what feature you'd like to see, syllabus improvements, or bug details..."
+                    className="w-full bg-zinc-950 border border-zinc-800 rounded-sm p-3 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-orange-500 transition-colors font-mono resize-none"
+                  />
+                </div>
+
+                {/* Optional Email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <label className="block text-xs font-mono text-zinc-400 uppercase tracking-wider">
+                      Email or GitHub Username <span className="text-zinc-600">(Optional)</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={feedbackEmail}
+                      onChange={(e) => setFeedbackEmail(e.target.value)}
+                      placeholder="e.g. alex@student.edu or @github_user"
+                      className="w-full bg-zinc-950 border border-zinc-800 rounded-sm p-2.5 text-xs text-zinc-200 placeholder-zinc-600 focus:outline-none focus:border-orange-500 transition-colors font-mono"
+                    />
+                  </div>
+
+                  <div className="flex items-end justify-end gap-2 pt-2 sm:pt-0">
+                    <a
+                      href={getGitHubIssueUrl()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto px-4 py-2.5 bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-zinc-300 hover:text-white text-xs font-mono rounded-sm transition-all flex items-center justify-center space-x-1.5"
+                    >
+                      <Github className="w-3.5 h-3.5" />
+                      <span>Open on GitHub</span>
+                    </a>
+
+                    <button
+                      type="submit"
+                      disabled={isSubmittingFeedback || !feedbackText.trim()}
+                      className="w-full sm:w-auto px-6 py-2.5 bg-orange-600 hover:bg-orange-500 disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider font-mono rounded-sm transition-all flex items-center justify-center space-x-2"
+                    >
+                      {isSubmittingFeedback ? (
+                        <span>Sending...</span>
+                      ) : (
+                        <>
+                          <span>Send Feedback</span>
+                          <Send className="w-3.5 h-3.5" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="border-t border-zinc-800/80 py-8 bg-zinc-950 text-xs text-zinc-500 font-mono">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center space-x-3">
-            <span className="text-zinc-200 font-bold font-sans">AscendiaOS</span>
-            <span>—</span>
-            <span>The Competitive Exam Preparation Infrastructure</span>
+      <footer className="border-t border-zinc-800/80 py-12 bg-zinc-950 text-xs text-zinc-400 font-mono">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-10">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand & Creator Attribution */}
+            <div className="space-y-3 md:col-span-2">
+              <div className="flex items-center space-x-3">
+                <span className="text-zinc-100 font-bold font-sans text-lg">AscendiaOS</span>
+                <span className="px-2 py-0.5 bg-orange-500/10 text-orange-400 border border-orange-500/30 text-[10px] font-bold rounded-sm uppercase tracking-wider">
+                  OPEN SOURCE
+                </span>
+              </div>
+              <p className="text-zinc-400 text-xs leading-relaxed max-w-md font-sans">
+                The open-source competitive exam preparation infrastructure built for structured learning, syllabus tree tracking, and continuous study momentum.
+              </p>
+              <div className="pt-2 text-zinc-400 font-mono flex items-center space-x-1 text-xs">
+                <span>Created with</span>
+                <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline mx-0.5" />
+                <span>by</span>
+                <a
+                  href="https://github.com/Sukhwinder-i0"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-orange-400 hover:text-orange-300 font-bold inline-flex items-center space-x-1 underline decoration-orange-500/40 underline-offset-4 ml-1 transition-colors"
+                >
+                  <Github className="w-3.5 h-3.5 inline" />
+                  <span>Sukhwinder-i0</span>
+                  <ExternalLink className="w-3 h-3 inline" />
+                </a>
+              </div>
+            </div>
+
+            {/* Community & Builders */}
+            <div className="space-y-3">
+              <h4 className="text-zinc-200 font-bold font-sans uppercase tracking-wider text-xs">For Builders & Students</h4>
+              <ul className="space-y-2 text-zinc-400">
+                <li>
+                  <a
+                    href="https://github.com/Sukhwinder-i0/AscendiaOS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-orange-400 transition-colors inline-flex items-center space-x-1.5"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>GitHub Repository</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/Sukhwinder-i0/AscendiaOS"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-orange-400 transition-colors inline-flex items-center space-x-1.5"
+                  >
+                    <GitFork className="w-3.5 h-3.5 text-orange-400" />
+                    <span>Contribute Code & Syllabi</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#feedback"
+                    className="hover:text-orange-400 transition-colors inline-flex items-center space-x-1.5"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>Feedback & Suggestions</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Platform Nav */}
+            <div className="space-y-3">
+              <h4 className="text-zinc-200 font-bold font-sans uppercase tracking-wider text-xs">Navigation</h4>
+              <ul className="space-y-2 text-zinc-400">
+                <li><a href="#workflow" className="hover:text-orange-400 transition-colors">How It Works</a></li>
+                <li><a href="#syllabus" className="hover:text-orange-400 transition-colors">Syllabus Tree</a></li>
+                <li><a href="#notes" className="hover:text-orange-400 transition-colors">Notes & Math</a></li>
+                <li><a href="#activity" className="hover:text-orange-400 transition-colors">Streak & Analytics</a></li>
+                <li><a href="#faq" className="hover:text-orange-400 transition-colors">FAQ</a></li>
+              </ul>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-6 text-zinc-400">
-            <a href="#workflow" className="hover:text-orange-400 transition-colors">How It Works</a>
-            <a href="#syllabus" className="hover:text-orange-400 transition-colors">Syllabus</a>
-            <a href="#notes" className="hover:text-orange-400 transition-colors">Notes & Math</a>
-            <a href="#activity" className="hover:text-orange-400 transition-colors">Streak & Analytics</a>
-            <a href="#faq" className="hover:text-orange-400 transition-colors">FAQ</a>
-          </div>
-
-          <div>
-            © {new Date().getFullYear()} AscendiaOS. All rights reserved.
+          {/* Bottom Copyright & GitHub Star Button */}
+          <div className="pt-6 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-zinc-500">
+            <div>
+              © {new Date().getFullYear()} <a href="https://github.com/Sukhwinder-i0/AscendiaOS" target="_blank" rel="noopener noreferrer" className="hover:underline text-zinc-400">AscendiaOS</a>. Open Source.
+            </div>
+            <a
+              href="https://github.com/Sukhwinder-i0/AscendiaOS"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-zinc-900 border border-zinc-800 hover:border-orange-500/50 text-zinc-300 hover:text-orange-400 rounded-sm transition-all"
+            >
+              <Star className="w-3.5 h-3.5 text-yellow-500 fill-yellow-500" />
+              <span className="font-bold text-xs">Star on GitHub</span>
+            </a>
           </div>
         </div>
       </footer>

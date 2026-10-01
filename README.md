@@ -25,7 +25,7 @@ Copyright (c) 2026 **Sukhwinder Singh ([Sukhwinder-i0](https://github.com/sukhwi
 This monorepo is managed using **pnpm workspaces**:
 
 ```text
-os4study/
+AscendiaOS/
 ├── apps/
 │   ├── api/                 # NestJS 10 REST API Service
 │   │   ├── .env.example     # API environment template
