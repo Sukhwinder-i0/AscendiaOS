@@ -9,3 +9,8 @@ dist
 .env.test.local
 .env.production.local
 coverage
+*.tsbuildinfo
+
+# Uploads directory (ignore all uploaded files except .gitkeep)
+apps/api/uploads/*
+!apps/api/uploads/.gitkeep
