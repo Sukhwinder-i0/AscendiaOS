@@ -11,7 +11,11 @@ export class OpenAIProvider implements AIProvider {
 
   constructor(private readonly configService: ConfigService) {
     const apiKey = this.configService.get<string>('OPENAI_API_KEY');
-    this.openai = new OpenAI({ apiKey: apiKey || 'dummy-key' });
+    const baseURL = this.configService.get<string>('OPENAI_BASE_URL');
+    this.openai = new OpenAI({
+      apiKey: apiKey || 'dummy-key',
+      ...(baseURL ? { baseURL } : {}),
+    });
   }
 
   async analyzeSyllabusText(extractedText: string): Promise<ExtractedHierarchy> {
@@ -66,17 +70,37 @@ CRITICAL PARSING & EXTRACTION RULES:
 `;
 
     try {
+      // Use configured model; default to openai/gpt-oss-120b (65k max completion tokens on Groq)
+      const model = this.configService.get<string>('OPENAI_MODEL') || 'openai/gpt-oss-120b';
+
+      // Set max_tokens close to the model limit to avoid early truncation on large syllabi.
+      // qwen/qwen3.8-27b cap is 16384; openai/gpt-oss-* cap is 65536.
+      const maxTokens = model.includes('qwen') ? 16000 : 32000;
+
+      this.logger.log(`Using model: ${model}, max_tokens: ${maxTokens}`);
+
       const response = await this.openai.chat.completions.create({
-        model: this.configService.get<string>('OPENAI_MODEL') || 'gpt-4o-mini',
+        model,
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Syllabus Content:\n\n${extractedText.slice(0, 50000)}` },
+          { role: 'user', content: `Syllabus Content:\n\n${extractedText.slice(0, 80000)}` },
         ],
         response_format: { type: 'json_object' },
         temperature: 0.1,
+        max_tokens: maxTokens,
       });
 
-      const content = response.choices[0]?.message?.content || '{}';
+      const choice = response.choices[0];
+      const finishReason = choice?.finish_reason;
+
+      // Warn if the model stopped due to length — JSON will be incomplete
+      if (finishReason === 'length') {
+        this.logger.warn(`Model stopped due to token limit (finish_reason=length). JSON may be truncated. Consider a model with higher max_completion_tokens.`);
+      }
+
+      this.logger.log(`finish_reason: ${finishReason}, usage: ${JSON.stringify(response.usage)}`);
+
+      const content = choice?.message?.content || '{}';
       const parsedJson = JSON.parse(content);
       
       const validated = ExtractedHierarchySchema.parse(parsedJson);

@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -15,12 +15,25 @@ import {
   Target,
   Clock,
   Flame,
+  X,
+  MessageSquarePlus,
+  Send,
+  Bug,
+  Lightbulb,
+  Star,
+  ChevronUp,
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { useTheme } from '@/context/ThemeContext';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
 
-import { X } from 'lucide-react';
+const FEEDBACK_CATEGORIES = [
+  { key: 'feature', label: 'Feature',  icon: Lightbulb, color: 'text-yellow-400' },
+  { key: 'bug',     label: 'Bug',      icon: Bug,        color: 'text-red-400'    },
+  { key: 'praise',  label: 'Praise',   icon: Star,       color: 'text-orange-400' },
+] as const;
+type FeedbackCategory = typeof FEEDBACK_CATEGORIES[number]['key'];
+const GITHUB_REPO = 'Sukhwinder-i0/AscendiaOS';
 
 interface SidebarProps {
   activeExamId?: string | null;
@@ -31,6 +44,21 @@ interface SidebarProps {
 export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   const { logoSrc } = useTheme();
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackCategory, setFeedbackCategory] = useState<FeedbackCategory>('feature');
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+
+  const handleFeedbackSubmit = () => {
+    if (!feedbackText.trim()) return;
+    const cat = FEEDBACK_CATEGORIES.find((c) => c.key === feedbackCategory)!;
+    const title = encodeURIComponent(`[${cat.label}] ${feedbackText.slice(0, 60)}`);
+    const body = encodeURIComponent(`### Category\n${cat.label}\n\n### Description\n${feedbackText}\n\n---\n*Submitted via AscendiaOS App*`);
+    const label = feedbackCategory === 'bug' ? '&labels=bug' : feedbackCategory === 'feature' ? '&labels=enhancement' : '';
+    window.open(`https://github.com/${GITHUB_REPO}/issues/new?title=${title}&body=${body}${label}`, '_blank');
+    setFeedbackSubmitted(true);
+    setTimeout(() => { setFeedbackSubmitted(false); setFeedbackText(''); setFeedbackOpen(false); }, 2000);
+  };
 
   const primaryNav = [
     { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -167,8 +195,85 @@ export function Sidebar({ activeExamId, isMobileOpen, onCloseMobile }: SidebarPr
         </div>
       </div>
 
-      {/* Footer / Author Credit */}
-      <div className="p-4 border-t border-border">
+      {/* Footer / Feedback + Author Credit */}
+      <div className="p-4 border-t border-border space-y-2">
+
+        {/* Feedback button + absolutely-positioned panel floating upward */}
+        <div className="relative">
+          {feedbackOpen && (
+            <div className="absolute bottom-full left-0 right-0 mb-2 bg-zinc-900 border border-zinc-700/60 rounded-sm p-3 space-y-2.5 shadow-xl shadow-black/40 z-50">
+              {feedbackSubmitted ? (
+                <div className="flex flex-col items-center gap-1.5 py-2 text-center">
+                  <Send className="w-4 h-4 text-orange-400" />
+                  <p className="text-xs font-medium text-zinc-100">Opening GitHub...</p>
+                  <p className="text-[11px] text-zinc-500">Thanks! 🙏</p>
+                </div>
+              ) : (
+                <>
+                  {/* Category pills */}
+                  <div className="flex gap-1.5">
+                    {FEEDBACK_CATEGORIES.map((c) => {
+                      const Icon = c.icon;
+                      return (
+                        <button
+                          key={c.key}
+                          onClick={() => setFeedbackCategory(c.key)}
+                          className={clsx(
+                            'flex items-center gap-1 px-2 py-1 rounded-sm text-[11px] font-medium border transition-all flex-1 justify-center',
+                            feedbackCategory === c.key
+                              ? 'bg-orange-500/20 border-orange-500/50 text-orange-300'
+                              : 'bg-zinc-800/50 border-zinc-700/40 text-zinc-400 hover:border-zinc-600'
+                          )}
+                        >
+                          <Icon className={clsx('w-3 h-3', feedbackCategory === c.key ? 'text-orange-400' : c.color)} />
+                          {c.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Text area */}
+                  <textarea
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
+                    placeholder={feedbackCategory === 'bug' ? 'What went wrong?' : feedbackCategory === 'feature' ? "What would you like to see?" : "What do you love?"}
+                    rows={4}
+                    className="w-full bg-zinc-800/60 border border-zinc-700/50 rounded-sm px-2.5 py-2 text-xs text-zinc-200 placeholder-zinc-600 resize-none focus:outline-none focus:border-orange-500/60 transition-all"
+                  />
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-zinc-600">Opens GitHub issue</span>
+                    <button
+                      onClick={handleFeedbackSubmit}
+                      disabled={!feedbackText.trim()}
+                      className="flex items-center gap-1 px-2.5 py-1 rounded-sm bg-orange-500 hover:bg-orange-400 disabled:opacity-40 disabled:cursor-not-allowed text-white text-[11px] font-semibold transition-all"
+                    >
+                      <Send className="w-3 h-3" />
+                      Submit
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Feedback toggle button */}
+          <button
+            onClick={() => setFeedbackOpen((v) => !v)}
+            className={clsx(
+              'w-full flex items-center justify-center gap-2 px-3 py-2 rounded-sm text-xs font-medium border transition-all',
+              feedbackOpen
+                ? 'bg-orange-500/10 border-orange-500/30 text-orange-400'
+                : 'bg-zinc-800/40 border-zinc-700/40 text-zinc-400 hover:border-orange-500/30 hover:text-orange-400 hover:bg-orange-500/5'
+            )}
+          >
+            <MessageSquarePlus className="w-3.5 h-3.5" />
+            Feedback & Suggestions
+            <ChevronUp className={clsx('w-3 h-3 ml-auto transition-transform duration-200', feedbackOpen ? '' : 'rotate-180')} />
+          </button>
+        </div>
+
+        {/* Prep Infrastructure card */}
         <div className="bg-background rounded-sm p-3 border border-border flex flex-col space-y-1.5 font-mono">
           <div className="text-xs">
             <p className="font-semibold text-primary">Prep Infrastructure</p>

@@ -117,7 +117,7 @@ export default function LoginPage() {
           <button
             onClick={() => {
               setEmail('demo@studyos.com');
-              setPassword('password123');
+              setPassword('123456');
             }}
             className="text-[11px] text-zinc-500 hover:text-orange-400 underline underline-offset-2"
           >
