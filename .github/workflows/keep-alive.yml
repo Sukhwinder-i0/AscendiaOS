@@ -1,0 +1,20 @@
+name: Keep Render API Awake
+
+on:
+  schedule:
+    # Run every 10 minutes to prevent Render Free Tier from sleeping
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Ping AscendiaOS Render API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GET Request to Health Endpoint
+        run: |
+          URL="${RENDER_API_URL:-https://ascendiaos.onrender.com/api/health}"
+          echo "Pinging API at: $URL"
+          curl -s -f -m 15 "$URL" || echo "API ping sent."
+        env:
+          RENDER_API_URL: ${{ secrets.RENDER_API_URL || vars.RENDER_API_URL }}

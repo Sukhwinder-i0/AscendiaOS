@@ -658,6 +658,16 @@ class ApiClient {
       `/analytics/topic-progress${queryStr}`,
     );
   }
+
+  // Pre-warm Health Check (Silent ping on web app load)
+  async pingHealth(): Promise<boolean> {
+    try {
+      await fetch(`${API_BASE}/health`, { method: 'GET', cache: 'no-store' });
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }
 
 export const api = new ApiClient();

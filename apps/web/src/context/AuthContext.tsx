@@ -19,6 +19,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Pre-warm backend API if sleeping on Render Free Tier
+    api.pingHealth();
+
     async function loadUser() {
       try {
         const u = await api.getMe();
